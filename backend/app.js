@@ -1,25 +1,37 @@
 // backend/app.js
-require('dotenv').config();
 const path = require('path');
 const express = require('express');
-
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// 바디 파서
+const authRoutes = require('./routes/auth');
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// 정적 사이트 서빙 (frontend/public 전체)
-app.use(express.static(path.resolve(__dirname, '../frontend/public')));
+// 정적(원하면 사용)
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
 
-// 헬스체크
-app.get('/api/health', (_req, res) => {
-  res.json({ ok: true, env: process.env.NODE_ENV || 'dev' });
+// API
+app.use('/api/auth', authRoutes);
+
+app.get('/health', (_req, res) => res.json({ ok: true }));
+
+app.use((err, _req, res, _next) => {
+  console.error(err);
+  res.status(500).json({ error: 'server error' });
 });
 
-// 홈
-app.get('/', (_req, res) => res.send('Hello, Express'));
+// db
+const pool = require('./config/db');
+app.get('/health/db', async (_req, res) => {
+  try {
+    const conn = await pool.getConnection();
+    const [rows] = await conn.query('SELECT NOW() AS now');
+    conn.release();
+    res.json({ ok: true, now: rows[0].now });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
 
-// 서버 시작
-app.listen(PORT, () => console.log(`${PORT} 번 포트에서 대기 중`));
+module.exports = app;

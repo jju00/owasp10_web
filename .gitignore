@@ -9,12 +9,11 @@ yarn-error.log*
 .env.local
 .env.*.local
 
-# DB/Uploads
-lab.db
-uploads/
-
 # OS/Editor
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+
+node_modules/
+*.log
