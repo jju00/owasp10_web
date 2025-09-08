@@ -1,12 +1,13 @@
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL,   -- 학습용이라 해시 안 씀 (고의취약)
-  role TEXT NOT NULL        -- 'admin' | 'user'
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  password CHAR(32) NOT NULL,   -- MD5 해시 길이는 32글자 (hex)
+  role ENUM('admin','user') NOT NULL
 );
 
+-- 비밀번호를 MD5로 해싱해서 저장
 INSERT INTO users (username, password, role) VALUES
-('admin', 'admin123', 'admin'),
-('nagox', 'nagox123', 'user');
+('admin', MD5('NoBrute123'), 'admin'),
+('nagox', MD5('NoGoyang76'), 'user');
