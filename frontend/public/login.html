@@ -4,101 +4,66 @@
   <meta charset="utf-8" />
   <title>로그인</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="/assets/css/style.css" />
-  <!-- CSRF 토큰: 나중에 서버가 실제 값으로 주입할 예정 -->
+  <link rel="stylesheet" href="/frontend/public/assets/CSS/style.css" />
+  <!-- 나중에 서버가 실제 CSRF 토큰으로 교체 -->
   <meta name="csrf-token" content="__CSRF_PLACEHOLDER__">
 </head>
 <body class="auth">
   <main class="auth-container">
     <header class="auth-header">
       <h1>로그인</h1>
-      <p class="sub">일반 사용자 / 관리자 로그인 (학습용)</p>
+      <p class="sub">서비스 이용을 위해 로그인이 필요합니다.</p>
     </header>
 
-    <!-- 정상 로그인 폼 -->
+    <!-- 일반 로그인 폼 -->
     <form id="loginForm" class="auth-form">
       <label>
         <span>아이디</span>
-        <input name="username" autocomplete="username" required />
+        <input name="username" autocomplete="username"
+        placeholder="아이디를 입력하세요"
+        required />
       </label>
 
       <label>
         <span>비밀번호</span>
-        <input type="password" name="password" autocomplete="current-password" required />
+        <input type="password" name="password" autocomplete="current-password" 
+        placeholder="비밀번호 (영문, 숫자, 특수문자 조합 8~16자리)"
+        required />
       </label>
 
       <div class="actions">
         <button type="submit" class="btn primary">로그인</button>
       </div>
+
+      <!-- 하단 링크바: 회원가입 | 아이디/비밀번호 찾기 -->
+      <nav class="account-links" aria-label="account links">
+        <a href="/signup.html">회원가입</a>
+        <span class="divider" aria-hidden="true">|</span>
+        <a href="/account/recover.html">아이디/비밀번호 찾기</a>
+      </nav>
+
       <p id="msg" class="msg" role="status" aria-live="polite"></p>
     </form>
-
-    <hr style="margin:1.25rem 0; border:none; border-top:1px solid #eee" />
-
-    <!-- (취약 실습) alg=none 토큰 붙여 자동 로그인 시도 -->
-    <section aria-label="JWT alg=none 취약 시뮬레이터">
-      <h2 style="font-size:1rem;margin:.25rem 0 .5rem;">임의 JWT 붙이기 (alg=none 실습)</h2>
-      <p class="sub" style="margin-top:0;">
-        아래 칸에 <code>header.payload.signature</code> 형태의 JWT를 붙여 넣고 “토큰으로 로그인”을 눌러보세요.
-        (서버가 취약 모드일 때, <code>alg=none</code>을 신뢰하면 서명 검사 없이 로그인됩니다.)
-      </p>
-      <textarea id="jwtInput" rows="3" style="width:100%; box-sizing:border-box; padding:.75rem; border:1px solid #d9d9e3; border-radius:10px;" placeholder="eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzAwMDAwMDAwfQ."></textarea>
-      <div class="actions" style="margin-top:.5rem;">
-        <button id="btnJwtLogin" class="btn">토큰으로 로그인</button>
-        <button id="btnClear" class="btn" type="button">초기화</button>
-      </div>
-      <p id="jwtMsg" class="msg"></p>
-    </section>
   </main>
 
   <script src="/assets/js/main.js" defer></script>
   <script src="/assets/js/auth.js" defer></script>
   <script defer>
-  // 1) 정상 로그인 흐름 (서버가 토큰 발급)
-  window.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('loginForm');
-    bindAuthForm(form, {
-      endpoint: '/api/auth/login',
-      onSuccess: (session) => {
-        // 서버가 Bearer 토큰을 JSON으로 주는 경우 가정
-        if (session && session.token) setToken(session.token);
-        document.getElementById('msg').textContent = '로그인 성공!';
-        setTimeout(()=>location.href='/index.html', 600);
-      },
-      onError: (errMsg) => {
-        document.getElementById('msg').textContent = errMsg || '로그인 실패';
-      }
+    // 정상 로그인: /api/auth/login 으로 제출
+    window.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('loginForm');
+      bindAuthForm(form, {
+        endpoint: '/api/auth/login',
+        onSuccess: (session) => {
+          if (session && session.token) setToken(session.token); // 지금은 데모: localStorage
+          document.getElementById('msg').textContent = '로그인 성공! 메인으로 이동합니다.';
+          setTimeout(() => location.href = '/index.html', 600);
+        },
+        onError: (errMsg) => {
+          document.getElementById('msg').textContent = errMsg || '아이디 또는 비밀번호를 확인해 주세요.';
+        }
+      });
     });
-
-    // 2) (취약 시뮬레이터) alg=none 토큰을 직접 주입하여 자동 로그인 시도
-    const jwtInput = document.getElementById('jwtInput');
-    const btnJwtLogin = document.getElementById('btnJwtLogin');
-    const btnClear = document.getElementById('btnClear');
-    const jwtMsg = document.getElementById('jwtMsg');
-
-    btnJwtLogin.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const token = jwtInput.value.trim();
-      if (!token) { jwtMsg.textContent = 'JWT를 입력하세요.'; return; }
-      try {
-        // 로컬에 저장 후 /api/auth/me로 세션 확인(서버 취약 모드면 통과)
-        setToken(token);
-        const me = await getMe(); // /api/auth/me
-        jwtMsg.textContent = `토큰 로그인 성공: ${JSON.stringify(me)}`;
-        setTimeout(()=>location.href='/index.html', 600);
-      } catch (err) {
-        jwtMsg.textContent = `실패: ${err.message}`;
-        clearToken();
-      }
-    });
-
-    btnClear.addEventListener('click', ()=>{
-      jwtInput.value = '';
-      jwtMsg.textContent = '';
-      clearToken();
-      document.getElementById('msg').textContent = '';
-    });
-  });
   </script>
 </body>
 </html>
