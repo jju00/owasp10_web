@@ -5,11 +5,15 @@ const crypto = require('crypto');
 const pool = require('../config/db');
 const jwtGuard = require('../middleware/jwt');
 
+
+// secret 키 설정 후 env에 정의 필요. 현재는 JWT_SECRET이 dev-secret-only-for-lab로 저장되어 있음.
 const DEV_SECRET = process.env.JWT_SECRET || 'dev-secret-only-for-lab';
+
+// jwt 발급 함수
 function signHS256(payload) {
   const h = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
   const p = Buffer.from(JSON.stringify(payload)).toString('base64url');
-  const s = crypto.createHmac('sha256', DEV_SECRET).update(`${h}.${p}`).digest('base64url');
+  const s = crypto.createHmac('sha256', DEV_SECRET).update(`${h}.${p}`).digest('base64url');    // 헤더.페이로드 + secret key를 hs256으로 해시 후 base64
   return `${h}.${p}.${s}`;
 }
 
@@ -35,7 +39,7 @@ router.post('/login', async (req, res) => {
         id: user.id, username: user.username, role: user.role,
         exp: Math.floor(Date.now()/1000) + 10*60
       });
-      return res.json({ token, user });
+      return res.json({ token, user }); // 를 통해 클라에게 jwt 토큰 발급
     } catch (e) {
       conn.release();
       console.error(e);
