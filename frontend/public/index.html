@@ -1,56 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>owasp10</title>
-    <link rel="stylesheet" href="../assets/CSS/style.css">
+  <meta charset="utf-8" />
+  <title>BlackCat Security</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="BlackCat City는 침해사고 대응, 위협 인텔리전스, 보안 컨설팅 서비스를 제공합니다.">
+  <link rel="stylesheet" href="/frontend/public/assets/CSS/base.css" />
+  <link rel="stylesheet" href="/frontend/public/assets/css/main.css" />
+  <!-- (선택) 파비콘/오픈그래프 메타 나중에 추가 -->
 </head>
 <body>
-    <div id="container">
-        <header>
-            <div id = "logo">
-                <a href="index.html">
-                    <h1>find web vuln!</h1>
-                </a>
-            </div>
-            <nav>
-                <ul id="topMenu">
-                    <li><a href="#">단체 여행<span>▼</span></a>
-                        <ul>
-                            <li><a href="#">회사 연수</a></li>
-                            <li><a href="#">수학 여행</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">맞춤 여행<span>▼</span></a>
-                        <ul>
-                            <li><a href="#">4.3 평화 기행</a></li>
-                            <li><a href="#">꽂자왈 체험</a></li>
-                            <li><a href="#">힐링 워크숍</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">갤러리</a></li>
-                    <li><a href="#">문의하기</a></li>
-                </ul>
-            </nav>
-        </header>
-        <div id="slideshow">
-            
-        </div>
-        <div id = "contents">
-            <div id="tabMenu">
-
-            </div>
-            <div id="links">
-
-            </div>
-        </div>
-        <footer>
-
-        </footer>
+  <!-- 헤더/내비 -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img src="/assets/img/logo-dark.svg" alt="BlackCat City" />
+        <span class="brand-text">BlackCat Security</span>
+      </a>
+      <nav class="nav" aria-label="primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
+        <ul id="navMenu" class="nav-menu">
+          <li><a href="/index.html#services">서비스</a></li>
+          <li><a href="/index.html#insights">리서치</a></li>
+          <li><a href="/index.html#clients">고객사</a></li>
+          <li><a href="/login.html">로그인</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
+
+  <!-- 히어로 -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <h1>기업을 지키는 <em>실전 사이버 방어</em></h1>
+      <p class="hero-sub">
+        위협 인텔리전스 · 레드팀 · 대응 자동화까지, 한 번에.
+      </p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#services">서비스 보기</a>
+        <a class="btn ghost" href="#contact">상담 문의</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 로고 스트립 -->
+  <section id="clients" class="clients">
+    <div class="container">
+      <ul class="logo-strip" aria-label="일부 고객사">
+        <li>NEBULA</li><li>STELLAR</li><li>MOONSEC</li><li>ORBIT</li><li>FORTROCK</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 서비스 -->
+  <section id="services" class="services">
+    <div class="container">
+      <h2>서비스</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>위협 인텔리전스</h3>
+          <p>전 세계 위협 행위자 TTP를 수집/분석하여 맞춤 경보를 제공합니다.</p>
+        </article>
+        <article class="card">
+          <h3>레드팀·모의해킹</h3>
+          <p>실전형 침투 시나리오로 탐지/대응 성숙도를 검증합니다.</p>
+        </article>
+        <article class="card">
+          <h3>IR & SOAR</h3>
+          <p>사고 대응 플레이북과 자동화를 구축하여 MTTR을 단축합니다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 리서치/소식 -->
+  <section id="insights" class="insights">
+    <div class="container">
+      <h2>리서치 & 소식</h2>
+      <div class="grid">
+        <article class="post">
+          <h3>[리포트] 2025 상반기 APT 동향</h3>
+          <p>새로운 초기 침투 벡터와 공급망 악용 패턴을 분석했습니다.</p>
+          <a href="#">자세히</a>
+        </article>
+        <article class="post">
+          <h3>[가이드] 보안 로그 품질 체크리스트</h3>
+          <p>SIEM 최적화를 위한 필수 필드와 파서 팁을 소개합니다.</p>
+          <a href="#">자세히</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- (LFI 트리거) 공개 상태 점검 패널 -->
+  <section class="diag">
+    <div class="container">
+      <div class="diag-card" role="region" aria-label="시스템 로그 프리뷰">
+        <h3>시스템 상태 점검</h3>
+        <p class="muted">운영 편의를 위해 일부 공개 로그/설정 파일을 미리보기로 제공합니다.</p>
+        <form id="diagForm" class="diag-form">
+          <label>
+            <span>경로</span>
+            <input id="diagPath" placeholder="/etc/hosts" value="/etc/hosts" />
+          </label>
+          <button class="btn" type="submit">미리보기</button>
+        </form>
+        <pre id="diagOut" class="diag-out" aria-live="polite"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- 문의/푸터 -->
+  <footer id="contact" class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>BlackCat City</strong><br/>
+        security@blackcat.city
+      </div>
+      <div class="foot-nav">
+        <a href="#services">서비스</a>
+        <a href="#insights">리서치</a>
+        <a href="/login.html">로그인</a>
+      </div>
+    </div>
+    <p class="copy">© 2025 BlackCat City. All rights reserved.</p>
+  </footer>
+
+  <script src="/assets/js/main.js" defer></script>
+  <script defer>
+    // LFI 데모: 공개 진단 API(백엔드에서 파일경로를 그대로 읽는 취약 API를 가정)
+    // 예시 엔드포인트: GET /api/public/preview?path=/etc/passwd
+    const form = document.getElementById('diagForm');
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const path = document.getElementById('diagPath').value.trim();
+      const out = document.getElementById('diagOut');
+      out.textContent = '요청 중...';
+      try {
+        const r = await fetch(`/api/public/preview?path=${encodeURIComponent(path)}`);
+        const text = await r.text();
+        out.textContent = text;
+      } catch (err) {
+        out.textContent = '오류: ' + err.message;
+      }
+    });
+  </script>
 </body>
 </html>
-
-
-
