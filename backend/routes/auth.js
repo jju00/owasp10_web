@@ -13,10 +13,8 @@ function signHS256(payload) {
   return `${h}.${p}.${s}`;
 }
 
-/**
- * 🚨 고의취약 SQLi: 문자열 연결로 로그인
- * 예) username=nagox, password=' OR '1'='1
- */
+/* ======= 고의취약 SQLi: 문자열 연결로 로그인 ======== */
+// login 엔드포인트로 post 요청이 올 시 동작 (서브 라우트)
 router.post('/login', async (req, res) => {
   const { username = '', password = '' } = req.body || {};
   const sql = `
@@ -49,7 +47,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// 토큰 검증 확인용
+// 토큰 검증 확인용 - /me로 get 요청이 오면 처리
 router.get('/me', jwtGuard, (req, res) => {
   res.json({ user: req.user });
 });

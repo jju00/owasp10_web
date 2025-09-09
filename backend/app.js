@@ -3,22 +3,31 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
+// 서브라우터 분리 - 경로: routes/auth.js
 const authRoutes = require('./routes/auth');
 
 app.use(express.json());
 
-// 정적(원하면 사용)
+
+// 정적파일 서빙
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
 
-// API
+
+// API - api/auth 아래 라우트는 routes/auth.js로 넘김
+// 관례상 엔드포인트 경로를 /api로 지정함
 app.use('/api/auth', authRoutes);
 
+
+// 프로세스 살아있나 헬스체크
 app.get('/health', (_req, res) => res.json({ ok: true }));
 
+
+// 에러 처리 미들웨어 - 일단은 모든 오류에 500 상태코드만 응답하도록
 app.use((err, _req, res, _next) => {
   console.error(err);
   res.status(500).json({ error: 'server error' });
 });
+
 
 // db
 const pool = require('./config/db');
