@@ -13,6 +13,7 @@
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="/" aria-label="BlackCat Security">
+        <!-- 경로 통일: 필요 시 /frontend/public 로 맞추세요 -->
         <img src="/assets/img/logo-dark.svg" alt="" />
         <span class="brand-text">BlackCat Security</span>
       </a>
@@ -83,115 +84,164 @@
 
   <!-- 히어로 -->
   <section class="hero">
-    <div v class="container hero-inner">
+    <div class="container hero-inner">
       <h1 class="hero-title">We Make Ambitious<br>Dreams a Reality</h1>
       <p class="hero-sub strong">압도적인 전문성은 기업의 완벽한 보안을 만듭니다.</p>
     </div>
   </section>
 
+  <!-- ABOUT US 섹션 -->
+  <section id="about" class="slice-about">
+    <div class="container about-text-wrap">
+      <h2 class="about-heading">ABOUT US</h2>
+      <h3 class="about-sub">About Us</h3>
+      <p class="about-desc">
+        BlackCat is a practical cybersecurity team dedicated to researching security<br>
+        technologies and gaining hands-on experience. We are active in various fields including <br>
+        web hacking, system defense, reverse engineering, and network security, and we enhance our capabilities through participating in CTF competitions 
+        and presenting at security conferences.
+      </p>
+    </div>
+  </section>
+
   <!-- ACTIVITIES 섹션 -->
-  <section id="about" class="slice-dark">
-  <div class="container about-wrap">
-    <h2 class="about-heading">ACTIVITIES</h2>
-    <div class="about-body grow-only">
-      <div class="feature-shelf">
-        <div class="feature-grid">
-          <article class="feature-card">
-            <img class="feature-icon" src="/frontend/public/assets/img/study.png" alt="" width="84" height="84" loading="lazy" />
-            <h3>STUDY & SEMINOR</h3>
-            <p class="feature-desc">
-            Enhancing <br>
-            fundamental hacking abilities <br>
-            via a self-paced study group, <br>
-            followed by seminar<br>
-            presentations based on<br>
-            the knowledge acquired.
-           </p>
-          </article>
+  <section id="activities" class="slice-dark">
+    <div class="container activities-wrap">
+      <h2 class="activities-heading">ACTIVITIES</h2>
+      <div class="activities-body grow-only">
+        <div class="feature-shelf">
+          <div class="feature-grid">
+            <article class="feature-card">
+              <!-- 경로 통일 필요 시 조정 -->
+              <img class="feature-icon" src="/frontend/public/assets/img/study.png" alt="" width="84" height="84" loading="lazy" />
+              <h3>STUDY & SEMINOR</h3>
+              <p class="feature-desc">
+                Enhancing <br>
+                fundamental hacking abilities <br>
+                via a self-paced study group, <br>
+                followed by seminar<br>
+                presentations based on<br>
+                the knowledge acquired.
+              </p>
+            </article>
 
-          <article class="feature-card">
-            <img class="feature-icon" src="/frontend/public/assets/img/winner.png" alt="" width="84" height="84" loading="lazy" />
-            <h3>CTF</h3>
-            <p class="feature-desc">
-              Participating as a group<br>
-              in various conferences<br>
-              and CTF competitions.<br>
-            </p>
-          </article>
+            <article class="feature-card">
+              <img class="feature-icon" src="/frontend/public/assets/img/winner.png" alt="" width="84" height="84" loading="lazy" />
+              <h3>CTF</h3>
+              <p class="feature-desc">
+                Participating as a group<br>
+                in various conferences<br>
+                and CTF competitions.<br>
+              </p>
+            </article>
 
-          <article class="feature-card">
-            <img class="feature-icon" src="/frontend/public/assets/img/project.png" alt="" width="84" height="84" loading="lazy" />
-            <h3>PROJECTS</h3>
-            <p class="feature-desc">
-              Conducting security projects <br>
-              in diverse fields such as <br>
-              embedded systems, web, and <br>
-              pwnable, and reinforcing learning <br>
-              through documentation.
-            </p>
-          </article>
+            <article class="feature-card">
+              <img class="feature-icon" src="/frontend/public/assets/img/project.png" alt="" width="84" height="84" loading="lazy" />
+              <h3>PROJECTS</h3>
+              <p class="feature-desc">
+                Conducting security projects <br>
+                in diverse fields such as <br>
+                embedded systems, web, and <br>
+                pwnable, and reinforcing learning <br>
+                through documentation.
+              </p>
+            </article>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section> <!-- ★ 누락됐던 닫는 태그 추가 -->
 
-  <!-- 서비스 -->
-  <section id="services" class="services">
+  <!-- BOARD 섹션 (슬라이드 + 게시판/아이콘) -->
+  <section id="board" class="slice-board">
     <div class="container">
-      <h2>서비스</h2>
-      <div class="grid">
-        <article id="services-ti" class="card">
-          <h3>위협 인텔리전스</h3>
-          <p>전 세계 위협 행위자 TTP를 수집/분석하여 맞춤 경보를 제공합니다.</p>
-        </article>
-        <article id="services-rt" class="card">
-          <h3>레드팀·모의해킹</h3>
-          <p>실전형 침투 시나리오로 탐지/대응 성숙도를 검증합니다.</p>
-        </article>
-        <article id="services-ir" class="card">
-          <h3>IR &amp; SOAR</h3>
-          <p>사고 대응 플레이북과 자동화를 구축하여 MTTR을 단축합니다.</p>
-        </article>
+      <!-- 상단 큰 타이틀 -->
+      <h2 class="board-heading">BOARD</h2>
+
+      <!-- 갤러리 (캐러셀) -->
+      <div class="carousel" aria-roledescription="carousel" aria-label="주요 이미지">
+        <button class="nav prev" aria-label="이전 슬라이드">‹</button>
+
+        <div class="viewport" tabindex="0">
+          <ul class="track">
+            <li class="slide is-active" id="slide1">
+              <img src="/frontend/public/assets/img/cat1.png" alt="첫번째 이미지" />
+              <div class="caption"></div>
+            </li>
+            <li class="slide" id="slide2">
+              <img src="/frontend/public/assets/img/dog1.png" alt="두번째 이미지" />
+              <div class="caption"></div>
+            </li>
+            <li class="slide" id="slide3">
+              <img src="/frontend/public/assets/img/penguin.png" alt="세번째 이미지" />
+              <div class="caption"></div>
+            </li>
+          </ul>
+        </div>
+
+        <button class="nav next" aria-label="다음 슬라이드">›</button>
+
+        <div class="dots" role="tablist" aria-label="슬라이드 선택">
+          <button class="dot is-active" role="tab" aria-selected="true" aria-controls="slide1" tabindex="0"></button>
+          <button class="dot" role="tab" aria-selected="false" aria-controls="slide2" tabindex="-1"></button>
+          <button class="dot" role="tab" aria-selected="false" aria-controls="slide3" tabindex="-1"></button>
+          <button class="pause" aria-label="일시정지/재생" title="일시정지">❚❚</button>
+        </div>
+      </div>
+
+      <!-- 하단 2단 그리드: 왼쪽 게시판 / 오른쪽 안내+아이콘 -->
+      <div class="board-grid">
+        <!-- 왼쪽: 게시판 -->
+        <section class="panel board-panel" aria-labelledby="noticeTab">
+          <div class="tabs">
+            <button id="noticeTab" class="tab is-active">공지사항</button>
+            <button class="tab">채용공고</button>
+            <button class="tab">입찰공고</button>
+            <button class="tab">보도자료</button>
+            <button class="tab">설명자료</button>
+            <button class="tab add" aria-label="게시 추가">＋</button>
+          </div>
+          <ul class="board-list">
+            <li><a href="#">2025년 보안 세미나 일정 안내</a><time>2025-09-08</time></li>
+            <li><a href="#">레드팀·모의해킹 상반기 접수 공지</a><time>2025-09-05</time></li>
+            <li><a href="#">인텔리전스 리포트 v2 공개</a><time>2025-09-03</time></li>
+            <li><a href="#">개인정보 처리방침 개정 안내</a><time>2025-08-27</time></li>
+          </ul>
+          <a class="more" href="#">더보기</a>
+        </section>
+
+        <!-- 오른쪽: 안내 박스 + 아이콘 -->
+        <aside class="panel info-panel">
+          <div class="info-card">
+            <h3 class="info-title">열린청장실</h3>
+            <p class="info-copy">
+              국민 여러분의 소중한 의견을 듣고<br/>
+              치안행정에 반영하겠습니다.
+            </p>
+            <ul class="info-links">
+              <li><a href="#">청장소개</a></li>
+              <li><a href="#">청장동정</a></li>
+              <li><a href="#">청장과의 대화</a></li>
+            </ul>
+          </div>
+
+          <div class="sns-bar">
+            <h4 class="sns-title">BlackCat의 다양한 소식</h4>
+            <div class="sns-icons">
+              <!-- 실제 아이콘 파일이 있으면 img로 교체 가능 -->
+              <a class="sns yt" href="#" aria-label="YouTube">▶</a>
+              <a class="sns fb" href="#" aria-label="Facebook">f</a>
+              <a class="sns x"  href="#" aria-label="X">x</a>
+              <a class="sns blog" href="#" aria-label="Blog">b</a>
+              <a class="sns ig" href="#" aria-label="Instagram">◎</a>
+              <a class="sns gh" href="#" aria-label="GitHub">🐱</a>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
 
-  <!-- 리서치/소식 -->
-  <section id="insights" class="insights">
-    <div class="container">
-      <h2>리서치 &amp; 소식</h2>
-      <div class="grid">
-        <article class="post">
-          <h3>[리포트] 2025 상반기 APT 동향</h3>
-          <p>새로운 초기 침투 벡터와 공급망 악용 패턴을 분석했습니다.</p>
-          <a href="#">자세히</a>
-        </article>
-        <article class="post">
-          <h3>[가이드] 보안 로그 품질 체크리스트</h3>
-          <p>SIEM 최적화를 위한 필수 필드와 파서 팁을 소개합니다.</p>
-          <a href="#">자세히</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- (데모) 공개 상태 점검 -->
-  <section class="diag">
-    <div class="container">
-      <div class="diag-card" role="region" aria-label="시스템 로그 프리뷰">
-        <h3>시스템 상태 점검</h3>
-        <p class="muted">운영 편의를 위해 일부 공개 로그/설정 파일을 미리보기로 제공합니다.</p>
-        <form id="diagForm" class="diag-form">
-          <label>
-            <span>경로</span>
-            <input id="diagPath" placeholder="/etc/hosts" value="/etc/hosts" />
-          </label>
-          <button class="btn" type="submit">미리보기</button>
-        </form>
-        <pre id="diagOut" class="diag-out" aria-live="polite"></pre>
-      </div>
-    </div>
-  </section>
 
   <!-- 푸터 -->
   <footer id="contact" class="site-footer">
@@ -209,6 +259,7 @@
     <p class="copy">© 2025 BlackCat City. All rights reserved.</p>
   </footer>
 
+  <!-- 모든 스크립트는 </body> 위에 -->
   <script>
     // 모바일 토글 & 접근성
     const navToggle = document.querySelector('.nav-toggle');
@@ -226,7 +277,7 @@
       });
     });
 
-    // (데모) LFI 프리뷰
+    // (데모) LFI 프리뷰 — 현재 DOM에 폼이 없으면 필요 시 제거 가능
     const form = document.getElementById('diagForm');
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -242,60 +293,131 @@
       }
     });
   </script>
+
+  <script>
+  (() => {
+    const el = document.querySelector('.slice-dark .grow-only');
+    if (!el) return;
+
+    const fromScale = 0.94;
+    const toScale   = 1.30;
+    const enterAt   = 0.98;
+    const exitAt    = -1.15;
+
+    let ticking = false;
+    const clamp = (v,min,max)=> Math.max(min, Math.min(max, v));
+    const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+
+    function update(){
+      ticking = false;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const topRatio = rect.top / vh;
+
+      let t = (enterAt - topRatio) / (enterAt - exitAt);
+      t = clamp(t, 0, 1);
+      t = easeOutCubic(t);
+
+      const s = fromScale + (toScale - fromScale) * t;
+      el.style.transform = `scale(${s})`;
+      el.style.opacity   = String(0.95 + 0.05 * t);
+    }
+
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if (entry.isIntersecting){
+          onScroll();
+          window.addEventListener('scroll', onScroll, {passive:true});
+        }else{
+          window.removeEventListener('scroll', onScroll);
+        }
+      });
+    }, {threshold: [0,1]});
+
+    function onScroll(){
+      if (!ticking){
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    io.observe(el);
+    window.addEventListener('resize', onScroll);
+  })();
+  </script>
+
+  <script>
+  (() => {
+    const root = document.querySelector('.carousel');
+    if (!root) return;
+
+    const track = root.querySelector('.track');
+    const slides = Array.from(root.querySelectorAll('.slide'));
+    const prevBtn = root.querySelector('.prev');
+    const nextBtn = root.querySelector('.next');
+    const dots = Array.from(root.querySelectorAll('.dot'));
+    const pauseBtn = root.querySelector('.pause');
+    const viewport = root.querySelector('.viewport');
+
+    let index = 0;
+    const last = slides.length - 1;
+    const intervalMs = 4500;
+    let timer = null;
+    let isPaused = false;
+
+    function go(i){
+      index = (i + slides.length) % slides.length;
+      const offset = -index * 100;
+      track.style.transform = `translateX(${offset}%)`;
+      slides.forEach((s,idx)=> s.classList.toggle('is-active', idx === index));
+      dots.forEach((d,idx)=>{
+        d.classList.toggle('is-active', idx === index);
+        d.setAttribute('aria-selected', idx===index ? 'true' : 'false');
+        d.tabIndex = idx===index ? 0 : -1;
+      });
+    }
+
+    function next(){ go(index + 1); }
+    function prev(){ go(index - 1); }
+
+    function start(){
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      stop(); timer = setInterval(next, intervalMs);
+    }
+    function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+
+    nextBtn.addEventListener('click', ()=>{ next(); start(); });
+    prevBtn.addEventListener('click', ()=>{ prev(); start(); });
+    dots.forEach((d,idx)=> d.addEventListener('click', ()=>{ go(idx); start(); }));
+
+    pauseBtn.addEventListener('click', ()=>{
+      isPaused = !isPaused;
+      if (isPaused){ stop(); pauseBtn.textContent = '▶'; pauseBtn.title = '재생'; }
+      else { start(); pauseBtn.textContent = '❚❚'; pauseBtn.title = '일시정지'; }
+    });
+
+    ['mouseenter','focusin'].forEach(ev => root.addEventListener(ev, ()=>{ stop(); }));
+    ['mouseleave','focusout'].forEach(ev => root.addEventListener(ev, ()=>{ if(!isPaused) start(); }));
+
+    viewport.addEventListener('keydown', (e)=>{
+      if (e.key === 'ArrowRight'){ next(); start(); }
+      if (e.key === 'ArrowLeft'){ prev(); start(); }
+    });
+
+    let startX = 0;
+    viewport.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+    viewport.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40){ dx < 0 ? next() : prev(); start(); }
+    }, {passive:true});
+
+    document.addEventListener('visibilitychange', ()=> {
+      if (document.hidden) stop(); else if (!isPaused) start();
+    });
+
+    go(0); start();
+  })();
+  </script>
+
 </body>
 </html>
-
-
-<!-- js -->
-<script>
-(() => {
-  const el = document.querySelector('.slice-dark .grow-only');
-  if (!el) return;
-
-  const fromScale = 0.94;   // 시작 크기
-  const toScale   = 1.30;   // 최대 크기(기존보다 +)
-  const enterAt   = 0.98;   // 화면 하단 근처에서 시작
-  const exitAt    = -1.15;  // 상단을 살짝 지나서까지(= 더 오래 커짐)
-
-  let ticking = false;
-  const clamp = (v,min,max)=> Math.max(min, Math.min(max, v));
-  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
-
-  function update(){
-    ticking = false;
-    const rect = el.getBoundingClientRect();
-    const vh = window.innerHeight;
-    const topRatio = rect.top / vh;                // 0=상단, 1=하단
-
-    // enterAt~exitAt 구간을 0~1로 정규화
-    let t = (enterAt - topRatio) / (enterAt - exitAt);
-    t = clamp(t, 0, 1);
-    t = easeOutCubic(t);                            // 더 부드럽게
-
-    const s = fromScale + (toScale - fromScale) * t;
-    el.style.transform = `scale(${s})`;
-    el.style.opacity   = String(0.95 + 0.05 * t);   // 아주 미세한 페이드
-  }
-
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if (entry.isIntersecting){
-        onScroll();
-        window.addEventListener('scroll', onScroll, {passive:true});
-      }else{
-        window.removeEventListener('scroll', onScroll);
-      }
-    });
-  }, {threshold: [0,1]});
-
-  function onScroll(){
-    if (!ticking){
-      ticking = true;
-      requestAnimationFrame(update);
-    }
-  }
-
-  io.observe(el);
-  window.addEventListener('resize', onScroll);
-})();
-</script>
