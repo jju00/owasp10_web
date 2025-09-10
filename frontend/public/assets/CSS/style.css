@@ -180,7 +180,7 @@ a:hover{text-decoration:underline}
 }
 
 
-/* -------------- ABOUT US 섹션 --------------- */
+/* -------------- ACTIVITIES 섹션 --------------- */
 /* 섹션: 흐릿한 배경 톤 */
 .slice-dark{
   position: relative;
@@ -194,13 +194,13 @@ a:hover{text-decoration:underline}
   border-bottom: 1px solid var(--border);
 }
 
-/* ABOUT US 타이틀 */
+/* ACTIVITIES 타이틀 */
 .about-heading{
   margin: 0 0 48px;
   text-align: center;
   font-weight: 900;
   letter-spacing: .04em;
-  font-size: clamp(28px, 7.2vw, 64px);
+  font-size: clamp(20px, 7.2vw, 64px);
   background: linear-gradient(90deg, #1ec8ff, #6a6afe);
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
@@ -259,6 +259,7 @@ a:hover{text-decoration:underline}
   color: #a9a9a9;      /* var(--muted)보다 밝고 선명 */
   font-weight: 530;    /* 본문 글씨 굵게 */
   line-height: 1.9;
+  font-size: 13px;
   letter-spacing: .2px;
 }
 
@@ -308,20 +309,28 @@ a:hover{text-decoration:underline}
   filter: blur(12px);
 }
 
-/* 아이콘 박스(가운데, 파랑↔보라 중간 톤) */
-.feature-icon-box{
-  width: 84px; height: 84px;
-  border-radius: 22px;
-  margin: 0 auto 12px;
-  background: linear-gradient(135deg, #29b7ff, #6a6afe);
-  border: 1px solid rgba(255,255,255,.10);
-  box-shadow: 0 14px 28px rgba(0,0,0,.35), 0 0 0 6px rgba(90,120,255,.10);
+/* 카드 이미지 아이콘 */
+.feature-icon{
+  display:block;
+  width:61px;
+  height:73px;
+  margin:0 auto 12px;            /* 가운데 정렬 + 제목과 간격 */
+  object-fit:contain;            /* PNG 비율 유지 */
+  border-radius:22px;            /* 둥근 사각형 윤곽(이미지가 사각형일 때) */
+  background: radial-gradient(120% 120% at 18% 15%, #ffffff22, transparent 55%);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:
+    0 14px 28px rgba(0,0,0,.35), /* 아래 그림자 */
+    0 0 0 6px rgba(90,120,255,.10); /* 은은한 링(박스 느낌 유지) */
+  transition: filter .25s ease, box-shadow .25s ease;
 }
 
 /* 모션 최소화 선호 시 효과 비활성화 */
 @media (prefers-reduced-motion: reduce){
   .grow-only{ transform: none !important; opacity: 1 !important; }
 }
+
+
 
 
 /* ---------- Clients strip ---------- */

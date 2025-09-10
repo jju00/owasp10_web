@@ -89,42 +89,45 @@
     </div>
   </section>
 
-  <!-- ABOUT US 섹션 -->
+  <!-- ACTIVITIES 섹션 -->
   <section id="about" class="slice-dark">
   <div class="container about-wrap">
-    <h2 class="about-heading">ABOUT US</h2>
+    <h2 class="about-heading">ACTIVITIES</h2>
     <div class="about-body grow-only">
       <div class="feature-shelf">
         <div class="feature-grid">
           <article class="feature-card">
-            <div class="feature-icon-box"></div>
-            <h3>Attacker's POV</h3>
+            <img class="feature-icon" src="/frontend/public/assets/img/study.png" alt="" width="84" height="84" loading="lazy" />
+            <h3>STUDY & SEMINOR</h3>
             <p class="feature-desc">
-             공격자의 관점과 <br>
-             TTP를 이해하고, <br>
-             그 시선으로 <br>
-            방어를 설계합니다.
+            Enhancing <br>
+            fundamental hacking abilities <br>
+            via a self-paced study group, <br>
+            followed by seminar<br>
+            presentations based on<br>
+            the knowledge acquired.
            </p>
           </article>
 
           <article class="feature-card">
-            <div class="feature-icon-box"></div>
-            <h3>Proactive</h3>
+            <img class="feature-icon" src="/frontend/public/assets/img/winner.png" alt="" width="84" height="84" loading="lazy" />
+            <h3>CTF</h3>
             <p class="feature-desc">
-              변화에 선제 대응하는 <br>
-              탐지·대응 체계를 <br>
-              구축합니다.
+              Participating as a group<br>
+              in various conferences<br>
+              and CTF competitions.<br>
             </p>
           </article>
 
           <article class="feature-card">
-            <div class="feature-icon-box"></div>
-            <h3>Innovation</h3>
+            <img class="feature-icon" src="/frontend/public/assets/img/project.png" alt="" width="84" height="84" loading="lazy" />
+            <h3>PROJECTS</h3>
             <p class="feature-desc">
-              파트너와의 <br>
-              협업과 연구로 <br>
-              지속적인 개선을 <br>
-              이뤄냅니다.
+              Conducting security projects <br>
+              in diverse fields such as <br>
+              embedded systems, web, and <br>
+              pwnable, and reinforcing learning <br>
+              through documentation.
             </p>
           </article>
         </div>
@@ -249,7 +252,6 @@
   const el = document.querySelector('.slice-dark .grow-only');
   if (!el) return;
 
-  // ▶ 커지는 범위 살짝 상향
   const fromScale = 0.94;   // 시작 크기
   const toScale   = 1.30;   // 최대 크기(기존보다 +)
   const enterAt   = 0.98;   // 화면 하단 근처에서 시작
