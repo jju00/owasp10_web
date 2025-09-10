@@ -5,40 +5,113 @@
   <title>BlackCat Security</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="BlackCat City는 침해사고 대응, 위협 인텔리전스, 보안 컨설팅 서비스를 제공합니다.">
-  <link rel="stylesheet" href="/frontend/public/assets/CSS/base.css" />
-  <link rel="stylesheet" href="/frontend/public/assets/css/main.css" />
-  <!-- (선택) 파비콘/오픈그래프 메타 나중에 추가 -->
+  <link rel="stylesheet" href="/frontend/public/assets/css/style.css" />
 </head>
 <body>
-  <!-- 헤더/내비 -->
+
+  <!-- 헤더 -->
   <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="/">
-        <img src="/assets/img/logo-dark.svg" alt="BlackCat City" />
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="BlackCat Security">
+        <img src="/assets/img/logo-dark.svg" alt="" />
         <span class="brand-text">BlackCat Security</span>
       </a>
-      <nav class="nav" aria-label="primary">
+
+      <nav class="nav" aria-label="주요 메뉴">
         <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
         <ul id="navMenu" class="nav-menu">
-          <li><a href="/index.html#services">서비스</a></li>
-          <li><a href="/index.html#insights">리서치</a></li>
-          <li><a href="/index.html#clients">고객사</a></li>
-          <li><a href="/login.html">로그인</a></li>
+          <!-- 드롭다운: 서비스 -->
+          <li class="has-sub">
+            <button class="toplink" aria-haspopup="true" aria-expanded="false"> 
+              서비스 <span class="arrow">▼</span></button>
+            <ul class="submenu">
+              <li><a href="#services-ti">위협 인텔리전스</a></li>
+              <li><a href="#services-rt">레드팀·모의해킹</a></li>
+              <li><a href="#services-ir">IR &amp; SOAR</a></li>
+            </ul>
+          </li>
+
+          <!-- 드롭다운: 리서치 -->
+          <li class="has-sub">
+            <button class="toplink" aria-haspopup="true" aria-expanded="false">
+              리서치 <span class="arrow">▼</span></button>
+            <ul class="submenu">
+              <li><a href="#insights">최신 리포트</a></li>
+              <li><a href="#insights">기술 가이드</a></li>
+            </ul>
+          </li>
+
+          <!-- 드롭다운: 고객사 -->
+          <li class="has-sub">
+            <button class="toplink" aria-haspopup="true" aria-expanded="false">
+              고객사 <span class="arrow">▼</span></button>
+            <ul class="submenu">
+              <li><a href="#clients">일부 고객사</a></li>
+              <li><a href="#contact">문의</a></li>
+            </ul>
+          </li>
+
+          <!-- 드롭다운: 로그인 -->
+          <li class="has-sub">
+            <button class="toplink" aria-haspopup="true" aria-expanded="false">
+              로그인 <span class="arrow">▼</span></button>
+            <ul class="submenu">
+              <li><a href="/login.html">로그인</a></li>
+              <li><a href="/signup.html">회원가입</a></li>
+              <li><a href="/account/recover.html">아이디/비밀번호 찾기</a></li>
+            </ul>
+          </li>
         </ul>
       </nav>
+
+      <!-- 헤더 아이콘 -->
+      <div class="header-actions" role="group" aria-label="사용자/검색/언어">
+        <a class="icon-btn" href="/login.html" aria-label="로그인">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/></svg>
+        </a>
+        <span class="vdiv" aria-hidden="true"></span>
+        <button class="icon-btn" type="button" aria-label="검색">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M21 20.29 16.65 16a8 8 0 1 0-1.41 1.41L20.29 21 21 20.29ZM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6Z"/></svg>
+        </button>
+        <span class="vdiv" aria-hidden="true"></span>
+        <a class="icon-btn" href="/en" aria-label="English">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm7.93 9h-3.11a15.5 15.5 0 0 0-1.05-5A8.01 8.01 0 0 1 19.93 11ZM12 4c.9 0 2.47 2.07 3.07 6H8.93C9.53 6.07 11.1 4 12 4ZM4.07 13h3.11a15.5 15.5 0 0 0 1.05 5 8.01 8.01 0 0 1-4.16-5Zm3.11-2H4.07A8.01 8.01 0 0 1 8.23 6a15.5 15.5 0 0 0-1.05 5Zm1.75 2h5.14c-.6 3.93-2.17 6-3.07 6s-2.47-2.07-3.07-6Zm7.84 0h3.11a8.01 8.01 0 0 1-4.16 5 15.5 15.5 0 0 0 1.05-5Z"/></svg>
+        </a>
+      </div>
     </div>
   </header>
 
   <!-- 히어로 -->
   <section class="hero">
-    <div class="container hero-inner">
-      <h1>기업을 지키는 <em>실전 사이버 방어</em></h1>
-      <p class="hero-sub">
-        위협 인텔리전스 · 레드팀 · 대응 자동화까지, 한 번에.
-      </p>
-      <div class="hero-cta">
-        <a class="btn primary" href="#services">서비스 보기</a>
-        <a class="btn ghost" href="#contact">상담 문의</a>
+    <div v class="container hero-inner">
+      <h1 class="hero-title">We Make Ambitious<br>Dreams a Reality</h1>
+      <p class="hero-sub strong">압도적인 전문성은 기업의 완벽한 보안을 만듭니다.</p>
+    </div>
+  </section>
+
+
+  <!-- 사이드바 + 관련 아티클 -->
+  <section class="mega">
+    <div class="container mega-inner">
+      <aside class="side-nav" aria-label="회사 정보">
+        <h2 class="side-title">회사소개</h2>
+        <ul class="side-list">
+          <li class="active"><a href="#about">회사소개</a></li>
+          <li><a href="#history">연혁</a></li>
+          <li><a href="#awards">수상 및 인증</a></li>
+          <li><a href="#notice">공지사항</a></li>
+        </ul>
+      </aside>
+
+      <div class="mega-content">
+        <h3 class="related-title">· 관련 아티클</h3>
+        <article class="related-card">
+          <img class="related-thumb" src="/assets/img/sample-news.jpg" alt="연구원 단체 사진" />
+          <div>
+            <span class="badge">보도자료</span>
+            <h4 class="related-head"><a href="#">엔키화이트햇 연구원들, 세계 최고 해킹대회 본선 진출</a></h4>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -57,16 +130,16 @@
     <div class="container">
       <h2>서비스</h2>
       <div class="grid">
-        <article class="card">
+        <article id="services-ti" class="card">
           <h3>위협 인텔리전스</h3>
           <p>전 세계 위협 행위자 TTP를 수집/분석하여 맞춤 경보를 제공합니다.</p>
         </article>
-        <article class="card">
+        <article id="services-rt" class="card">
           <h3>레드팀·모의해킹</h3>
           <p>실전형 침투 시나리오로 탐지/대응 성숙도를 검증합니다.</p>
         </article>
-        <article class="card">
-          <h3>IR & SOAR</h3>
+        <article id="services-ir" class="card">
+          <h3>IR &amp; SOAR</h3>
           <p>사고 대응 플레이북과 자동화를 구축하여 MTTR을 단축합니다.</p>
         </article>
       </div>
@@ -76,7 +149,7 @@
   <!-- 리서치/소식 -->
   <section id="insights" class="insights">
     <div class="container">
-      <h2>리서치 & 소식</h2>
+      <h2>리서치 &amp; 소식</h2>
       <div class="grid">
         <article class="post">
           <h3>[리포트] 2025 상반기 APT 동향</h3>
@@ -92,7 +165,7 @@
     </div>
   </section>
 
-  <!-- (LFI 트리거) 공개 상태 점검 패널 -->
+  <!-- (데모) 공개 상태 점검 -->
   <section class="diag">
     <div class="container">
       <div class="diag-card" role="region" aria-label="시스템 로그 프리뷰">
@@ -110,7 +183,7 @@
     </div>
   </section>
 
-  <!-- 문의/푸터 -->
+  <!-- 푸터 -->
   <footer id="contact" class="site-footer">
     <div class="container footer-inner">
       <div>
@@ -126,10 +199,24 @@
     <p class="copy">© 2025 BlackCat City. All rights reserved.</p>
   </footer>
 
-  <script src="/assets/js/main.js" defer></script>
-  <script defer>
-    // LFI 데모: 공개 진단 API(백엔드에서 파일경로를 그대로 읽는 취약 API를 가정)
-    // 예시 엔드포인트: GET /api/public/preview?path=/etc/passwd
+  <script>
+    // 모바일 토글 & 접근성
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.getElementById('navMenu');
+    navToggle?.addEventListener('click', () => {
+      const open = navMenu.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(open));
+    });
+    // 드롭다운 토글(키보드 접근)
+    document.querySelectorAll('.has-sub > .toplink').forEach(btn=>{
+      const submenu = btn.nextElementSibling;
+      btn.addEventListener('click', ()=>{
+        const open = submenu.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+    });
+
+    // (데모) LFI 프리뷰
     const form = document.getElementById('diagForm');
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
