@@ -89,41 +89,48 @@
     </div>
   </section>
 
+  <!-- ABOUT US 섹션 -->
+  <section id="about" class="slice-dark">
+  <div class="container about-wrap">
+    <h2 class="about-heading">ABOUT US</h2>
+    <div class="about-body grow-only">
+      <div class="feature-shelf">
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon-box"></div>
+            <h3>Attacker's POV</h3>
+            <p class="feature-desc">
+             공격자의 관점과 <br>
+             TTP를 이해하고, <br>
+             그 시선으로 <br>
+            방어를 설계합니다.
+           </p>
+          </article>
 
-  <!-- 사이드바 + 관련 아티클 -->
-  <section class="mega">
-    <div class="container mega-inner">
-      <aside class="side-nav" aria-label="회사 정보">
-        <h2 class="side-title">회사소개</h2>
-        <ul class="side-list">
-          <li class="active"><a href="#about">회사소개</a></li>
-          <li><a href="#history">연혁</a></li>
-          <li><a href="#awards">수상 및 인증</a></li>
-          <li><a href="#notice">공지사항</a></li>
-        </ul>
-      </aside>
+          <article class="feature-card">
+            <div class="feature-icon-box"></div>
+            <h3>Proactive</h3>
+            <p class="feature-desc">
+              변화에 선제 대응하는 <br>
+              탐지·대응 체계를 <br>
+              구축합니다.
+            </p>
+          </article>
 
-      <div class="mega-content">
-        <h3 class="related-title">· 관련 아티클</h3>
-        <article class="related-card">
-          <img class="related-thumb" src="/assets/img/sample-news.jpg" alt="연구원 단체 사진" />
-          <div>
-            <span class="badge">보도자료</span>
-            <h4 class="related-head"><a href="#">엔키화이트햇 연구원들, 세계 최고 해킹대회 본선 진출</a></h4>
-          </div>
-        </article>
+          <article class="feature-card">
+            <div class="feature-icon-box"></div>
+            <h3>Innovation</h3>
+            <p class="feature-desc">
+              파트너와의 <br>
+              협업과 연구로 <br>
+              지속적인 개선을 <br>
+              이뤄냅니다.
+            </p>
+          </article>
+        </div>
       </div>
     </div>
-  </section>
-
-  <!-- 로고 스트립 -->
-  <section id="clients" class="clients">
-    <div class="container">
-      <ul class="logo-strip" aria-label="일부 고객사">
-        <li>NEBULA</li><li>STELLAR</li><li>MOONSEC</li><li>ORBIT</li><li>FORTROCK</li>
-      </ul>
-    </div>
-  </section>
+  </div>
 
   <!-- 서비스 -->
   <section id="services" class="services">
@@ -234,3 +241,59 @@
   </script>
 </body>
 </html>
+
+
+<!-- js -->
+<script>
+(() => {
+  const el = document.querySelector('.slice-dark .grow-only');
+  if (!el) return;
+
+  // ▶ 커지는 범위 살짝 상향
+  const fromScale = 0.94;   // 시작 크기
+  const toScale   = 1.30;   // 최대 크기(기존보다 +)
+  const enterAt   = 0.98;   // 화면 하단 근처에서 시작
+  const exitAt    = -1.15;  // 상단을 살짝 지나서까지(= 더 오래 커짐)
+
+  let ticking = false;
+  const clamp = (v,min,max)=> Math.max(min, Math.min(max, v));
+  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+
+  function update(){
+    ticking = false;
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const topRatio = rect.top / vh;                // 0=상단, 1=하단
+
+    // enterAt~exitAt 구간을 0~1로 정규화
+    let t = (enterAt - topRatio) / (enterAt - exitAt);
+    t = clamp(t, 0, 1);
+    t = easeOutCubic(t);                            // 더 부드럽게
+
+    const s = fromScale + (toScale - fromScale) * t;
+    el.style.transform = `scale(${s})`;
+    el.style.opacity   = String(0.95 + 0.05 * t);   // 아주 미세한 페이드
+  }
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if (entry.isIntersecting){
+        onScroll();
+        window.addEventListener('scroll', onScroll, {passive:true});
+      }else{
+        window.removeEventListener('scroll', onScroll);
+      }
+    });
+  }, {threshold: [0,1]});
+
+  function onScroll(){
+    if (!ticking){
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  io.observe(el);
+  window.addEventListener('resize', onScroll);
+})();
+</script>

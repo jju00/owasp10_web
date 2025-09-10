@@ -21,7 +21,8 @@ a{color:var(--fg);text-decoration:none}
 a:hover{text-decoration:underline}
 .container{max-width:var(--container);margin:0 auto;padding:0 16px}
 
-/* ---------- Header ---------- */
+
+/* -------------- Header -------------- */
 .site-header{
   position:sticky;top:0;z-index:50;
   background:rgba(11,13,18,.9);
@@ -40,7 +41,7 @@ a:hover{text-decoration:underline}
   overflow:hidden;text-overflow:ellipsis;max-width:260px
 }
 
-/* nav */
+/* ----------- nav (gnb - toplink) ----------- */
 .nav-toggle{display:none}
 .nav-menu{display:flex;gap:18px;list-style:none;margin:0;padding:0;align-items:center;justify-content:center;margin-left: -70px;}
 .nav-menu>li{position:relative}
@@ -58,6 +59,7 @@ a:hover{text-decoration:underline}
   transition: color .3s ease;
 }
 
+/* - gnb hover 시 이벤트 처리 -  */
 /* hover시 밑줄 적용 - 일단 기본은 숨김 (scaleX=0) */
 .toplink::after{
   content: "";
@@ -66,7 +68,7 @@ a:hover{text-decoration:underline}
   bottom: 2px;               
   width: 100%;
   height: 2px;
-  background: #6dd2ff;       
+  background: #1e90ff;       
   transform: scaleX(0);
   transform-origin: left;    /* 왼쪽에서부터 밑줄*/
   transition: transform .3s ease;
@@ -108,11 +110,12 @@ a:hover{text-decoration:underline}
 .icon-btn:hover{background:rgba(255,255,255,.06);color:#fff}
 .vdiv{width:1px;height:18px;background:var(--border)}
 
+
 /* ---------- Buttons ---------- */
 .btn{
   display:inline-block;padding:.7rem 1rem;border-radius:12px;
   border:1px solid var(--border);background:#141a25;color:var(--fg);
-  cursor:pointer;transition:transform .02s,box-shadow .2s,background .2s
+  cursor:pointer;transition:transform .02s,box-shadow .2s;
 }
 .btn:hover{box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .btn:active{transform:translateY(1px)}
@@ -174,6 +177,150 @@ a:hover{text-decoration:underline}
 
 @media (max-width: 600px){
   .hero{ min-height: 68vh; }
+}
+
+
+/* -------------- ABOUT US 섹션 --------------- */
+/* 섹션: 흐릿한 배경 톤 */
+.slice-dark{
+  position: relative;
+  background:
+    radial-gradient(1200px 520px at 70% -10%, rgba(106,106,254,.18), transparent 60%),
+    radial-gradient(900px 420px at 10% -5%, rgba(37,194,160,.12), transparent 60%),
+    linear-gradient(180deg,#0b0d12 0%, #0a0e1a 100%);
+  color: var(--fg);
+  padding: 84px 0 160px;          
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ABOUT US 타이틀 */
+.about-heading{
+  margin: 0 0 48px;
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: .04em;
+  font-size: clamp(28px, 7.2vw, 64px);
+  background: linear-gradient(90deg, #1ec8ff, #6a6afe);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 20px rgba(0,0,0,.35);
+}
+
+/* 본문 래퍼(이것만 천천히 커짐) */
+.grow-only{
+  transform: scale(0.94);
+  min-height: 600px;
+  transform-origin: center top;
+  will-change: transform, opacity;
+  opacity: .97;
+}
+
+/* 선반: 그리드 배경을 살짝 띄워 보이게 */
+.feature-shelf{
+  position: relative;
+  margin: 8px 0 40px;
+  padding: 26px;
+  border-radius: 32px;
+  background:
+    radial-gradient(120% 180% at 15% 0%, rgba(255,255,255,.09), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.08));
+  border: 1px solid rgba(255,255,255,.07);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 32px 80px rgba(0,0,0,.45);
+  overflow: visible; /* 카드 글로우가 잘리지 않게 */
+}
+
+/* 카드 3개 그리드 */
+.feature-grid{
+  display: grid;
+  gap: 28px;
+  grid-template-columns: repeat(auto-fit, 320px); /* 고정 폭 카드 320px */
+  justify-content: center;
+}
+
+/* 카드 스타일 */
+.feature-card{
+  position: relative;
+  width: 290px;               /* 카드 가로 */
+  min-height: 400px;          /* 카드 세로 */
+  padding: 30px 24px 26px;
+  border-radius: 28px;
+  background: var(--card);
+  text-align: center;
+  transition: transform .25s ease, box-shadow .25s ease;
+  will-change: transform, box-shadow;
+  overflow: visible;
+}
+
+/* 카드 안 본문 스타일 */
+.feature-card .feature-desc{
+  color: #a9a9a9;      /* var(--muted)보다 밝고 선명 */
+  font-weight: 530;    /* 본문 글씨 굵게 */
+  line-height: 1.9;
+  letter-spacing: .2px;
+}
+
+/* 기본 테두리 레이어 - hover를 위한 가상 요소 정의 */
+.feature-card::before{
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 2px; /* 테두리 두께 */
+  background: linear-gradient(135deg, #10d2ff, #6a6afe); /* 파랑↔보라 */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: .55;                          /* 기본은 은은하게 */
+  transition: opacity .25s ease, filter .25s ease;
+  pointer-events: none;
+}
+
+/* 글로우(번짐) 레이어 — 부드러운 퍼짐 전용 */
+.feature-card::after{
+  content: "";
+  position: absolute; inset: -6px;
+  border-radius: inherit;
+  background: radial-gradient(60% 60% at 50% 50%, rgba(32,210,255,.35), transparent 70%);
+  opacity: 0;                             /* 기본은 숨김 */
+  filter: blur(10px);
+  transition: opacity .25s ease, filter .25s ease;
+  pointer-events: none;
+}
+
+/* hover 시 살짝 떠오르고 테두리/글로우가 밝아짐 */
+.feature-card:hover,
+.feature-card:focus-within{
+  transform: translateY(-8px);
+  box-shadow: 0 24px 64px rgba(0,0,0,.45);
+}
+.feature-card:hover::before,
+.feature-card:focus-within::before{
+  opacity: 1;
+  filter: drop-shadow(0 0 14px rgba(32,210,255,.45));
+}
+.feature-card:hover::after,
+.feature-card:focus-within::after{
+  opacity: 1;
+  filter: blur(12px);
+}
+
+/* 아이콘 박스(가운데, 파랑↔보라 중간 톤) */
+.feature-icon-box{
+  width: 84px; height: 84px;
+  border-radius: 22px;
+  margin: 0 auto 12px;
+  background: linear-gradient(135deg, #29b7ff, #6a6afe);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 14px 28px rgba(0,0,0,.35), 0 0 0 6px rgba(90,120,255,.10);
+}
+
+/* 모션 최소화 선호 시 효과 비활성화 */
+@media (prefers-reduced-motion: reduce){
+  .grow-only{ transform: none !important; opacity: 1 !important; }
 }
 
 
