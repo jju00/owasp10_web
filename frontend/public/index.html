@@ -1,56 +1,418 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>owasp10</title>
-    <link rel="stylesheet" href="../assets/CSS/style.css">
+  <meta charset="utf-8" />
+  <title>BlackCat Security</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="BlackCat Security는 침해사고 대응, 위협 인텔리전스, 보안 컨설팅 서비스를 제공합니다.">
+  <link rel="stylesheet" href="/frontend/public/assets/css/style.css" />
 </head>
-<body>
-    <div id="container">
-        <header>
-            <div id = "logo">
-                <a href="index.html">
-                    <h1>find web vuln!</h1>
-                </a>
-            </div>
-            <nav>
-                <ul id="topMenu">
-                    <li><a href="#">단체 여행<span>▼</span></a>
-                        <ul>
-                            <li><a href="#">회사 연수</a></li>
-                            <li><a href="#">수학 여행</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">맞춤 여행<span>▼</span></a>
-                        <ul>
-                            <li><a href="#">4.3 평화 기행</a></li>
-                            <li><a href="#">꽂자왈 체험</a></li>
-                            <li><a href="#">힐링 워크숍</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">갤러리</a></li>
-                    <li><a href="#">문의하기</a></li>
-                </ul>
-            </nav>
-        </header>
-        <div id="slideshow">
-            
-        </div>
-        <div id = "contents">
-            <div id="tabMenu">
 
-            </div>
-            <div id="links">
+<body id="top">
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="BlackCat Security">
+        <!-- 경로 통일: 필요 시 /frontend/public 로 맞추세요 -->
+        <img src="/frontend/public/assets/img/dark-logo.png" alt="" />
+        <span class="brand-text">BlackCat Security</span>
+      </a>
 
-            </div>
-        </div>
-        <footer>
+      <nav class="nav" aria-label="주요 메뉴">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
+        <ul id="navMenu" class="nav-menu">
+          <!-- 드롭다운: HOME -->
+          <li class="has-sub">
+            <a class="toplink" href="#top"> 
+              HOME<span class="arrow"> </span></a>
+          </li>
 
-        </footer>
+          <!-- 드롭다운: ABOUT -->
+          <li class="has-sub">
+            <a class="toplink" href="#about">
+              ABOUT <span class="arrow"> </span></a>
+          </li>
+
+          <!-- 드롭다운: ACTIVIty -->
+          <li class="has-sub">
+            <a class="toplink" href="#activities">
+              ACTIVITY <span class="arrow">▼</span></a>
+            <ul class="submenu">
+              <li><a href="#activities">스터디</a></li>
+              <li><a href="#activities">컨퍼런스</a></li>
+              <li><a href="#activities">ctf</a></li>
+              <li><a href="#activities">프로젝트</a></li>
+            </ul>
+          </li>
+
+          <!-- 드롭다운: BOARD -->
+          <li class="has-sub">
+            <a class="toplink" href="#board">
+              BOARD <span class="arrow">▼</span></a>
+            <ul class="submenu">
+              <li><a href="#board">사진</a></li>
+              <li><a href="#board-list">게시판</a></li>
+            </ul>
+          </li>
+
+          <!-- 드롭다운: login -->
+          <li class="has-sub">
+            <a class="toplink" href="#login">
+              LOGIN <span class="arrow">▼</span></a>
+            <ul class="submenu">
+              <li><a href="#login">로그인</a></li>
+              <li><a href="#signup">회원가입</a></li>
+              <li><a href="/account/recover.html">아이디/비밀번호 찾기</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </nav>
+
+      <!-- 헤더 아이콘 -->
+      <div class="header-actions" role="group" aria-label="사용자/검색/언어">
+        <a class="icon-btn" href="/frontend/public/login.html" aria-label="로그인">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/></svg>
+        </a>
+        <span class="vdiv" aria-hidden="true"></span>
+        <button class="icon-btn" type="button" aria-label="검색">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M21 20.29 16.65 16a8 8 0 1 0-1.41 1.41L20.29 21 21 20.29ZM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6Z"/></svg>
+        </button>
+        <span class="vdiv" aria-hidden="true"></span>
+        <a class="icon-btn" href="/en" aria-label="English">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm7.93 9h-3.11a15.5 15.5 0 0 0-1.05-5A8.01 8.01 0 0 1 19.93 11ZM12 4c.9 0 2.47 2.07 3.07 6H8.93C9.53 6.07 11.1 4 12 4ZM4.07 13h3.11a15.5 15.5 0 0 0 1.05 5 8.01 8.01 0 0 1-4.16-5Zm3.11-2H4.07A8.01 8.01 0 0 1 8.23 6a15.5 15.5 0 0 0-1.05 5Zm1.75 2h5.14c-.6 3.93-2.17 6-3.07 6s-2.47-2.07-3.07-6Zm7.84 0h3.11a8.01 8.01 0 0 1-4.16 5 15.5 15.5 0 0 0 1.05-5Z"/></svg>
+        </a>
+      </div>
     </div>
+  </header>
+
+  <!-- 히어로 -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <h1 class="hero-title">We Make Ambitious<br>Dreams a Reality</h1>
+      <p class="hero-sub strong">압도적인 전문성은 기업의 완벽한 보안을 만듭니다.</p>
+    </div>
+  </section>
+
+  <!-- ABOUT US 섹션 -->
+  <section id="about" class="slice-about">
+    <div class="container about-text-wrap">
+      <h2 class="about-heading">ABOUT US</h2>
+      <h3 class="about-sub">who we are</h3>
+      <p class="about-desc">
+        BlackCat is a practical cybersecurity team dedicated to researching security<br>
+        technologies and gaining hands-on experience. We are active in various fields including <br>
+        web hacking, system defense, reverse engineering, and network security, and we enhance our capabilities through participating in CTF competitions 
+        and presenting at security conferences.
+      </p>
+    </div>
+  </section>
+
+  <!-- ACTIVITIES 섹션 -->
+  <section id="activities" class="slice-dark">
+    <div class="container activities-wrap">
+      <h2 class="activities-heading">ACTIVITIES</h2>
+      <div class="activities-body grow-only">
+        <div class="feature-shelf">
+          <div class="feature-grid">
+            <article class="feature-card">
+              <!-- 경로 통일 필요 시 조정 -->
+              <img class="feature-icon" src="/frontend/public/assets/img/study.png" alt="" width="84" height="84" loading="lazy" />
+              <h3>STUDY & SEMINOR</h3>
+              <p class="feature-desc">
+                Enhancing <br>
+                fundamental hacking abilities <br>
+                via a self-paced study group, <br>
+                followed by seminar<br>
+                presentations based on<br>
+                the knowledge acquired.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <img class="feature-icon" src="/frontend/public/assets/img/winner.png" alt="" width="84" height="84" loading="lazy" />
+              <h3>CTF</h3>
+              <p class="feature-desc">
+                Participating as a group<br>
+                in various conferences<br>
+                and CTF competitions.<br>
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <img class="feature-icon" src="/frontend/public/assets/img/project.png" alt="" width="84" height="84" loading="lazy" />
+              <h3>PROJECTS</h3>
+              <p class="feature-desc">
+                Conducting security projects <br>
+                in diverse fields such as <br>
+                embedded systems, web, and <br>
+                pwnable, and reinforcing learning <br>
+                through documentation.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOARD 섹션 (슬라이드 + 게시판/아이콘) -->
+  <section id="board" class="slice-board">
+    <div class="container">
+      <!-- 상단 큰 타이틀 -->
+      <h2 class="board-heading">BOARD</h2>
+
+      <!-- 갤러리 (캐러셀) -->
+      <div class="carousel" aria-roledescription="carousel" aria-label="주요 이미지">
+        <button class="nav prev" aria-label="이전 슬라이드">‹</button>
+
+        <div class="viewport" tabindex="0">
+          <ul class="track">
+            <li class="slide is-active" id="slide1">
+              <img src="/frontend/public/assets/img/cat1.png" alt="첫번째 이미지" />
+              <div class="caption"></div>
+            </li>
+            <li class="slide" id="slide2">
+              <img src="/frontend/public/assets/img/dog1.png" alt="두번째 이미지" />
+              <div class="caption"></div>
+            </li>
+            <li class="slide" id="slide3">
+              <img src="/frontend/public/assets/img/penguin.png" alt="세번째 이미지" />
+              <div class="caption"></div>
+            </li>
+          </ul>
+        </div>
+
+        <button class="nav next" aria-label="다음 슬라이드">›</button>
+
+        <div class="dots" role="tablist" aria-label="슬라이드 선택">
+          <button class="dot is-active" role="tab" aria-selected="true" aria-controls="slide1" tabindex="0"></button>
+          <button class="dot" role="tab" aria-selected="false" aria-controls="slide2" tabindex="-1"></button>
+          <button class="dot" role="tab" aria-selected="false" aria-controls="slide3" tabindex="-1"></button>
+          <button class="pause" aria-label="일시정지/재생" title="일시정지">❚❚</button>
+        </div>
+      </div>
+
+      <!-- 하단 2단 그리드: 왼쪽 게시판 / 오른쪽 안내+아이콘 -->
+      <div class="board-grid">
+        <!-- 왼쪽: 게시판 -->
+        <section class="panel board-panel" id="board-list" aria-labelledby="noticeTab">
+          <div class="tabs">
+            <button id="noticeTab" class="tab is-active">공지사항</button>
+            <button class="tab">자유 게시판</button>
+            <button class="tab">비밀 게시판</button>
+            <button class="tab">홍보 게시판</button>
+            <button class="tab add" aria-label="게시 추가">＋</button>
+          </div>
+          <ul class="board-list">
+            <li><a href="#">2025년 보안 세미나 일정 안내</a><time>2025-09-08</time></li>
+            <li><a href="#">레드팀·모의해킹 상반기 접수 공지</a><time>2025-09-05</time></li>
+            <li><a href="#">인텔리전스 리포트 v2 공개</a><time>2025-09-03</time></li>
+            <li><a href="#">개인정보 처리방침 개정 안내</a><time>2025-08-27</time></li>
+          </ul>
+          <a class="more" href="#">더보기</a>
+        </section>
+
+        <!-- 오른쪽: 안내 박스 + 아이콘 -->
+        <aside class="panel info-panel">
+          <div class="info-card">
+            <h3 class="info-title">Concact US</h3>
+            <p class="info-copy">
+              Please Send Email to Connect Us
+            </p>
+
+            <!-- Email 버튼 -->
+            <div class="email-card">
+              <div class="email-icon">
+                <img src="/frontend/public/assets/img/email.png" alt="Email" />
+              </div>
+              <div class="email-text">
+                <strong>Email</strong>
+                <span>nagox76@gmail.com</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 아이콘들 -->
+          <div class="sns-bar">
+            <h4 class="sns-title">BlackCat의 다양한 소식</h4>
+            <div class="sns-icons">
+              <!-- 실제 아이콘 파일이 있으면 img로 교체 가능 -->
+              <a class="sns yt" href="#" aria-label="YouTube">▶</a>
+              <a class="sns fb" href="#" aria-label="Facebook">f</a>
+              <a class="sns x"  href="#" aria-label="X">x</a>
+              <a class="sns blog" href="#" aria-label="Blog">b</a>
+              <a class="sns ig" href="#" aria-label="Instagram">◎</a>
+              <a class="sns gh" href="#" aria-label="GitHub">🐱</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer id="contact" class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>BlackCat Security</strong><br/>
+        security@blackcat.security
+      </div>
+      <div class="foot-nav">
+        <a href="#services">서비스</a>
+        <a href="#insights">리서치</a>
+        <a href="/login.html">로그인</a>
+      </div>
+    </div>
+    <p class="copy">© 2025 BlackCat Security. All rights reserved.</p>
+  </footer>
+
+
+  <!-- js 스크립트 -->
+  <script>
+    // 모바일 토글 & 접근성
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.getElementById('navMenu');
+    navToggle?.addEventListener('click', () => {
+      const open = navMenu.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(open));
+    });
+    // 드롭다운 토글(키보드 접근)
+    document.querySelectorAll('.has-sub > .toplink').forEach(btn=>{
+      if (btn.tagName !== 'BUTTON') return;
+      const submenu = btn.nextElementSibling;
+      btn.addEventListener('click', ()=>{
+        e.preventDefault();
+        const open = submenu.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+    });
+  </script>
+
+  <script>
+  (() => {
+    const el = document.querySelector('.slice-dark .grow-only');
+    if (!el) return;
+
+    const fromScale = 0.94;
+    const toScale   = 1.30;
+    const enterAt   = 0.98;
+    const exitAt    = -1.15;
+
+    let ticking = false;
+    const clamp = (v,min,max)=> Math.max(min, Math.min(max, v));
+    const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+
+    function update(){
+      ticking = false;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const topRatio = rect.top / vh;
+
+      let t = (enterAt - topRatio) / (enterAt - exitAt);
+      t = clamp(t, 0, 1);
+      t = easeOutCubic(t);
+
+      const s = fromScale + (toScale - fromScale) * t;
+      el.style.transform = `scale(${s})`;
+      el.style.opacity   = String(0.95 + 0.05 * t);
+    }
+
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if (entry.isIntersecting){
+          onScroll();
+          window.addEventListener('scroll', onScroll, {passive:true});
+        }else{
+          window.removeEventListener('scroll', onScroll);
+        }
+      });
+    }, {threshold: [0,1]});
+
+    function onScroll(){
+      if (!ticking){
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    io.observe(el);
+    window.addEventListener('resize', onScroll);
+  })();
+  </script>
+
+  <script>
+  (() => {
+    const root = document.querySelector('.carousel');
+    if (!root) return;
+
+    const track = root.querySelector('.track');
+    const slides = Array.from(root.querySelectorAll('.slide'));
+    const prevBtn = root.querySelector('.prev');
+    const nextBtn = root.querySelector('.next');
+    const dots = Array.from(root.querySelectorAll('.dot'));
+    const pauseBtn = root.querySelector('.pause');
+    const viewport = root.querySelector('.viewport');
+
+    let index = 0;
+    const last = slides.length - 1;
+    const intervalMs = 4500;
+    let timer = null;
+    let isPaused = false;
+
+    function go(i){
+      index = (i + slides.length) % slides.length;
+      const offset = -index * 100;
+      track.style.transform = `translateX(${offset}%)`;
+      slides.forEach((s,idx)=> s.classList.toggle('is-active', idx === index));
+      dots.forEach((d,idx)=>{
+        d.classList.toggle('is-active', idx === index);
+        d.setAttribute('aria-selected', idx===index ? 'true' : 'false');
+        d.tabIndex = idx===index ? 0 : -1;
+      });
+    }
+
+    function next(){ go(index + 1); }
+    function prev(){ go(index - 1); }
+
+    function start(){
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      stop(); timer = setInterval(next, intervalMs);
+    }
+    function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+
+    nextBtn.addEventListener('click', ()=>{ next(); start(); });
+    prevBtn.addEventListener('click', ()=>{ prev(); start(); });
+    dots.forEach((d,idx)=> d.addEventListener('click', ()=>{ go(idx); start(); }));
+
+    pauseBtn.addEventListener('click', ()=>{
+      isPaused = !isPaused;
+      if (isPaused){ stop(); pauseBtn.textContent = '▶'; pauseBtn.title = '재생'; }
+      else { start(); pauseBtn.textContent = '❚❚'; pauseBtn.title = '일시정지'; }
+    });
+
+    ['mouseenter','focusin'].forEach(ev => root.addEventListener(ev, ()=>{ stop(); }));
+    ['mouseleave','focusout'].forEach(ev => root.addEventListener(ev, ()=>{ if(!isPaused) start(); }));
+
+    viewport.addEventListener('keydown', (e)=>{
+      if (e.key === 'ArrowRight'){ next(); start(); }
+      if (e.key === 'ArrowLeft'){ prev(); start(); }
+    });
+
+    let startX = 0;
+    viewport.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+    viewport.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40){ dx < 0 ? next() : prev(); start(); }
+    }, {passive:true});
+
+    document.addEventListener('visibilitychange', ()=> {
+      if (document.hidden) stop(); else if (!isPaused) start();
+    });
+
+    go(0); start();
+  })();
+  </script>
+
 </body>
 </html>
-
-
-
