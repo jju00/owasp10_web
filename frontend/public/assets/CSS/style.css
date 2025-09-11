@@ -9,6 +9,7 @@
   --ring:rgba(106,106,254,.28);
   --container:1120px;
 
+  --header-h: 64px; 
   --shadow:0 10px 30px rgba(0,0,0,.25);
   --font-ui:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
 }
@@ -18,9 +19,9 @@ html,body{margin: 5px;padding: 5px;}
 body{background:var(--bg);color:var(--fg);font-family:var(--font-ui)}
 img{max-width:100%;display:block}
 a{color:var(--fg);text-decoration:none}
-a:hover{text-decoration:underline}
 .container{max-width:var(--container);margin:0 auto;padding:0 16px}
 
+html { scroll-behavior: smooth; }
 
 /* -------------- Header -------------- */
 .site-header{
@@ -33,11 +34,11 @@ a:hover{text-decoration:underline}
   display:grid;grid-template-columns:auto 1fr auto;gap:16px;
   align-items:center;padding:10px 16px
 }
-.brand{display:flex;align-items:center;gap:10px;padding:2px 6px 18px 16px;white-space:nowrap}
+.brand{display:flex;align-items:center;gap:10px;padding:8px 12px;white-space:nowrap}
 .brand img{width:28px;height:28px;object-fit:contain}
 .brand-text{
-  font-weight:700;letter-spacing:.2px;line-height:1;white-space:nowrap;
-  padding: 2px 2px 18px 16px;
+  font-weight:700;letter-spacing:.2px;line-height:1;
+  padding: 0;
   overflow:hidden;text-overflow:ellipsis;max-width:260px
 }
 
@@ -52,10 +53,10 @@ a:hover{text-decoration:underline}
   border: 0;
   cursor: pointer;
   font: inherit;
-  padding: 1px 6px 18px 16px;
+  padding: 8px 12px;
   border-radius: 8px;
   font-weight:bold;
-  font-size: 1.05rem;
+  font-size: 0.93rem;
   transition: color .3s ease;
 }
 
@@ -227,7 +228,7 @@ a:hover{text-decoration:underline}
     radial-gradient(900px 420px at 10% -5%, rgba(37,194,160,.12), transparent 60%),
     linear-gradient(180deg,#0b0d12 0%, #0a0e1a 100%);
   color: var(--fg);
-  padding: 84px 0 33px;     /* BOARD와 카드 사이 여백 조정 */       
+  padding: 84px 0 25px;     /* BOARD와 카드 사이 여백 조정 */       
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -513,6 +514,7 @@ a:hover{text-decoration:underline}
 
 .board-list{
   list-style: none; margin: 0; padding: 8px 12px;
+  scroll-margin-top: calc(var(--header-h) + 8px);
 }
 .board-list li{
   display: grid; grid-template-columns: 1fr auto; align-items: center;
@@ -546,14 +548,48 @@ a:hover{text-decoration:underline}
   color: #0e1520;
 }
 .info-copy{ margin: 0 0 10px; }
-.info-links{
-  list-style: none; margin: 10px 0 0; padding: 0;
+
+/* 이메일 카드 */
+.email-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 12px 16px;
+  margin: 20px;
+  border-radius: 16px;
+  background: #191970;
+  box-shadow: 0 0 20px rgba(30,200,255,0.25);
 }
-.info-links li{ margin: 6px 0; }
-.info-links a{
-  color: #0e1520; font-weight: 700; text-decoration: none;
+
+.email-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #8a2be2, #0066ff);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 20px rgba(0, 200, 255, 0.6);
 }
-.info-links a:hover{ text-decoration: underline; }
+
+.email-icon img {
+  background: none;   /* 흰색 네모 제거 */
+  border-radius: 50%; /* 혹시 모서리 남아도 둥글게 */
+  display: block;
+}
+
+.email-text strong {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #00baff;
+}
+
+.email-text span {
+  display: block;
+  font-size: 1rem;
+  color: #fff;
+  opacity: 0.9;
+}
 
 /* SNS 바 */
 .sns-bar{

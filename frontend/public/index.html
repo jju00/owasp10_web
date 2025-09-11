@@ -4,70 +4,74 @@
   <meta charset="utf-8" />
   <title>BlackCat Security</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="BlackCat City는 침해사고 대응, 위협 인텔리전스, 보안 컨설팅 서비스를 제공합니다.">
+  <meta name="description" content="BlackCat Security는 침해사고 대응, 위협 인텔리전스, 보안 컨설팅 서비스를 제공합니다.">
   <link rel="stylesheet" href="/frontend/public/assets/css/style.css" />
 </head>
-<body>
 
+<body id="top">
   <!-- 헤더 -->
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="/" aria-label="BlackCat Security">
+      <a class="brand" href="#top" aria-label="BlackCat Security">
         <!-- 경로 통일: 필요 시 /frontend/public 로 맞추세요 -->
-        <img src="/assets/img/logo-dark.svg" alt="" />
+        <img src="/frontend/public/assets/img/dark-logo.png" alt="" />
         <span class="brand-text">BlackCat Security</span>
       </a>
 
       <nav class="nav" aria-label="주요 메뉴">
         <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
         <ul id="navMenu" class="nav-menu">
-          <!-- 드롭다운: 서비스 -->
+          <!-- 드롭다운: HOME -->
           <li class="has-sub">
-            <button class="toplink" aria-haspopup="true" aria-expanded="false"> 
-              서비스 <span class="arrow">▼</span></button>
+            <a class="toplink" href="#top"> 
+              HOME<span class="arrow"> </span></a>
+          </li>
+
+          <!-- 드롭다운: ABOUT -->
+          <li class="has-sub">
+            <a class="toplink" href="#about">
+              ABOUT <span class="arrow"> </span></a>
+          </li>
+
+          <!-- 드롭다운: ACTIVIty -->
+          <li class="has-sub">
+            <a class="toplink" href="#activities">
+              ACTIVITY <span class="arrow">▼</span></a>
             <ul class="submenu">
-              <li><a href="#services-ti">위협 인텔리전스</a></li>
-              <li><a href="#services-rt">레드팀·모의해킹</a></li>
-              <li><a href="#services-ir">IR &amp; SOAR</a></li>
+              <li><a href="#activities">스터디</a></li>
+              <li><a href="#activities">컨퍼런스</a></li>
+              <li><a href="#activities">ctf</a></li>
+              <li><a href="#activities">프로젝트</a></li>
             </ul>
           </li>
 
-          <!-- 드롭다운: 리서치 -->
+          <!-- 드롭다운: BOARD -->
           <li class="has-sub">
-            <button class="toplink" aria-haspopup="true" aria-expanded="false">
-              리서치 <span class="arrow">▼</span></button>
+            <a class="toplink" href="#board">
+              BOARD <span class="arrow">▼</span></a>
             <ul class="submenu">
-              <li><a href="#insights">최신 리포트</a></li>
-              <li><a href="#insights">기술 가이드</a></li>
+              <li><a href="#board">사진</a></li>
+              <li><a href="#board-list">게시판</a></li>
             </ul>
           </li>
 
-          <!-- 드롭다운: 고객사 -->
+          <!-- 드롭다운: login -->
           <li class="has-sub">
-            <button class="toplink" aria-haspopup="true" aria-expanded="false">
-              고객사 <span class="arrow">▼</span></button>
+            <a class="toplink" href="#login">
+              LOGIN <span class="arrow">▼</span></a>
             <ul class="submenu">
-              <li><a href="#clients">일부 고객사</a></li>
-              <li><a href="#contact">문의</a></li>
-            </ul>
-          </li>
-
-          <!-- 드롭다운: 로그인 -->
-          <li class="has-sub">
-            <button class="toplink" aria-haspopup="true" aria-expanded="false">
-              로그인 <span class="arrow">▼</span></button>
-            <ul class="submenu">
-              <li><a href="/login.html">로그인</a></li>
-              <li><a href="/signup.html">회원가입</a></li>
+              <li><a href="#login">로그인</a></li>
+              <li><a href="#signup">회원가입</a></li>
               <li><a href="/account/recover.html">아이디/비밀번호 찾기</a></li>
             </ul>
           </li>
+
         </ul>
       </nav>
 
       <!-- 헤더 아이콘 -->
       <div class="header-actions" role="group" aria-label="사용자/검색/언어">
-        <a class="icon-btn" href="/login.html" aria-label="로그인">
+        <a class="icon-btn" href="/frontend/public/login.html" aria-label="로그인">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/></svg>
         </a>
         <span class="vdiv" aria-hidden="true"></span>
@@ -94,7 +98,7 @@
   <section id="about" class="slice-about">
     <div class="container about-text-wrap">
       <h2 class="about-heading">ABOUT US</h2>
-      <h3 class="about-sub">About Us</h3>
+      <h3 class="about-sub">who we are</h3>
       <p class="about-desc">
         BlackCat is a practical cybersecurity team dedicated to researching security<br>
         technologies and gaining hands-on experience. We are active in various fields including <br>
@@ -150,7 +154,7 @@
         </div>
       </div>
     </div>
-  </section> <!-- ★ 누락됐던 닫는 태그 추가 -->
+  </section>
 
   <!-- BOARD 섹션 (슬라이드 + 게시판/아이콘) -->
   <section id="board" class="slice-board">
@@ -192,13 +196,12 @@
       <!-- 하단 2단 그리드: 왼쪽 게시판 / 오른쪽 안내+아이콘 -->
       <div class="board-grid">
         <!-- 왼쪽: 게시판 -->
-        <section class="panel board-panel" aria-labelledby="noticeTab">
+        <section class="panel board-panel" id="board-list" aria-labelledby="noticeTab">
           <div class="tabs">
             <button id="noticeTab" class="tab is-active">공지사항</button>
-            <button class="tab">채용공고</button>
-            <button class="tab">입찰공고</button>
-            <button class="tab">보도자료</button>
-            <button class="tab">설명자료</button>
+            <button class="tab">자유 게시판</button>
+            <button class="tab">비밀 게시판</button>
+            <button class="tab">홍보 게시판</button>
             <button class="tab add" aria-label="게시 추가">＋</button>
           </div>
           <ul class="board-list">
@@ -213,18 +216,24 @@
         <!-- 오른쪽: 안내 박스 + 아이콘 -->
         <aside class="panel info-panel">
           <div class="info-card">
-            <h3 class="info-title">열린청장실</h3>
+            <h3 class="info-title">Concact US</h3>
             <p class="info-copy">
-              국민 여러분의 소중한 의견을 듣고<br/>
-              치안행정에 반영하겠습니다.
+              Please Send Email to Connect Us
             </p>
-            <ul class="info-links">
-              <li><a href="#">청장소개</a></li>
-              <li><a href="#">청장동정</a></li>
-              <li><a href="#">청장과의 대화</a></li>
-            </ul>
+
+            <!-- Email 버튼 -->
+            <div class="email-card">
+              <div class="email-icon">
+                <img src="/frontend/public/assets/img/email.png" alt="Email" />
+              </div>
+              <div class="email-text">
+                <strong>Email</strong>
+                <span>nagox76@gmail.com</span>
+              </div>
+            </div>
           </div>
 
+          <!-- 아이콘들 -->
           <div class="sns-bar">
             <h4 class="sns-title">BlackCat의 다양한 소식</h4>
             <div class="sns-icons">
@@ -242,13 +251,12 @@
     </div>
   </section>
 
-
   <!-- 푸터 -->
   <footer id="contact" class="site-footer">
     <div class="container footer-inner">
       <div>
-        <strong>BlackCat City</strong><br/>
-        security@blackcat.city
+        <strong>BlackCat Security</strong><br/>
+        security@blackcat.security
       </div>
       <div class="foot-nav">
         <a href="#services">서비스</a>
@@ -256,10 +264,11 @@
         <a href="/login.html">로그인</a>
       </div>
     </div>
-    <p class="copy">© 2025 BlackCat City. All rights reserved.</p>
+    <p class="copy">© 2025 BlackCat Security. All rights reserved.</p>
   </footer>
 
-  <!-- 모든 스크립트는 </body> 위에 -->
+
+  <!-- js 스크립트 -->
   <script>
     // 모바일 토글 & 접근성
     const navToggle = document.querySelector('.nav-toggle');
@@ -270,27 +279,13 @@
     });
     // 드롭다운 토글(키보드 접근)
     document.querySelectorAll('.has-sub > .toplink').forEach(btn=>{
+      if (btn.tagName !== 'BUTTON') return;
       const submenu = btn.nextElementSibling;
       btn.addEventListener('click', ()=>{
+        e.preventDefault();
         const open = submenu.classList.toggle('open');
         btn.setAttribute('aria-expanded', String(open));
       });
-    });
-
-    // (데모) LFI 프리뷰 — 현재 DOM에 폼이 없으면 필요 시 제거 가능
-    const form = document.getElementById('diagForm');
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const path = document.getElementById('diagPath').value.trim();
-      const out = document.getElementById('diagOut');
-      out.textContent = '요청 중...';
-      try {
-        const r = await fetch(`/api/public/preview?path=${encodeURIComponent(path)}`);
-        const text = await r.text();
-        out.textContent = text;
-      } catch (err) {
-        out.textContent = '오류: ' + err.message;
-      }
     });
   </script>
 
