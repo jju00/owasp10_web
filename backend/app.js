@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
-// 서브라우터 분리 - 경로: routes/auth.js
+// 서브라우터 분리 - 경로: routes/auth.js (로그인 처리)
 const authRoutes = require('./routes/auth');
 
 app.use(express.json());

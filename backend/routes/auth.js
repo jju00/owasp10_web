@@ -18,7 +18,7 @@ function signHS256(payload) {
 }
 
 /* ======= 고의취약 SQLi: 문자열 연결로 로그인 ======== */
-// login 엔드포인트로 post 요청이 올 시 동작 (서브 라우트)
+// login 엔드포인트로 post 요청이 올 시 동작 (서브 라우트). 즉, 로그인 요청 처리
 router.post('/login', async (req, res) => {
   const { username = '', password = '' } = req.body || {};
   const sql = `
