@@ -10,6 +10,7 @@
 }
 
 .post-metahead{ margin-bottom: 10px; }
+
 .cat{
   display:inline-block; padding: 4px 10px; border-radius: 999px;
   font-weight: 800; font-size: 12px; border:1px solid var(--border);
@@ -23,8 +24,10 @@
 }
 
 .author-row{
-  display:flex; align-items:center; justify-content:space-between;
-  padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 14px;
+  position: relative;
+  padding-bottom: 35px;   /* 스크랩 버튼 공간 확보 */
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 5px;    /* 본문과의 간격 */
 }
 .author-left{ display:flex; align-items:center; gap:12px; }
 .avatar{
@@ -36,24 +39,90 @@
 .badge-row{ color: var(--muted); font-size: 13px; }
 .badge-row .dot{ margin: 0 6px; color: var(--muted); }
 
-.btn.ghost.small{ height:34px; padding:0 12px; }
-
-.post-body{ line-height:1.75; font-size: 15px; color: var(--fg); }
-.post-body p{ margin: 10px 0; }
-
-/* LFI preview */
-.lfi{ margin-top: 18px; }
-.lfi-title{ margin: 10px 0 8px; font-size: 16px; font-weight: 900; }
-.lfi-path{
-  display:block; padding:8px 10px; margin-bottom:8px;
-  color:#cde4ff; background: rgba(0,0,0,.18);
-  border:1px dashed var(--border); border-radius: 8px;
-  word-break: break-all;
+/* 본문 */
+.post-body{
+  line-height: 2.7;        /* 줄 간격 조금 더 넓힘 (기존 1.75 → 1.9) */
+  font-size: 17px;
+  color: var(--fg);
 }
-.lfi-frame{
-  width:100%; height: 300px; border:1px solid var(--border);
-  border-radius: 10px; background:#fff;
-}
-.hint{ font-size:13px; color: var(--muted); margin-top: 8px; }
+.post-body p{ margin: 12px 0; } /* 단락 간격도 살짝 확대 */
 
-.post-actions{ margin-top: 16px; display:flex; justify-content:flex-end; gap:8px; }
+/* ===== 액션 바 (추천/댓글/스크랩) ===== */
+.post-actionbar{
+  display: flex;
+  margin: 50px 0 50px;   /* 본문과 여백 ↑ (28px), 목록 버튼과 여백 ↓ (10px) */
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,.03);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.action-btn{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+.action-btn:hover{
+  background: rgba(255,255,255,.06);
+  color: var(--fg);
+}
+
+.action-btn .ico{
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* 버튼 사이 경계선 */
+.action-btn + .action-btn{
+  border-left: 1px solid var(--border);
+}
+
+/* ===================== 버튼 공통 & 변형 ===================== */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.62rem 1rem;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#141a25;
+  color:var(--fg);
+  font-weight:700;
+  letter-spacing:.2px;
+  line-height:1;
+  transition:transform .02s, box-shadow .2s, filter .15s, opacity .15s;
+  user-select:none;
+}
+.btn:hover{ box-shadow:0 2px 10px rgba(0,0,0,.28); filter:brightness(1.04); }
+.btn:active{ transform:translateY(1px); }
+.btn[disabled]{ opacity:.55; cursor:not-allowed; }
+.btn:focus-visible{
+  outline:2px solid transparent;
+  box-shadow:0 0 0 3px rgba(110,164,255,.35);
+}
+
+/* 크기 유틸 (기존 호환) */
+.btn.small, .btn.ghost.small{ height:34px; padding:0 12px; }
+
+/* 목록으로 버튼: 붉은 계열 */
+.btn-back{
+  background: linear-gradient(135deg,#6a5acd 0%, #9370db 100%);
+  border-color: transparent;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,.25);
+  font-size: 16px;
+  padding: 0.45rem 0.9rem;
+  border-radius: 10px;
+}
+.btn-back:hover{ filter:saturate(1.1) brightness(1.02); }
+.btn-back:focus-visible{ box-shadow:0 0 0 3px rgba(255,102,102,.35); }

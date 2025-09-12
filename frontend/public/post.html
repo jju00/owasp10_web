@@ -2,119 +2,116 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <title>게시글 보기</title>
+  <title>BlackCat Security | posts </title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <!-- 사이트 공통 토큰/기본 스타일 -->
   <link rel="stylesheet" href="/frontend/public/assets/css/style.css" />
-  <!-- 게시글 전용 스타일 -->
   <link rel="stylesheet" href="/frontend/public/assets/css/post.css" />
 </head>
 
 <body id="top">
+  <!-- gnb - index.html과 같음 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="BlackCat Security">
+        <img src="/frontend/public/assets/img/dark-logo.png" alt="" />
+        <span class="brand-text">BlackCat Security</span>
+      </a>
 
-    <!-- gnb - index.html과 같음 -->
-    <header class="site-header">
-      <div class="header-inner">
-        <a class="brand" href="#top" aria-label="BlackCat Security">
-          <img src="/frontend/public/assets/img/dark-logo.png" alt="" />
-          <span class="brand-text">BlackCat Security</span>
+      <nav class="nav" aria-label="주요 메뉴">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
+        <ul id="navMenu" class="nav-menu">
+          <!-- 드롭다운: HOME -->
+          <li class="has-sub">
+            <a class="toplink" href="/frontend/public/index.html#top">
+              HOME<span class="arrow"> </span>
+            </a>
+          </li>
+
+          <!-- 드롭다운: ABOUT -->
+          <li class="has-sub">
+            <a class="toplink" href="/frontend/public/index.html#about">
+              ABOUT <span class="arrow"> </span>
+            </a>
+          </li>
+
+          <!-- 드롭다운: ACTIVITY -->
+          <li class="has-sub">
+            <a class="toplink" href="/frontend/public/index.html#activities">
+              ACTIVITY <span class="arrow">▼</span>
+            </a>
+            <ul class="submenu">
+              <li><a href="/frontend/public/index.html#activities">스터디</a></li>
+              <li><a href="/frontend/public/index.html#activities">컨퍼런스</a></li>
+              <li><a href="/frontend/public/index.html#activities">ctf</a></li>
+              <li><a href="/frontend/public/index.html#activities">프로젝트</a></li>
+            </ul>
+          </li>
+
+          <!-- 드롭다운: BOARD -->
+          <li class="has-sub">
+            <a class="toplink" href="/frontend/public/board.html#board-index containor">
+              BOARD <span class="arrow">▼</span>
+            </a>
+            <ul class="submenu">
+              <li><a href="/frontend/public/index.html#board">사진</a></li>
+              <li><a href="/frontend/public/board.html#board-index containor">게시판</a></li>
+            </ul>
+          </li>
+
+          <!-- 드롭다운: LOGIN -->
+          <li class="has-sub">
+            <a class="toplink" href="/frontend/public/login.html">
+              LOGIN <span class="arrow">▼</span>
+            </a>
+            <ul class="submenu">
+              <li><a href="/frontend/public/login.html">로그인</a></li>
+              <li><a href="#signup">회원가입</a></li>
+              <li><a href="/account/recover.html">아이디/비밀번호 찾기</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- 오른쪽 아이콘 -->
+      <div class="header-actions" role="group" aria-label="사용자/검색/언어">
+        <a class="icon-btn" href="/frontend/public/login.html" aria-label="로그인">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"
+            />
+          </svg>
         </a>
-
-        <nav class="nav" aria-label="주요 메뉴">
-          <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
-          <ul id="navMenu" class="nav-menu">
-            <!-- 드롭다운: HOME -->
-            <li class="has-sub">
-              <a class="toplink" href="/frontend/public/index.html#top">
-                HOME<span class="arrow"> </span>
-              </a>
-            </li>
-
-            <!-- 드롭다운: ABOUT -->
-            <li class="has-sub">
-              <a class="toplink" href="/frontend/public/index.html#about">
-                ABOUT <span class="arrow"> </span>
-              </a>
-            </li>
-
-            <!-- 드롭다운: ACTIVIty -->
-            <li class="has-sub">
-              <a class="toplink" href="/frontend/public/index.html#activities">
-                ACTIVITY <span class="arrow">▼</span>
-              </a>
-              <ul class="submenu">
-                <li><a href="/frontend/public/index.html#activities">스터디</a></li>
-                <li><a href="/frontend/public/index.html#activities">컨퍼런스</a></li>
-                <li><a href="/frontend/public/index.html#activities">ctf</a></li>
-                <li><a href="/frontend/public/index.html#activities">프로젝트</a></li>
-              </ul>
-            </li>
-
-            <!-- 드롭다운: BOARD -->
-            <li class="has-sub">
-              <a class="toplink" href="/frontend/public/index.html#board">
-                BOARD <span class="arrow">▼</span>
-              </a>
-              <ul class="submenu">
-                <li><a href="/frontend/public/index.html#board">사진</a></li>
-                <li><a href="/frontend/public/index.html#board">게시판</a></li>
-              </ul>
-            </li>
-
-            <!-- 드롭다운: login -->
-            <li class="has-sub">
-              <a class="toplink" href="/frontend/public/login.html">
-                LOGIN <span class="arrow">▼</span>
-              </a>
-              <ul class="submenu">
-                <li><a href="/frontend/public/login.html">로그인</a></li>
-                <li><a href="#signup">회원가입</a></li>
-                <li><a href="/account/recover.html">아이디/비밀번호 찾기</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-
-        <!-- 오른쪽 아이콘 -->
-        <div class="header-actions" role="group" aria-label="사용자/검색/언어">
-          <a class="icon-btn" href="/frontend/public/login.html" aria-label="로그인">
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"
-              />
-            </svg>
-          </a>
-          <span class="vdiv" aria-hidden="true"></span>
-          <button class="icon-btn" type="button" aria-label="검색">
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M21 20.29 16.65 16a8 8 0 1 0-1.41 1.41L20.29 21 21 20.29ZM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6Z"
-              />
-            </svg>
-          </button>
-          <span class="vdiv" aria-hidden="true"></span>
-          <a class="icon-btn" href="/en" aria-label="English">
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm7.93 9h-3.11a15.5 15.5 0 0 0-1.05-5A8.01 8.01 0 0 1 19.93 11ZM12 4c.9 0 2.47 2.07 3.07 6H8.93C9.53 6.07 11.1 4 12 4ZM4.07 13h3.11a15.5 15.5 0 0 0 1.05 5 8.01 8.01 0 0 1-4.16-5Zm3.11-2H4.07A8.01 8.01 0 0 1 8.23 6a15.5 15.5 0 0 0-1.05 5Zm1.75 2h5.14c-.6 3.93-2.17 6-3.07 6s-2.47-2.07-3.07-6Zm7.84 0h3.11a8.01 8.01 0 0 1-4.16 5 15.5 15.5 0 0 0 1.05-5Z"
-              />
-            </svg>
-          </a>
-        </div>
+        <span class="vdiv" aria-hidden="true"></span>
+        <button class="icon-btn" type="button" aria-label="검색">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M21 20.29 16.65 16a8 8 0 1 0-1.41 1.41L20.29 21 21 20.29ZM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6Z"
+            />
+          </svg>
+        </button>
+        <span class="vdiv" aria-hidden="true"></span>
+        <a class="icon-btn" href="/en" aria-label="English">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm7.93 9h-3.11a15.5 15.5 0 0 0-1.05-5A8.01 8.01 0 0 1 19.93 11ZM12 4c.9 0 2.47 2.07 3.07 6H8.93C9.53 6.07 11.1 4 12 4ZM4.07 13h3.11a15.5 15.5 0 0 0 1.05 5 8.01 8.01 0 0 1-4.16-5Zm3.11-2H4.07A8.01 8.01 0 0 1 8.23 6a15.5 15.5 0 0 0-1.05 5Zm1.75 2h5.14c-.6 3.93-2.17 6-3.07 6s-2.47-2.07-3.07-6Zm7.84 0h3.11a8.01 8.01 0 0 1-4.16 5 15.5 15.5 0 0 0 1.05-5Z"
+            />
+          </svg>
+        </a>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <!----------- post 페이지 시작 ------------>
+  <!----------- post 페이지 시작 ------------>
   <main class="post-wrap container">
     <!-- 상단 메타 -->
     <div class="post-metahead">
       <span class="cat cat-qna">자유게시판</span>
     </div>
 
-    <!-- 타이틀 -->
+    <!-- 제목 (더미 데이터) -->
     <h1 class="post-title">관리자 게시판에 있는 글들 뜸?</h1>
 
     <!-- 작성자/통계 줄 -->
@@ -132,12 +129,9 @@
           </div>
         </div>
       </div>
-      <div class="author-right">
-        <button class="btn ghost small">스크랩</button>
-      </div>
     </div>
 
-    <!-- 본문 -->
+    <!-- 본문 (더미 데이터) -->
     <article class="post-body">
       <p>친구가 들어가서 보여줬는데, 관리자 전용 게시판이 있는데 권한이 없다고 안들어가진네..</p>
       <p>ID/PW 있으면 들어가는 거 맞냐?</p>
@@ -145,128 +139,196 @@
       <p>뭔가 중급스눕스키드도 하고... 진짜 비밀번호 맞냐?? ㅋㅋㅋㅋ</p>
     </article>
 
-    <!-- 하단 LFI 미리보기(학습용 취약점) -->
-    <section class="lfi">
-      <h2 class="lfi-title">첨부/경로 미리보기</h2>
-      <code id="lfiPath" class="lfi-path"></code>
-      <iframe id="lfiFrame" class="lfi-frame" title="LFI Preview (취약 예시)"></iframe>
-      <p class="hint">
-        💡 URL의 <code>?page=</code> 값을 조작하면 서버가 그 경로를 읽어 반환합니다. 예:
-        <code>?page=../../etc/passwd</code>
-      </p>
-    </section>
+    <!-- 액션 바 (추천/댓글/스크랩) -->
+    <div class="post-actionbar">
+      <button class="action-btn" type="button">
+        <span class="ico">👍</span> 공감
+      </button>
+      <button class="action-btn" type="button">
+        <span class="ico">💬</span> 댓글 0
+      </button>
+      <button class="action-btn" type="button">
+        <span class="ico">🔖</span> 스크랩
+      </button>
+    </div>
 
     <!-- 목록으로 -->
-    <div class="post-actions">
-      <a class="btn" href="/frontend/public/board.html">목록으로</a>
+    <div class="post-actions left">
+      <a class="btn btn-back" href="/frontend/public/board.html">목록으로</a>
     </div>
   </main>
 
-    <script>
-    // ❗페이지별로 "각자 분리된 본문"을 가진 데이터 (지금은 같은 내용으로 채움)
+  <!-- 푸터 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div><strong>BlackCat Security</strong><br />security@blackcat.security</div>
+      <div class="foot-nav">
+        <a href="#services">서비스</a>
+        <a href="#insights">리서치</a>
+        <a href="/frontend/public/login.html">로그인</a>
+      </div>
+    </div>
+    <p class="copy">© 2025 BlackCat Security. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // 게시글 별 본문 내용
     const POSTS = {
-        1:{cat:'자유게시판',   title:'관리자 게시판에 있는 글들 뜸?',     author:'익명', datetime:'2025-04-02T12:47',
+      1: {
+        cat: '공지사항',
+        title: '[공지] BlackCat 정기 세미나 진행',
+        author: '익명',
+        datetime: '2025-04-02T12:47',
         body: `
-            <p>친구가 들어가서 보여줬는데, 관리자 전용 게시판이 있는데 권한이 없다고 안들어가진네..</p>
-            <p>ID/PW 있으면 들어가는 거 맞냐?</p>
-            <p>위장주소 + 대표자명 + 이메일 + 추천인 ID + 파트너사 2개 + 커뮤니티 창설일</p>
-            <p>뭔가 중급스눕스키드도 하고... 진짜 비밀번호 맞냐?? ㅋㅋㅋㅋ</p>
-        `},
-        2:{cat:'자유게시판', title:'여기저기서 돌던 소문인데..',       author:'익명', datetime:'2025-04-02T10:05',
+            <p>2025년 11월 23일 세미나 진행합니다.</p>
+            <p>발표 주제</p>
+            <p>1. 임베디드 펌웨어 에뮬레이션</p>
+            <p>2. 웹 버그헌팅 방법론</p>
+            <p>3. 레드팀 c2 프레임워크 제작</p>
+            <p>ps. 참석 안 하면 벌금 100000000원</p>
+        `
+      },
+      2: {
+        cat: '자유게시판',
+        title: 'kt에서 문자왔는데 이거 망한거냐?',
+        author: '익명',
+        datetime: '2025-04-02T10:05',
         body: `
-            <p>친구가 들어가서 보여줬는데, 관리자 전용 게시판이 있는데 권한이 없다고 안들어가진네..</p>
-            <p>ID/PW 있으면 들어가는 거 맞냐?</p>
-            <p>위장주소 + 대표자명 + 이메일 + 추천인 ID + 파트너사 2개 + 커뮤니티 창설일</p>
-            <p>뭔가 중급스눕스키드도 하고... 진짜 비밀번호 맞냐?? ㅋㅋㅋㅋ</p>
-        `},
-        3:{cat:'비밀게시판', title:'[비밀] 관리자 메뉴 접근 이슈',      author:'익명', datetime:'2025-04-02T09:12',
+            <p>kt에서 최근에 소액결제했었음</p>
+            <p>최근에 뉴스보는데 kt 해킹당했다길래 식겁해서</p>
+            <p>kt에서 온 문자 확인했는데...</p>
+            <p>아무일도 없더라</p>
+            <p>어그로 미안. 저녁 메뉴 추천해주고 가</p>
+        `
+      },
+      3: {
+        cat: '자유게시판',
+        title: '사진 올리고 싶은데',
+        author: '익명',
+        datetime: '2025-04-02T09:12',
         body: `
-            <p>누구는 고양이 사진 올리던데.. 어디다 올리는 거임?</p>
-            <p>나만 모르는 사이트라도 있나;</p>
-            <p>위장주소 + 대표자명 + 이메일 + 추천인 ID + 파트너사 2개 + 커뮤니티 창설일</p>
-            <p>뭔가 중급스눕스키드도 하고... 진짜 비밀번호 맞냐?? ㅋㅋㅋㅋ</p>
-        `},
-        4:{cat:'홍보게시판', title:'보안 스터디원 모집(오프라인)',      author:'익명', datetime:'2025-04-02T08:40',
+            <p>아니 아래 글 보니까 누구는 고양이 사진 올리던데</p>
+            <p>어디다 올리는 거임? 나만 모르는 방법이라도 있나;</p>
+            <p>고양이 사진 올린 사람아 댓글 좀 달아주라</p>
+            <p>어디 분명 파일 올리는 곳이 있는 거 같은데 못찾겠네</p>
+        `
+      },
+      4: {
+        cat: '홍보게시판',
+        title: '보안 스터디원 모집(오프라인)',
+        author: '익명',
+        datetime: '2025-04-02T08:40',
         body: `
-            <p>친구가 들어가서 보여줬는데, 관리자 전용 게시판이 있는데 권한이 없다고 안들어가진네..</p>
-            <p>ID/PW 있으면 들어가는 거 맞냐?</p>
-            <p>위장주소 + 대표자명 + 이메일 + 추천인 ID + 파트너사 2개 + 커뮤니티 창설일</p>
-            <p>뭔가 중급스눕스키드도 하고... 진짜 비밀번호 맞냐?? ㅋㅋㅋㅋ</p>
-        `},
-        5:{cat:'자유게시판', title:'리눅스 계정 리스트 공유..?',        author:'익명', datetime:'2025-04-02T07:30',
+            <p>수도권 오프라인 보안 스터디원 모집합니다.</p>
+            <p>분야: 웹 해킹</p>
+            <p>상세: owasp top 10 기반 및 lfi, xss, 파일 관련 취약점, csrf 등</p>
+            <p>010-1111-2222로 연락주세요</p>
+        `
+      },
+      5: {
+        cat: '자유게시판',
+        title: '우리집 고양이 사진',
+        author: '익명',
+        datetime: '2025-04-02T07:30',
         body: `
-            <p>친구가 들어가서 보여줬는데, 관리자 전용 게시판이 있는데 권한이 없다고 안들어가진네..</p>
-            <p>ID/PW 있으면 들어가는 거 맞냐?</p>
-            <p>위장주소 + 대표자명 + 이메일 + 추천인 ID + 파트너사 2개 + 커뮤니티 창설일</p>
-            <p>뭔가 중급스눕스키드도 하고... 진짜 비밀번호 맞냐?? ㅋㅋㅋㅋ</p>
-        `},
-        6:{cat:'공지사항',   title:'[공지] 개인정보 처리방침 개정',    author:'익명', datetime:'2025-04-01T18:00',
+            <p>고양이 사진 보고 가셈</p>
+            <p>종은 렉돌인데 털이 너무 빠짐;</p>
+            <p>그래도 보다보면 기분 좋고 외롭지도 않아서 좋다. 님들도 고양이 하나 키우는 거 추천</p>        `
+      },
+      6: {
+        cat: '공지사항',
+        title: '[공지] BlackCat 종강총회 알림',
+        author: '익명',
+        datetime: '2025-04-01T18:00',
         body: `
-            <p>친구가 들어가서 보여줬는데, 관리자 전용 게시판이 있는데 권한이 없다고 안들어가진네..</p>
-            <p>ID/PW 있으면 들어가는 거 맞냐?</p>
-            <p>위장주소 + 대표자명 + 이메일 + 추천인 ID + 파트너사 2개 + 커뮤니티 창설일</p>
-            <p>뭔가 중급스눕스키드도 하고... 진짜 비밀번호 맞냐?? ㅋㅋㅋㅋ</p>
-        `},
-        7:{cat:'자유게시판', title:'주말 CTF 같이 하실 분',            author:'익명', datetime:'2025-04-01T16:22',
+            <p>2025년 12월 31일 종강총회합니다.</p>
+            <p>많은 참여 부탁드립니당</p>
+            <p>뒤풀이는 아마 할 거 같습니다</p>
+            <p>고기먹을까 치킨먹을까 뭐먹을까</p>
+        `
+      },
+      7: {
+        cat: '비밀게시판',
+        title: '문의드립니다',
+        author: '익명',
+        datetime: '2025-04-01T16:22',
         body: `
-            <p>친구가 들어가서 보여줬는데, 관리자 전용 게시판이 있는데 권한이 없다고 안들어가진네..</p>
-            <p>ID/PW 있으면 들어가는 거 맞냐?</p>
-            <p>위장주소 + 대표자명 + 이메일 + 추천인 ID + 파트너사 2개 + 커뮤니티 창설일</p>
-            <p>뭔가 중급스눕스키드도 하고... 진짜 비밀번호 맞냐?? ㅋㅋㅋㅋ</p>
-        `},
-        8:{cat:'비밀게시판', title:'내부 네트워크 다이어그램',           author:'익명', datetime:'2025-04-01T14:11',
+            <p>다른 사람의 비밀글은 못 보는 건가요?</p>
+            <p>이거 분명 보는 방법이 있을텐데/p>
+            <p>흠...</p>
+            <p>Hmm..............</p>
+        `
+      },
+      8: {
+        cat: '자유게시판',
+        title: '한로로 노래 안 들어본 사람도 있나',
+        author: '익명',
+        datetime: '2025-04-01T14:11',
         body: `
-            <p>친구가 들어가서 보여줬는데, 관리자 전용 게시판이 있는데 권한이 없다고 안들어가진네..</p>
-            <p>ID/PW 있으면 들어가는 거 맞냐?</p>
-            <p>위장주소 + 대표자명 + 이메일 + 추천인 ID + 파트너사 2개 + 커뮤니티 창설일</p>
-            <p>뭔가 중급스눕스키드도 하고... 진짜 비밀번호 맞냐?? ㅋㅋㅋㅋ</p>
-        `},
-        9:{cat:'홍보게시판', title:'OSS 기여자 모집합니다',             author:'익명', datetime:'2025-04-01T12:05',
+            <p>뽀롱뽀롱 한로로~</p>
+            <p>사랑하게 될 거야</p>
+            <p>화해, 0+0, 시간을 달리네</p>
+            <p>자처, ㅈㅣㅂ 등등 추천한다...반드시 들으셈</p>
+        `
+      },
+      9: {
+        cat: '홍보게시판',
+        title: '프로젝트 할 사람 모집',
+        author: '익명',
+        datetime: '2025-04-01T12:05',
         body: `
-            <p>친구가 들어가서 보여줬는데, 관리자 전용 게시판이 있는데 권한이 없다고 안들어가진네..</p>
-            <p>ID/PW 있으면 들어가는 거 맞냐?</p>
-            <p>위장주소 + 대표자명 + 이메일 + 추천인 ID + 파트너사 2개 + 커뮤니티 창설일</p>
-            <p>뭔가 중급스눕스키드도 하고... 진짜 비밀번호 맞냐?? ㅋㅋㅋㅋ</p>
-        `},
-        10:{cat:'자유게시판',title:'키보드 추천 부탁',                  author:'익명', datetime:'2025-04-01T09:55',
+            <p>기한: 종강 후 ~ 다음 학기 개강 전</p>
+            <p>내용: c2 프레임워크 제작 실습</p>
+            <p>상세: 주 1번 오프라인 모임 및 주 1회 온라인 회의</p>
+            <p>모집: 0명</p>
+        `
+      },
+      10: {
+        cat: '비밀게시판',
+        title: '이런 거 올려도 되나 모르겠네',
+        author: '익명',
+        datetime: '2025-04-01T09:55',
         body: `
-            <p>올려도 되는지 모르겠는데.. 사실 이 사이트에는 숨겨진 디렉터리가 있음</p>
-            <p>고양이 올린 사람 난데 /uploads에 올리면 된다 ㅋㅋ</p>
+            <p>위에 글 보니까 누가 사진 어캐 올렸냐고 물어보길래 알려줌</p>
+            <p>사실 /uplo라고 숨겨진 디렉터리가 있음 ㅎㅎ</p>
+            <p>근데 아무도 모르는 거 보니까 일부러 숨겨 놓은 듯..?</p>
             <p>(수정)</p>
             <p> 관리자가 비밀글로 바꿔버림 ㅠㅠㅠ</p>
-            <p>이거 본 사람만 파일 마음껏 올리도록...</p>
-        `},
+            <p>이거 본 사람만 해당 경로에서 파일 마음껏 올리도록...</p>
+        `
+      }
     };
 
-    (function(){
-        const usp    = new URLSearchParams(location.search);
-        const pageRaw = usp.get('page') || '1'; // 원본 값(숫자/경로 모두 허용) — LFI에서 사용
-        const pageNum = Number(pageRaw);
+    (function () {
+      const usp = new URLSearchParams(location.search);
+      const pageRaw = usp.get('page') || '1'; // 원본 값(숫자/경로 모두 허용) — LFI에서 사용
+      const pageNum = Number(pageRaw);
 
-        // 화면 메타/본문은 숫자 1~10 중 존재하는 항목만 사용, 없으면 1번으로 폴백
-        const item = Number.isInteger(pageNum) && POSTS[pageNum] ? POSTS[pageNum] : POSTS[1];
+      // 화면 메타/본문은 숫자 1~10 중 존재하는 항목만 사용, 없으면 1번으로 폴백
+      const item = Number.isInteger(pageNum) && POSTS[pageNum] ? POSTS[pageNum] : POSTS[1];
 
-        // 메타 채우기
-        document.querySelector('.cat').textContent = item.cat;
-        document.querySelector('.post-title').textContent = item.title;
-        document.querySelector('.author-meta .nick').textContent = item.author || '익명';
+      // 메타 채우기
+      document.querySelector('.cat').textContent = item.cat;
+      document.querySelector('.post-title').textContent = item.title;
+      document.querySelector('.author-meta .nick').textContent = item.author || '익명';
 
-        const t = new Date(item.datetime);
-        const timeText =
-        `${String(t.getFullYear()).slice(2)}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')} ${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
-        const timeEl = document.querySelector('time.info');
-        if (timeEl) { timeEl.textContent = timeText; timeEl.dateTime = item.datetime; }
+      const t = new Date(item.datetime);
+      const timeText =
+        `${String(t.getFullYear()).slice(2)}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')} ${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}`;
+      const timeEl = document.querySelector('time.info');
+      if (timeEl) {
+        timeEl.textContent = timeText;
+        timeEl.dateTime = item.datetime;
+      }
 
-        // ★ 본문: 각 페이지마다 분리된 body 사용(지금은 같은 내용이지만 독립 저장)
-        document.querySelector('.post-body').innerHTML = item.body;
+      // ★ 본문: 각 페이지마다 분리된 body 사용(지금은 같은 내용이지만 독립 저장)
+      document.querySelector('.post-body').innerHTML = item.body;
 
-        // ★ LFI 트리거: pageRaw(원본 문자열)를 그대로 백엔드에 전달
-        document.getElementById('lfiPath').textContent = pageRaw;
-        document.getElementById('lfiFrame').src = `/board?page=${encodeURIComponent(pageRaw)}`;
+      // ★ LFI 트리거: pageRaw(원본 문자열)를 그대로 백엔드에 전달
+      document.getElementById('lfiPath').textContent = pageRaw;
+      document.getElementById('lfiFrame').src = `/board?page=${encodeURIComponent(pageRaw)}`;
     })();
-    </script>
-
-
+  </script>
 
 </body>
 </html>
