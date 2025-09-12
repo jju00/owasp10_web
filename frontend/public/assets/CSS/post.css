@@ -126,3 +126,36 @@
 }
 .btn-back:hover{ filter:saturate(1.1) brightness(1.02); }
 .btn-back:focus-visible{ box-shadow:0 0 0 3px rgba(255,102,102,.35); }
+
+/* 메타 아래 ‘첨부’ 텍스트 링크 줄 */
+.attach-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 8px;          /* 메타 줄과 약간 간격 */
+}
+
+.attach-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255,255,255,.03); /* 살짝 흐릿한 배경 */
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.attach-link::before{
+  content: '⬇';             /* 간단한 다운로드 아이콘 느낌 */
+  font-size: 12px;
+  opacity: .85;
+}
+
+.attach-link:hover{
+  background: rgba(255,255,255,.07);
+  filter: brightness(1.03);
+}
