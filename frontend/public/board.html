@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>BlackCat Security | Board</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="BlackCat Security 게시판" />
+  <link rel="stylesheet" href="/frontend/public/assets/css/style.css" />
+  <link rel="stylesheet" href="/frontend/public/assets/css/board.css" />
+</head>
+
+<body id="top">
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="BlackCat Security">
+        <img src="/frontend/public/assets/img/dark-logo.png" alt="" />
+        <span class="brand-text">BlackCat Security</span>
+      </a>
+
+      <nav class="nav" aria-label="주요 메뉴">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
+        <ul id="navMenu" class="nav-menu">
+          <!-- 드롭다운: HOME -->
+          <li class="has-sub">
+            <a class="toplink" href="/frontend/public/index.html#top"> 
+              HOME<span class="arrow"> </span></a>
+          </li>
+
+          <!-- 드롭다운: ABOUT -->
+          <li class="has-sub">
+            <a class="toplink" href="/frontend/public/index.html#about">
+              ABOUT <span class="arrow"> </span></a>
+          </li>
+
+          <!-- 드롭다운: ACTIVIty -->
+          <li class="has-sub">
+            <a class="toplink" href="/frontend/public/index.html#activities">
+              ACTIVITY <span class="arrow">▼</span></a>
+            <ul class="submenu">
+              <li><a href="/frontend/public/index.html#activities">스터디</a></li>
+              <li><a href="/frontend/public/index.html#activities">컨퍼런스</a></li>
+              <li><a href="/frontend/public/index.html#activities">ctf</a></li>
+              <li><a href="/frontend/public/index.html#activities">프로젝트</a></li>
+            </ul>
+          </li>
+
+          <!-- 드롭다운: BOARD -->
+          <li class="has-sub">
+            <a class="toplink" href="/frontend/public/index.html#board">
+              BOARD <span class="arrow">▼</span></a>
+            <ul class="submenu">
+              <li><a href="/frontend/public/index.html#board">사진</a></li>
+              <li><a href="#board-index containor">게시판</a></li>
+            </ul>
+          </li>
+
+          <!-- 드롭다운: login -->
+          <li class="has-sub">
+            <a class="toplink" href="/frontend/public/login.html">
+              LOGIN <span class="arrow">▼</span></a>
+            <ul class="submenu">
+              <li><a href="/frontend/public/login.html">로그인</a></li>
+              <li><a href="#signup">회원가입</a></li>
+              <li><a href="/account/recover.html">아이디/비밀번호 찾기</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- 헤더 아이콘 -->
+      <div class="header-actions" role="group" aria-label="사용자/검색/언어">
+        <a class="icon-btn" href="/frontend/public/login.html" aria-label="로그인">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/></svg>
+        </a>
+        <span class="vdiv" aria-hidden="true"></span>
+        <button class="icon-btn" type="button" aria-label="검색">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M21 20.29 16.65 16a8 8 0 1 0-1.41 1.41L20.29 21 21 20.29ZM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6Z"/></svg>
+        </button>
+        <span class="vdiv" aria-hidden="true"></span>
+        <a class="icon-btn" href="/en" aria-label="English">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm7.93 9h-3.11a15.5 15.5 0 0 0-1.05-5A8.01 8.01 0 0 1 19.93 11ZM12 4c.9 0 2.47 2.07 3.07 6H8.93C9.53 6.07 11.1 4 12 4ZM4.07 13h3.11a15.5 15.5 0 0 0 1.05 5 8.01 8.01 0 0 1-4.16-5Zm3.11-2H4.07A8.01 8.01 0 0 1 8.23 6a15.5 15.5 0 0 0-1.05 5Zm1.75 2h5.14c-.6 3.93-2.17 6-3.07 6s-2.47-2.07-3.07-6Zm7.84 0h3.11a8.01 8.01 0 0 1-4.16 5 15.5 15.5 0 0 0 1.05-5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 보드 -->
+  <section class="board-index container">
+    <div class="board-shell">
+      <!-- 왼쪽 사이드바 -->
+      <aside class="board-side" aria-label="게시판 카테고리">
+        <h3 class="side-title">게시판</h3>
+        <nav class="side-nav">
+          <button class="side-item is-active" data-cat="all">전체 보기</button>
+          <button class="side-item" data-cat="공지사항">공지사항</button>
+          <button class="side-item" data-cat="자유게시판">자유 게시판</button>
+          <button class="side-item" data-cat="비밀게시판">비밀 게시판</button>
+          <button class="side-item" data-cat="홍보게시판">홍보 게시판</button>
+        </nav>
+      </aside>
+
+      <!-- 메인 -->
+      <div class="board-main">
+        <!-- 검색 -->
+        <form class="board-search" id="searchForm" role="search" aria-label="게시글 검색">
+          <span class="search-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M21 20.29 16.65 16a8 8 0 1 0-1.41 1.41L20.29 21 21 20.29ZM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6Z"/></svg>
+          </span>
+          <input id="q" class="search-input" type="search" name="q" placeholder="검색" aria-label="검색어" />
+        </form>
+
+        <!-- 목록 테이블 -->
+        <div class="board-table-wrap" role="region" aria-label="게시글 목록" tabindex="0">
+          <table class="board-list" id="table">
+            <colgroup>
+              <col style="width:160px" />
+              <col />
+              <col style="width:120px" />
+              <col style="width:110px" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">게시판</th>
+                <th scope="col">제목</th>
+                <th scope="col">이름</th>
+                <th scope="col">일시</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"><!-- JS 렌더 --></tbody>
+          </table>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <nav class="pager" id="pager" aria-label="페이지 이동">
+          <button class="page" id="first" aria-label="첫 페이지">«</button>
+          <button class="page" id="prev"  aria-label="이전 페이지">‹</button>
+          <button class="page" data-p="1">1</button>
+          <button class="page" data-p="2">2</button>
+          <button class="page" id="next"  aria-label="다음 페이지">›</button>
+          <button class="page" id="last"  aria-label="마지막 페이지">»</button>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div><strong>BlackCat Security</strong><br/>security@blackcat.security</div>
+      <div class="foot-nav">
+        <a href="#services">서비스</a>
+        <a href="#insights">리서치</a>
+        <a href="/frontend/public/login.html">로그인</a>
+      </div>
+    </div>
+    <p class="copy">© 2025 BlackCat Security. All rights reserved.</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+  // 모바일 네비 토글(공통)
+  const navToggle = document.querySelector('.nav-toggle');
+  const navMenu = document.getElementById('navMenu');
+  navToggle?.addEventListener('click', () => {
+    const open = navMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(open));
+  });
+
+  (() => {
+    // ===== 데이터: 1페이지 7개 / 2페이지 3개 =====
+    const PAGES = {
+      1: [
+        {pageId:1, cat:'공지사항',   title:'[공지] BlackCat 정기 세미나 진행',   date:'2025-04-02'},
+        {pageId:2, cat:'자유게시판', title:'kt에서 문자왔는데 이거 망한거냐?',     date:'2025-04-02'},
+        {pageId:3, cat:'자유게시판', title:'사진 올리고 싶은데',    date:'2025-04-02'},
+        {pageId:4, cat:'홍보게시판', title:'보안 스터디원 모집 (오프라인)',    date:'2025-04-02'},
+        {pageId:5, cat:'자유게시판', title:'우리집 고양이 사진',      date:'2025-04-02'},
+        {pageId:6, cat:'공지사항',   title:'[공지] BlackCat 종강총회 알림',  date:'2025-04-01'},  // ← 2p에서 이사
+        {pageId:7, cat:'비밀게시판', title:'문의드립니다',          date:'2025-04-01'},  // ← 2p에서 이사
+      ],
+      2: [
+        {pageId:8,  cat:'자유게시판', title:'한로로 노래 안 들어본 사람도 있나',         date:'2025-04-01'},
+        {pageId:9,  cat:'홍보게시판', title:'프로젝트 할 사람 모집',           date:'2025-04-01'},
+        {pageId:10, cat:'비밀게시판', title:'고양이 사진 올리는 법.txt',                date:'2025-04-01'},
+      ],
+    };
+
+    const CAT_CLASS = {
+      '공지사항': 'cat-noti',
+      '자유게시판': 'cat-free',
+      '비밀게시판': 'cat-secret',
+      '홍보게시판': 'cat-promo',
+    };
+
+    // page 파라미터
+    const PAGE_PARAM = 'p';
+
+    const tbody  = document.getElementById('tbody');
+    const qInput = document.getElementById('q');
+    const pager  = document.getElementById('pager');
+    const sideBtns = document.querySelectorAll('.side-item');
+
+    const params = new URLSearchParams(location.search);
+    let page     = Number(params.get(PAGE_PARAM) || 1);   // ← 기존 'page' → 'p'
+    let q        = params.get('q') || '';
+    let catFilter= params.get('cat') || 'all';
+
+    const ALL = [...PAGES[1], ...PAGES[2]];
+
+    function fmtDate(s){ const m=/(\d{4})-(\d{2})-(\d{2})/.exec(s); return m?`${m[2]}-${m[3]}`:s; }
+
+    function render(){
+      let rows = [];
+      if (!q.trim() && catFilter === 'all') {
+        rows = PAGES[page] || [];
+        pager.style.display = '';
+      } else {
+        const term = q.trim().toLowerCase();
+        rows = ALL.filter(r => {
+          const okCat = (catFilter==='all') || (r.cat===catFilter);
+          const okQ   = term ? (r.title.toLowerCase().includes(term) || r.cat.toLowerCase().includes(term)) : true;
+          return okCat && okQ;
+        });
+        pager.style.display = 'none';
+      }
+
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td><span class="cat ${CAT_CLASS[r.cat]||'cat-free'}">${r.cat}</span></td>
+          <td class="tt"><a href="/frontend/public/post.html?page=${encodeURIComponent(r.pageId)}">${r.title}</a></td>
+          <td class="author">익명</td>
+          <td><time>${fmtDate(r.date)}</time></td>
+        </tr>
+      `).join('');
+
+      if (!q.trim() && catFilter==='all') {
+        document.querySelectorAll('.pager .page[data-p]').forEach(b=>{
+          b.classList.toggle('is-current', Number(b.dataset.p)===page);
+        });
+        const atFirst = page===1, atLast = page===2;
+        document.getElementById('first').disabled = atFirst;
+        document.getElementById('prev').disabled  = atFirst;
+        document.getElementById('next').disabled  = atLast;
+        document.getElementById('last').disabled  = atLast;
+      }
+
+      sideBtns.forEach(b=>{
+        b.classList.toggle('is-active', b.dataset.cat===catFilter || (catFilter==='all'&&b.dataset.cat==='all'));
+      });
+    }
+
+    // 페이지 버튼
+    document.querySelectorAll('.pager .page[data-p]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        page = Number(btn.dataset.p);
+        params.set(PAGE_PARAM, String(page));
+        params.delete('q'); params.set('cat','all');
+        history.replaceState(null,'',`?${params.toString()}`);
+        q=''; qInput.value=''; catFilter='all';
+        render();
+      });
+    });
+    document.getElementById('first').addEventListener('click', ()=>go(1));
+    document.getElementById('prev').addEventListener('click', ()=>go(Math.max(1,page-1)));
+    document.getElementById('next').addEventListener('click', ()=>go(Math.min(2,page+1)));
+    document.getElementById('last').addEventListener('click', ()=>go(2));
+    function go(p){
+      page = p; params.set(PAGE_PARAM, String(page));
+      params.delete('q'); params.set('cat','all');
+      history.replaceState(null,'',`?${params.toString()}`);
+      q=''; qInput.value=''; catFilter='all'; render();
+    }
+
+    // 검색
+    qInput.value = q;
+    document.getElementById('searchForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      q = qInput.value || '';
+      if (q) params.set('q', q); else params.delete('q');
+      params.delete(PAGE_PARAM); params.set('cat','all');
+      history.replaceState(null,'',`?${params.toString()}`);
+      render();
+    });
+
+    // 사이드바 필터
+    sideBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        catFilter = btn.dataset.cat;
+        params.set('cat', catFilter);
+        params.delete(PAGE_PARAM); // 필터 모드에선 페이지 의미 없음
+        params.delete('q'); q=''; qInput.value='';
+        history.replaceState(null,'',`?${params.toString()}`);
+        render();
+      });
+    });
+
+    // 초기 보정 & 렌더
+    if (page<1 || page>2) { page=1; params.set(PAGE_PARAM,'1'); history.replaceState(null,'',`?${params.toString()}`); }
+    render();
+  })();
+  </script>
+</body>
+</html>
