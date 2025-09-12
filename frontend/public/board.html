@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>BlackCat Security | Board</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="BlackCat Security 게시판" />
+    <!-- 겹치는 부분 style.css 스타일 재활용 -->
+    <link rel="stylesheet" href="/frontend/public/assets/css/style.css" />
+    <link rel="stylesheet" href="/frontend/public/assets/css/board.css" />
+  </head>
+
+  <body id="top">
+    <!-- gnb - index.html과 같음 -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#top" aria-label="BlackCat Security">
+          <!-- 경로 통일: 필요 시 /frontend/public 로 맞추세요 -->
+          <img src="/frontend/public/assets/img/dark-logo.png" alt="" />
+          <span class="brand-text">BlackCat Security</span>
+        </a>
+
+        <nav class="nav" aria-label="주요 메뉴">
+          <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
+          <ul id="navMenu" class="nav-menu">
+            <!-- 드롭다운: HOME -->
+            <li class="has-sub">
+              <a class="toplink" href="/frontend/public/index.html#top">
+                HOME<span class="arrow"> </span>
+              </a>
+            </li>
+
+            <!-- 드롭다운: ABOUT -->
+            <li class="has-sub">
+              <a class="toplink" href="/frontend/public/index.html#about">
+                ABOUT <span class="arrow"> </span>
+              </a>
+            </li>
+
+            <!-- 드롭다운: ACTIVIty -->
+            <li class="has-sub">
+              <a class="toplink" href="/frontend/public/index.html#activities">
+                ACTIVITY <span class="arrow">▼</span>
+              </a>
+              <ul class="submenu">
+                <li><a href="/frontend/public/index.html#activities">스터디</a></li>
+                <li><a href="/frontend/public/index.html#activities">컨퍼런스</a></li>
+                <li><a href="/frontend/public/index.html#activities">ctf</a></li>
+                <li><a href="/frontend/public/index.html#activities">프로젝트</a></li>
+              </ul>
+            </li>
+
+            <!-- 드롭다운: BOARD -->
+            <li class="has-sub">
+              <a class="toplink" href="/frontend/public/index.html#board">
+                BOARD <span class="arrow">▼</span>
+              </a>
+              <ul class="submenu">
+                <li><a href="/frontend/public/index.html#board">사진</a></li>
+                <li><a href="/frontend/public/index.html#board">게시판</a></li>
+              </ul>
+            </li>
+
+            <!-- 드롭다운: login -->
+            <li class="has-sub">
+              <a class="toplink" href="/frontend/public/login.html">
+                LOGIN <span class="arrow">▼</span>
+              </a>
+              <ul class="submenu">
+                <li><a href="/frontend/public/login.html">로그인</a></li>
+                <li><a href="#signup">회원가입</a></li>
+                <li><a href="/account/recover.html">아이디/비밀번호 찾기</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- 오른쪽 아이콘 -->
+        <div class="header-actions" role="group" aria-label="사용자/검색/언어">
+          <a class="icon-btn" href="/frontend/public/login.html" aria-label="로그인">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"
+              />
+            </svg>
+          </a>
+          <span class="vdiv" aria-hidden="true"></span>
+          <button class="icon-btn" type="button" aria-label="검색">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M21 20.29 16.65 16a8 8 0 1 0-1.41 1.41L20.29 21 21 20.29ZM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6Z"
+              />
+            </svg>
+          </button>
+          <span class="vdiv" aria-hidden="true"></span>
+          <a class="icon-btn" href="/en" aria-label="English">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm7.93 9h-3.11a15.5 15.5 0 0 0-1.05-5A8.01 8.01 0 0 1 19.93 11ZM12 4c.9 0 2.47 2.07 3.07 6H8.93C9.53 6.07 11.1 4 12 4ZM4.07 13h3.11a15.5 15.5 0 0 0 1.05 5 8.01 8.01 0 0 1-4.16-5Zm3.11-2H4.07A8.01 8.01 0 0 1 8.23 6a15.5 15.5 0 0 0-1.05 5Zm1.75 2h5.14c-.6 3.93-2.17 6-3.07 6s-2.47-2.07-3.07-6Zm7.84 0h3.11a8.01 8.01 0 0 1-4.16 5 15.5 15.5 0 0 0 1.05-5Z"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+
+    <!------------- board 시작 -------------->
+    <section class="board-index container">
+      <!-- LFI 미리보기: ?file= 가 있으면 노출 -->
+      <div class="lfi-preview" id="lfiBox" hidden>
+        <div class="lfi-head">
+          <strong>미리보기</strong>
+          <code id="lfiPath"></code>
+        </div>
+        <iframe id="lfiFrame" title="LFI preview"></iframe>
+        <p class="lfi-hint">
+          ※ 서버가 취약하면 임의 경로가 노출될 수 있습니다. 예)
+          <code>?file=../../etc/passwd</code>
+        </p>
+      </div>
+
+      <!-- ▼▼ 새 래퍼: 사이드 + 컨텐츠 2열 -->
+      <div class="board-shell">
+        <!-- 왼쪽: 사이드바 -->
+        <aside class="board-side" aria-label="게시판 카테고리">
+          <h3 class="side-title">게시판</h3>
+          <nav class="side-nav">
+            <button class="side-item is-active" data-cat="all">전체 보기</button>
+            <button class="side-item" data-cat="공지사항">공지사항</button>
+            <button class="side-item" data-cat="자유게시판">자유 게시판</button>
+            <button class="side-item" data-cat="비밀게시판">비밀 게시판</button>
+            <button class="side-item" data-cat="홍보게시판">홍보 게시판</button>
+          </nav>
+        </aside>
+
+        <!-- 오른쪽: 검색 + 목록 + 페이지 -->
+        <div class="board-main">
+          <!-- 검색 바 -->
+          <form class="board-search" id="searchForm" role="search" aria-label="게시글 검색">
+            <span class="search-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path
+                  fill="currentColor"
+                  d="M21 20.29 16.65 16a8 8 0 1 0-1.41 1.41L20.29 21 21 20.29ZM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6Z"
+                />
+              </svg>
+            </span>
+            <input id="q" class="search-input" type="search" name="q" placeholder="검색" aria-label="검색어" />
+            <button class="search-btn" type="submit">검색</button>
+          </form>
+
+          <!-- 목록 -->
+          <div class="board-table-wrap" role="region" aria-label="게시글 목록" tabindex="0">
+            <table class="board-list" id="table">
+              <colgroup>
+                <col style="width:160px" />
+                <col />
+                <col style="width:120px" />
+                <col style="width:110px" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th scope="col">게시판</th>
+                  <th scope="col">제목</th>
+                  <th scope="col">이름</th>
+                  <th scope="col">일시</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"><!-- JS 렌더 --></tbody>
+            </table>
+          </div>
+
+          <!-- 페이지네이션 -->
+          <nav class="pager" id="pager" aria-label="페이지 이동">
+            <button class="page" id="first" aria-label="첫 페이지">«</button>
+            <button class="page" id="prev" aria-label="이전 페이지">‹</button>
+            <button class="page" data-p="1">1</button>
+            <button class="page" data-p="2">2</button>
+            <button class="page" data-p="3">3</button>
+            <button class="page" id="next" aria-label="다음 페이지">›</button>
+            <button class="page" id="last" aria-label="마지막 페이지">»</button>
+          </nav>
+
+          <!-- 게시글 상세 보기 (post= 아이디로 진입 시 노출) -->
+            <article id="postView" class="post-view hidden" aria-live="polite">
+            <div class="post-head">
+                <h3 id="pvTitle" class="post-title">제목</h3>
+                <div class="post-meta">
+                <span id="pvCat" class="cat">카테고리</span>
+                <span id="pvAuthor">익명</span>
+                <time id="pvDate">MM-DD</time>
+                </div>
+            </div>
+            <code id="pvFile" class="post-file"></code>
+            <iframe id="pvFrame" class="post-frame" title="게시글 프리뷰"></iframe>
+            <p class="post-hint">※ 학습용 취약점: 서버가 취약하면 임의 경로가 노출될 수 있습니다.</p>
+            <div class="post-actions">
+                <button id="pvBack" class="btn">목록으로</button>
+            </div>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <strong>BlackCat Security</strong><br />
+          security@blackcat.security
+        </div>
+        <div class="foot-nav">
+          <a href="#services">한로로</a>
+          <a href="#insights">노래</a>
+          <a href="/frontend/public/login.html">너무 좋아</a>
+        </div>
+      </div>
+      <p class="copy">© 2025 BlackCat Security. All rights reserved.</p>
+    </footer>
+
+    <!-- JS: 미리보기 프레임과 탭, 네비 토글 -->
+    <script>
+    (() => {
+    // ===== 데이터: 5개 x 2페이지 =====
+    // 각 게시글은 post(아이디), cat, title, date, file(LFI 학습용 경로) 보유
+    const PAGES = {
+        1: [
+        {post:'p101', cat:'공지사항',   title:'[공지] 시스템 점검 안내',      date:'2025-04-02', file:'pages/notice.html'},
+        {post:'p102', cat:'자유게시판', title:'여기저기서 돌던 소문인데..',  date:'2025-04-02', file:'pages/news.html'},
+        {post:'p103', cat:'비밀게시판', title:'[비밀] 관리자 메뉴 접근 이슈', date:'2025-04-02', file:'../../etc/hosts'},
+        {post:'p104', cat:'홍보게시판', title:'보안 스터디원 모집(오프라인)', date:'2025-04-02', file:'pages/promo.html'},
+        // ▼ 학습 포인트: /etc/passwd 로딩 (컨테이너 내)
+        {post:'p105', cat:'자유게시판', title:'리눅스 계정 리스트 공유..?',   date:'2025-04-02', file:'../../etc/passwd'},
+        ],
+        2: [
+        {post:'p201', cat:'공지사항',   title:'[공지] 개인정보 처리방침 개정', date:'2025-04-01', file:'pages/policy.html'},
+        {post:'p202', cat:'자유게시판', title:'주말 CTF 같이 하실 분',        date:'2025-04-01', file:'pages/ctf.html'},
+        {post:'p203', cat:'비밀게시판', title:'내부 네트워크 다이어그램',       date:'2025-04-01', file:'../../../../../../etc/shadow'}, // 예시(보통 권한 거절)
+        {post:'p204', cat:'홍보게시판', title:'OSS 기여자 모집합니다',         date:'2025-04-01', file:'pages/oss.html'},
+        {post:'p205', cat:'자유게시판', title:'키보드 추천 부탁',              date:'2025-04-01', file:'pages/any.html'},
+        ],
+    };
+
+    // 배지 색 클래스
+    const CAT_CLASS = {
+        '공지사항': 'cat-noti',
+        '자유게시판': 'cat-free',
+        '비밀게시판': 'cat-secret',
+        '홍보게시판': 'cat-promo',
+    };
+
+    const tbody   = document.getElementById('tbody');
+    const qInput  = document.getElementById('q');
+    const pager   = document.getElementById('pager');
+    const sideBtns= document.querySelectorAll('.side-item');
+
+    // 상세뷰 엘리먼트
+    const pv      = document.getElementById('postView');
+    const pvTitle = document.getElementById('pvTitle');
+    const pvCat   = document.getElementById('pvCat');
+    const pvAuthor= document.getElementById('pvAuthor');
+    const pvDate  = document.getElementById('pvDate');
+    const pvFile  = document.getElementById('pvFile');
+    const pvFrame = document.getElementById('pvFrame');
+    const pvBack  = document.getElementById('pvBack');
+
+    // URL 파라미터
+    const params = new URLSearchParams(location.search);
+    let page     = Number(params.get('page') || 1);
+    let q        = params.get('q') || '';
+    let catFilter = params.get('cat') || 'all';
+    let postId   = params.get('post') || '';
+
+    // 전체 데이터(검색/필터/상세에 사용)
+    const ALL = [...PAGES[1], ...PAGES[2]];
+
+    // 렌더: 목록/페이지 or 상세
+    function render(){
+        if (postId) return renderPost(postId); // 상세 우선
+
+        pv.classList.add('hidden'); // 상세 숨김
+        // 목록 모드
+        let baseRows = [];
+        if (!q.trim() && catFilter === 'all') {
+        baseRows = (PAGES[page] || []);
+        pager.style.display = '';
+        } else {
+        const term = q.trim().toLowerCase();
+        baseRows = ALL.filter(r => {
+            const okCat = (catFilter === 'all') || (r.cat === catFilter);
+            const okQ   = term ? (r.title.toLowerCase().includes(term) || r.cat.toLowerCase().includes(term)) : true;
+            return okCat && okQ;
+        });
+        pager.style.display = 'none'; // 필터/검색 시 페이지 숨김
+        }
+
+        tbody.innerHTML = baseRows.map(r => `
+        <tr>
+            <td><span class="cat ${CAT_CLASS[r.cat]||'cat-free'}">${r.cat}</span></td>
+            <td class="tt"><a href="${buildPostHref(r.post)}">${r.title}</a></td>
+            <td class="author">익명</td>
+            <td><time>${fmtDate(r.date)}</time></td>
+        </tr>
+        `).join('');
+
+        // 페이지 버튼 상태
+        if (!q.trim() && catFilter === 'all') {
+        document.querySelectorAll('.pager .page[data-p]').forEach(btn=>{
+            const p = Number(btn.dataset.p);
+            btn.classList.toggle('is-current', p===page);
+        });
+        const atFirst = page===1, atLast = page===2;
+        document.getElementById('first').disabled = atFirst;
+        document.getElementById('prev').disabled  = atFirst;
+        document.getElementById('next').disabled  = atLast;
+        document.getElementById('last').disabled  = atLast;
+        }
+
+        // 사이드 선택 상태
+        sideBtns.forEach(b=>{
+        b.classList.toggle('is-active', b.dataset.cat === catFilter || (catFilter==='all' && b.dataset.cat==='all'));
+        });
+    }
+
+    // 상세 렌더 + LFI 프리뷰 (여기서 /board?file=... 호출)
+    function renderPost(id){
+        const item = ALL.find(x => x.post === id);
+        if (!item){ // 아이디가 없으면 목록으로 복귀
+        params.delete('post'); history.replaceState(null,'',`?${params.toString()}`); postId = ''; return render();
+        }
+
+        pvTitle.textContent = item.title;
+        pvCat.textContent   = item.cat;
+        pvCat.className     = `cat ${CAT_CLASS[item.cat]||'cat-free'}`;
+        pvAuthor.textContent= '익명';
+        pvDate.textContent  = fmtDate(item.date);
+        pvFile.textContent  = item.file;
+        pvFrame.src         = `/board?file=${encodeURIComponent(item.file)}`; // ★ LFI 트리거 지점
+        pv.classList.remove('hidden');
+
+        // 목록 영역/페이저는 가려두기
+        document.querySelector('.board-table-wrap').classList.add('hidden');
+        document.querySelector('.board-search').classList.add('hidden');
+        pager.style.display = 'none';
+    }
+
+    // 목록으로 복귀
+    pvBack.addEventListener('click', ()=>{
+        // 상세만 제거하고 목록/검색/필터 상태는 유지
+        params.delete('post');
+        history.replaceState(null, '', `?${params.toString()}`);
+        postId = '';
+        document.querySelector('.board-table-wrap').classList.remove('hidden');
+        document.querySelector('.board-search').classList.remove('hidden');
+        render();
+    });
+
+    // 헬퍼
+    function fmtDate(s){
+        const m = /(\d{4})-(\d{2})-(\d{2})/.exec(s);
+        return m ? `${m[2]}-${m[3]}` : s;
+    }
+    function buildPostHref(id){
+        const p = new URLSearchParams(location.search);
+        p.set('post', id);
+        // 목록 모드라면 page/cat/q 그대로 보존
+        return `?${p.toString()}`;
+    }
+
+    // 페이지 버튼
+    document.querySelectorAll('.pager .page[data-p]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+        page = Number(btn.dataset.p);
+        params.set('page', String(page));
+        params.delete('q'); params.set('cat', 'all'); params.delete('post');
+        history.replaceState(null, '', `?${params.toString()}`);
+        q = ''; qInput.value=''; catFilter='all'; postId='';
+        document.querySelector('.board-table-wrap').classList.remove('hidden');
+        document.querySelector('.board-search').classList.remove('hidden');
+        render();
+        });
+    });
+    document.getElementById('first').addEventListener('click', ()=>go(1));
+    document.getElementById('prev').addEventListener('click', ()=>go(Math.max(1, page-1)));
+    document.getElementById('next').addEventListener('click', ()=>go(Math.min(2, page+1)));
+    document.getElementById('last').addEventListener('click', ()=>go(2));
+    function go(p){
+        page = p; params.set('page', String(page));
+        params.delete('q'); params.set('cat','all'); params.delete('post');
+        history.replaceState(null,'',`?${params.toString()}`);
+        q=''; qInput.value=''; catFilter='all'; postId='';
+        document.querySelector('.board-table-wrap').classList.remove('hidden');
+        document.querySelector('.board-search').classList.remove('hidden');
+        render();
+    }
+
+    // 검색
+    qInput.value = q;
+    document.getElementById('searchForm').addEventListener('submit', (e)=>{
+        e.preventDefault();
+        q = qInput.value || '';
+        if (q) { params.set('q', q); } else { params.delete('q'); }
+        params.delete('post'); // 상세 모드 종료
+        history.replaceState(null, '', `?${params.toString()}`);
+        postId=''; render();
+    });
+
+    // 사이드바 카테고리
+    document.querySelectorAll('.side-item').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+        catFilter = btn.dataset.cat;
+        params.set('cat', catFilter);
+        params.delete('post'); // 상세 모드 종료
+        // 필터 모드에서는 page는 의미 없으니 제거
+        params.delete('page');
+        history.replaceState(null,'',`?${params.toString()}`);
+        postId=''; render();
+        });
+    });
+
+    // 초기 정리 및 렌더
+    if (page<1 || page>2) { page=1; params.set('page','1'); history.replaceState(null,'',`?${params.toString()}`); }
+    render();
+    })();
+    </script>
+
+  </body>
+</html>
