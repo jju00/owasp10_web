@@ -50,7 +50,7 @@
               BOARD <span class="arrow">▼</span></a>
             <ul class="submenu">
               <li><a href="#board">사진</a></li>
-              <li><a href="#board-list">게시판</a></li>
+              <li><a href="/frontend/public/board.html">게시판</a></li>
             </ul>
           </li>
 
@@ -196,17 +196,18 @@
         <!-- 왼쪽: 게시판 -->
         <section class="panel board-panel" id="board-list" aria-labelledby="noticeTab">
           <div class="tabs">
-            <button id="noticeTab" class="tab is-active">공지사항</button>
+            <button id="tablAll" class="tab is-active">전체 보기</button>
+            <button class="tab">공지사항</button>
             <button class="tab">자유 게시판</button>
             <button class="tab">비밀 게시판</button>
             <button class="tab">홍보 게시판</button>
             <button class="tab add" aria-label="게시 추가">＋</button>
           </div>
           <ul class="board-list">
-            <li><a href="#">2025년 보안 세미나 일정 안내</a><time>2025-09-08</time></li>
-            <li><a href="#">레드팀·모의해킹 상반기 접수 공지</a><time>2025-09-05</time></li>
-            <li><a href="#">인텔리전스 리포트 v2 공개</a><time>2025-09-03</time></li>
-            <li><a href="#">개인정보 처리방침 개정 안내</a><time>2025-08-27</time></li>
+            <li><a href="#">[공지] BlackCat 정기 세미나 진행</a><time>2025-09-08</time></li>
+            <li><a href="#">kt에서 문자왔는데 이거 망한거냐?</a><time>2025-09-05</time></li>
+            <li><a href="#">사진 올리고 싶은데</a><time>2025-09-03</time></li>
+            <li><a href="#">보안 스터디원 모집(오프라인)</a><time>2025-08-27</time></li>
           </ul>
           <a class="more" href="/frontend/public/board.html#board-index containor">더보기</a>
         </section>
