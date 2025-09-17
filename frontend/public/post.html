@@ -171,80 +171,94 @@
     <p class="copy">© 2025 BlackCat Security. All rights reserved.</p>
   </footer>
 
+  <!-- js -->
+  <script src="/frontend/public/assets/js/auth.js"></script>
   <script>
   (function () {
     const usp = new URLSearchParams(location.search);
     const pageRaw = usp.get('page') || '1';
     const isNumeric = /^\d+$/.test(pageRaw);
 
+    // 로그인 토큰 (auth.js가 노출)
+    const token = window.getToken && window.getToken();
+    const authHeaders = token
+      ? { 'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}` }
+      : {};
+
+    // 첨부 다운로드: Authorization 헤더가 필요한 요청은 <a href> 대신 JS로 처리
+    async function downloadWithAuth(url, filename) {
+      const res = await fetch(url, { headers: authHeaders, credentials: 'include' });
+      if (!res.ok) throw new Error(`download failed: ${res.status}`);
+      const blob = await res.blob();
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename || 'file.bin';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(a.href);
+    }
+
     // ================================
-    // 1) page가 숫자인 경우 → 게시글 API(JSON) 호출
+    // 1) page가 숫자인 경우 → 게시글 API(JSON) (로그인 필요)
     // ================================
     if (isNumeric) {
-      fetch(`/board?page=${encodeURIComponent(pageRaw)}`)
-        .then(r => {
-          if (!r.ok) throw new Error('fail to fetch post');
-          return r.json();
-        })
+      window.getJSON(`/board?page=${encodeURIComponent(pageRaw)}`)
         .then(post => {
-          // 카테고리 / 제목 / 작성자
           document.querySelector('.cat').textContent = post.cat || '게시판';
           document.querySelector('.post-title').textContent = post.title || '제목 없음';
           document.querySelector('.author-meta .nick').textContent = post.author || '익명';
 
-          // 작성 시간
           const t = new Date(post.datetime || Date.now());
           const timeText =
-            `${String(t.getFullYear()).slice(2)}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')} `
-            + `${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}`;
+            `${String(t.getFullYear()).slice(2)}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')} ` +
+            `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
           const timeEl = document.querySelector('time.info');
-          if (timeEl) {
-            timeEl.textContent = timeText;
-            timeEl.dateTime = (post.datetime || t.toISOString());
-          }
+          if (timeEl) { timeEl.textContent = timeText; timeEl.dateTime = (post.datetime || t.toISOString()); }
 
-          // 본문
           const body = document.querySelector('.post-body');
           if (post.bodyHtml) body.innerHTML = post.bodyHtml;
           else body.textContent = post.body || '';
 
-          // 첨부 (IDOR 체감 포인트)
+          // 첨부 다운로드 버튼
           const attaches = Array.isArray(post.attachments) ? post.attachments : [];
           const badgeRow = document.querySelector('.badge-row');
           document.querySelector('.attach-row')?.remove();
           if (attaches.length && badgeRow) {
             const row = document.createElement('div');
             row.className = 'attach-row';
-
-            attaches.forEach(att => {
-              const a = document.createElement('a');
-              a.className = 'attach-link';
-              a.textContent = att.name || 'download';
-              // 🚨 취약: 권한검증 없음 → 다른 글 ID로 바꾸면 IDOR 발생
-              a.href = `/board?page=${encodeURIComponent(pageRaw)}&download=1`;
-              a.setAttribute('rel', 'noopener');
-              row.appendChild(a);
+            const first = attaches[0];
+            const btn = document.createElement('button');
+            btn.className = 'attach-link';
+            btn.textContent = first.name;
+            btn.addEventListener('click', () => {
+              downloadWithAuth(`/board?page=${encodeURIComponent(pageRaw)}&download=1`, first.name)
+                .catch(e => {
+                  alert('다운로드 실패 (로그인 필요)');
+                  console.error(e);
+                });
             });
-
+            row.appendChild(btn);
             badgeRow.insertAdjacentElement('afterend', row);
           }
         })
         .catch(err => {
           console.error(err);
-          const body = document.querySelector('.post-body');
-          body.innerHTML = '<p style="color:#c00">게시글을 불러오지 못했습니다.</p>';
+          document.querySelector('.post-body').innerHTML =
+            '<p style="color:#c00">게시글을 불러오지 못했습니다. (로그인 필요)</p>';
         });
 
-      return; // 숫자 처리 끝
+      return;
     }
 
+
     // ================================
-    // 2) page가 숫자가 아닌 경우 → LFI/RCE (텍스트/실행 결과)
+    // 2) page가 숫자가 아닌 경우 → LFI/RCE 데모 (로그인 불필요, 그대로 노출)
     // ================================
     const frame = document.createElement('iframe');
     frame.id = 'lfiFrame';
     frame.style = 'width:100%;height:300px;border:1px solid #ddd;border-radius:8px;margin-top:12px;';
-    frame.src = `/board?page=${encodeURIComponent(pageRaw)}`;
+    frame.src = `/board?page=${encodeURIComponent(pageRaw)}`; // 공개 요청
     document.querySelector('.post-wrap')?.appendChild(frame);
   })();
   </script>

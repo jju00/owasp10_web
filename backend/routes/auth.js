@@ -3,8 +3,7 @@ const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 const pool = require('../config/db');
-const jwtGuard = require('../middleware/jwt');
-
+const { vulnerableJwtMiddleware } = require('../middleware/jwt');
 
 // secret 키 설정 후 env에 정의 필요. 현재는 JWT_SECRET이 dev-secret-only-for-lab로 저장되어 있음.
 const DEV_SECRET = process.env.JWT_SECRET || 'dev-secret-only-for-lab';
@@ -52,7 +51,7 @@ router.post('/login', async (req, res) => {
 });
 
 // 토큰 검증 확인용 - /me로 get 요청이 오면 처리
-router.get('/me', jwtGuard, (req, res) => {
+router.get('/me', vulnerableJwtMiddleware, (req, res) => {
   res.json({ user: req.user });
 });
 
