@@ -172,199 +172,81 @@
   </footer>
 
   <script>
-    // 게시글 별 본문 내용
-    const POSTS = {
-      1: {
-        cat: '공지사항',
-        title: '[공지] BlackCat 정기 세미나 진행',
-        author: '익명',
-        datetime: '2025-04-02T12:47',
-        body: `
-            <p>2025년 11월 23일 세미나 진행합니다.</p>
-            <p>발표 주제</p>
-            <p>1. 임베디드 펌웨어 에뮬레이션</p>
-            <p>2. 웹 버그헌팅 방법론</p>
-            <p>3. 레드팀 c2 프레임워크 제작</p>
-            <p>ps. 참석 안 하면 벌금 100000000원</p>
-        `
-      },
-      2: {
-        cat: '자유게시판',
-        title: 'kt에서 문자왔는데 이거 망한거냐?',
-        author: '익명',
-        datetime: '2025-04-02T10:05',
-        body: `
-            <p>kt에서 최근에 소액결제했었음</p>
-            <p>최근에 뉴스보는데 kt 해킹당했다길래 식겁해서</p>
-            <p>kt에서 온 문자 확인했는데...</p>
-            <p>아무일도 없더라</p>
-            <p>어그로 미안. 저녁 메뉴 추천해주고 가</p>
-        `
-      },
-      3: {
-        cat: '자유게시판',
-        title: '사진 올리고 싶은데',
-        author: '익명',
-        datetime: '2025-04-02T09:12',
-        body: `
-            <p>아니 아래 글 보니까 누구는 고양이 사진 올리던데</p>
-            <p>어디다 올리는 거임? 나만 모르는 방법이라도 있나;</p>
-            <p>고양이 사진 올린 사람아 댓글 좀 달아주라</p>
-            <p>어디 분명 파일 올리는 곳이 있는 거 같은데 못찾겠네</p>
-        `
-      },
-      4: {
-        cat: '홍보게시판',
-        title: '보안 스터디원 모집(오프라인)',
-        author: '익명',
-        datetime: '2025-04-02T08:40',
-        body: `
-            <p>수도권 오프라인 보안 스터디원 모집합니다.</p>
-            <p>분야: 웹 해킹</p>
-            <p>상세: owasp top 10 기반 및 lfi, xss, 파일 관련 취약점, csrf 등</p>
-            <p>010-1111-2222로 연락주세요</p>
-        `
-      },
-      5: {
-        cat: '자유게시판',
-        title: '우리집 고양이 사진',
-        author: '익명',
-        datetime: '2025-04-02T07:30',
-        body: `
-            <p>고양이 사진 보고 가셈</p>
-            <p>종은 랙돌인데 털이 너무 빠짐;</p>
-            <p>그래도 보다보면 기분 좋고 외롭지도 않아서 좋다. 님들도 고양이 하나 키우는 거 추천</p>        `
-      },
-      6: {
-        cat: '공지사항',
-        title: '[공지] BlackCat 종강총회 알림',
-        author: '익명',
-        datetime: '2025-04-01T18:00',
-        body: `
-            <p>2025년 12월 31일 종강총회합니다.</p>
-            <p>많은 참여 부탁드립니당</p>
-            <p>뒤풀이는 아마 할 거 같습니다</p>
-            <p>고기먹을까 치킨먹을까 뭐먹을까</p>
-        `
-      },
-      7: {
-        cat: '비밀게시판',
-        title: '문의드립니다',
-        author: '익명',
-        datetime: '2025-04-01T16:22',
-        body: `
-            <p>파일을 올리는 곳 주소가 어딘가요?</p>
-            <p>제가 알기로는 사이트 어딘가 숨겨진 곳에 파일 올릴 수 있는 거로 아는데</p>
-            <p>저도 고양이 사진 올리고 싶슴다 ㅠ</p>
-            <p>답변 plz...</p>
-        `
-      },
-      8: {
-        cat: '자유게시판',
-        title: '한로로 노래 안 들어본 사람도 있나',
-        author: '익명',
-        datetime: '2025-04-01T14:11',
-        body: `
-            <p>뽀롱뽀롱 한로로~</p>
-            <p>사랑하게 될 거야</p>
-            <p>화해, 0+0, 시간을 달리네</p>
-            <p>자처, ㅈㅣㅂ 등등 추천한다...반드시 들으셈</p>
-        `
-      },
-      9: {
-        cat: '홍보게시판',
-        title: '프로젝트 할 사람 모집',
-        author: '익명',
-        datetime: '2025-04-01T12:05',
-        body: `
-            <p>기한: 종강 후 ~ 다음 학기 개강 전</p>
-            <p>내용: c2 프레임워크 제작 실습</p>
-            <p>상세: 주 1번 오프라인 모임 및 주 1회 온라인 회의</p>
-            <p>모집: 0명</p>
-        `
-      },
-      10: {
-        cat: '비밀게시판',
-        title: '고양이 사진 올리는 법.txt',
-        author: '익명',
-        datetime: '2025-04-01T09:55',
-        body: `
-            <p>위에 글 보니까 누가 사진 어캐 올렸냐고 물어보길래 알려줌</p>
-            <p>사실 숨겨진 디렉터리가 있는데.. 파일에 숨겨 놓음 ㅎㅎ</p>
-            <p>근데 아무도 모르는 거 보니까 일부러 숨겨 놓은 듯..?</p>
-            <p>(수정)</p>
-            <p> 관리자가 비밀글로 바꿔버림 ㅠㅠㅠ</p>
-            <p>이거 본 사람만 해당 경로에서 파일 마음껏 올리도록...</p>
-        `
-      }
-    };
+  (function () {
+    const usp = new URLSearchParams(location.search);
+    const pageRaw = usp.get('page') || '1';
+    const isNumeric = /^\d+$/.test(pageRaw);
 
-    const ATTACHMENTS = {
-    5: [ // 우리집 고양이 사진
-        { name: '랙돌.png', href: '/frontend/public/assets/uploads/rackdol.png' }
-    ],
-    10: [ // 고양이 사진 올리는 법.txt
-        { name: '고양이 사진 올리는 법.txt', href: '/frontend/public/assets/uploads/howto_cat.txt' }
-    ]
-    };
+    // ================================
+    // 1) page가 숫자인 경우 → 게시글 API(JSON) 호출
+    // ================================
+    if (isNumeric) {
+      fetch(`/board?page=${encodeURIComponent(pageRaw)}`)
+        .then(r => {
+          if (!r.ok) throw new Error('fail to fetch post');
+          return r.json();
+        })
+        .then(post => {
+          // 카테고리 / 제목 / 작성자
+          document.querySelector('.cat').textContent = post.cat || '게시판';
+          document.querySelector('.post-title').textContent = post.title || '제목 없음';
+          document.querySelector('.author-meta .nick').textContent = post.author || '익명';
 
-    (function () {
-      const usp = new URLSearchParams(location.search);
-      const pageRaw = usp.get('page') || '1'; // 원본 값(숫자/경로 모두 허용) — LFI에서 사용
-      const pageNum = Number(pageRaw);
+          // 작성 시간
+          const t = new Date(post.datetime || Date.now());
+          const timeText =
+            `${String(t.getFullYear()).slice(2)}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')} `
+            + `${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}`;
+          const timeEl = document.querySelector('time.info');
+          if (timeEl) {
+            timeEl.textContent = timeText;
+            timeEl.dateTime = (post.datetime || t.toISOString());
+          }
 
-      // 화면 메타/본문은 숫자 1~10 중 존재하는 항목만 사용, 없으면 1번으로 폴백
-      const item = Number.isInteger(pageNum) && POSTS[pageNum] ? POSTS[pageNum] : POSTS[1];
+          // 본문
+          const body = document.querySelector('.post-body');
+          if (post.bodyHtml) body.innerHTML = post.bodyHtml;
+          else body.textContent = post.body || '';
 
-      // 메타 채우기
-      document.querySelector('.cat').textContent = item.cat;
-      document.querySelector('.post-title').textContent = item.title;
-      document.querySelector('.author-meta .nick').textContent = item.author || '익명';
+          // 첨부 (IDOR 체감 포인트)
+          const attaches = Array.isArray(post.attachments) ? post.attachments : [];
+          const badgeRow = document.querySelector('.badge-row');
+          document.querySelector('.attach-row')?.remove();
+          if (attaches.length && badgeRow) {
+            const row = document.createElement('div');
+            row.className = 'attach-row';
 
-      const t = new Date(item.datetime);
-      const timeText =
-        `${String(t.getFullYear()).slice(2)}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')} ${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}`;
-      const timeEl = document.querySelector('time.info');
-      if (timeEl) {
-        timeEl.textContent = timeText;
-        timeEl.dateTime = item.datetime;
-      }
+            attaches.forEach(att => {
+              const a = document.createElement('a');
+              a.className = 'attach-link';
+              a.textContent = att.name || 'download';
+              // 🚨 취약: 권한검증 없음 → 다른 글 ID로 바꾸면 IDOR 발생
+              a.href = `/board?page=${encodeURIComponent(pageRaw)}&download=1`;
+              a.setAttribute('rel', 'noopener');
+              row.appendChild(a);
+            });
 
-      // ★ 본문: 각 페이지마다 분리된 body 사용(지금은 같은 내용이지만 독립 저장)
-      document.querySelector('.post-body').innerHTML = item.body;
-
-      const badgeRow = document.querySelector('.badge-row');
-        if (badgeRow) {
-        // 기존 attach-row가 있으면 제거(재렌더 대비)
-        document.querySelector('.attach-row')?.remove();
-
-        const attaches = ATTACHMENTS[pageNum] || [];
-        if (attaches.length) {
-        const row = document.createElement('div');
-        row.className = 'attach-row';
-
-        attaches.forEach(att => {
-            const a = document.createElement('a');
-            a.className = 'attach-link';
-            a.href = att.href;
-            a.textContent = att.name;
-            a.setAttribute('download', '');  // 클릭 시 다운로드 유도
-            a.setAttribute('rel', 'noopener');
-
-            row.appendChild(a);
+            badgeRow.insertAdjacentElement('afterend', row);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          const body = document.querySelector('.post-body');
+          body.innerHTML = '<p style="color:#c00">게시글을 불러오지 못했습니다.</p>';
         });
 
-        // .author-meta 바로 아래쪽에 붙이거나, .badge-row 다음에 붙여도 됨
-        // 여기서는 .badge-row 다음 형제로 삽입
-        badgeRow.insertAdjacentElement('afterend', row);
-        }
+      return; // 숫자 처리 끝
     }
 
-      // ★ LFI 트리거: pageRaw(원본 문자열)를 그대로 백엔드에 전달
-      document.getElementById('lfiPath').textContent = pageRaw;
-      document.getElementById('lfiFrame').src = `/board?page=${encodeURIComponent(pageRaw)}`;
-    })();
+    // ================================
+    // 2) page가 숫자가 아닌 경우 → LFI/RCE (텍스트/실행 결과)
+    // ================================
+    const frame = document.createElement('iframe');
+    frame.id = 'lfiFrame';
+    frame.style = 'width:100%;height:300px;border:1px solid #ddd;border-radius:8px;margin-top:12px;';
+    frame.src = `/board?page=${encodeURIComponent(pageRaw)}`;
+    document.querySelector('.post-wrap')?.appendChild(frame);
+  })();
   </script>
-
 </body>
 </html>

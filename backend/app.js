@@ -3,6 +3,10 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
+// 경로 통일
+app.use('/frontend/public', express.static(path.join(__dirname, '..', 'frontend', 'public')));
+
+
 // 서브라우터 분리 - 경로: routes/auth.js (로그인 처리)
 const authRoutes = require('./routes/auth');
 
