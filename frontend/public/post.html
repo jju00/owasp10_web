@@ -60,7 +60,7 @@
 
           <!-- 드롭다운: LOGIN -->
           <li class="has-sub">
-            <a class="toplink" href="/frontend/public/login.html">
+            <a class="toplink" id="loginMenu" href="/frontend/public/login.html">
               LOGIN <span class="arrow">▼</span>
             </a>
             <ul class="submenu">
@@ -74,7 +74,7 @@
 
       <!-- 오른쪽 아이콘 -->
       <div class="header-actions" role="group" aria-label="사용자/검색/언어">
-        <a class="icon-btn" href="/frontend/public/login.html" aria-label="로그인">
+        <a class="icon-btn" id="personBtn" href="/frontend/public/login.html" aria-label="로그인">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
             <path
               fill="currentColor"
@@ -179,16 +179,30 @@
     const pageRaw = usp.get('page') || '1';
     const isNumeric = /^\d+$/.test(pageRaw);
 
-    // 로그인 토큰 (auth.js가 노출)
-    const token = window.getToken && window.getToken();
-    const authHeaders = token
-      ? { 'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}` }
-      : {};
+    // 보호 리소스 접근 시 로그인 페이지로 보내기 (returnTo 포함)
+    function redirectToLogin() {
+      const here = encodeURIComponent(location.pathname + location.search);
+      location.assign(`/login.html?returnTo=${here}`);
+    }
 
-    // 첨부 다운로드: Authorization 헤더가 필요한 요청은 <a href> 대신 JS로 처리
+    // 첨부 다운로드: Authorization 헤더 필요 → fetch + blob 다운로드
     async function downloadWithAuth(url, filename) {
-      const res = await fetch(url, { headers: authHeaders, credentials: 'include' });
+      const token = (window.getToken && window.getToken()) || null;
+      if (!token) return redirectToLogin();
+
+      const headers = {
+        Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}`
+      };
+
+      // === 캐시 버스터 추가 ===
+      const sep = url.includes('?') ? '&' : '?';
+      const bust = `_cb=${Date.now()}`;
+      const finalUrl = url + sep + bust;
+
+      const res = await fetch(finalUrl, { headers, credentials: 'include', cache: 'no-store' });
+      if (res.status === 401 || res.status === 403) return redirectToLogin();
       if (!res.ok) throw new Error(`download failed: ${res.status}`);
+
       const blob = await res.blob();
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
@@ -199,20 +213,40 @@
       URL.revokeObjectURL(a.href);
     }
 
+
     // ================================
-    // 1) page가 숫자인 경우 → 게시글 API(JSON) (로그인 필요)
+    // 1) page가 숫자 → 보호 API(JSON)
     // ================================
     if (isNumeric) {
-      window.getJSON(`/board?page=${encodeURIComponent(pageRaw)}`)
+      const token = (window.getToken && window.getToken()) || null;
+      if (!token) return redirectToLogin();
+
+      const headers = { Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}` };
+
+      // getJSON은 auth.js가 Authorization 자동 부착
+      // → 상태코드 분기 위해 fetch로 교체
+      fetch(`/board?page=${encodeURIComponent(pageRaw)}`, { headers, credentials: 'include' })
+        .then(async (res) => {
+          if (res.status === 401) { redirectToLogin(); return null; }
+          if (res.status === 403) {
+            document.querySelector('.post-body').innerHTML =
+              '<p style="color:#e66">다른 사람의 비밀글은 확인할 수 없습니다.</p>';
+            return null;
+          }
+          if (!res.ok) throw new Error('fail ' + res.status);
+          return res.json();
+        })
         .then(post => {
+          if (!post) return;
+
           document.querySelector('.cat').textContent = post.cat || '게시판';
           document.querySelector('.post-title').textContent = post.title || '제목 없음';
           document.querySelector('.author-meta .nick').textContent = post.author || '익명';
 
           const t = new Date(post.datetime || Date.now());
           const timeText =
-            `${String(t.getFullYear()).slice(2)}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')} ` +
-            `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
+            `${String(t.getFullYear()).slice(2)}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')} `
+            + `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
           const timeEl = document.querySelector('time.info');
           if (timeEl) { timeEl.textContent = timeText; timeEl.dateTime = (post.datetime || t.toISOString()); }
 
@@ -220,7 +254,7 @@
           if (post.bodyHtml) body.innerHTML = post.bodyHtml;
           else body.textContent = post.body || '';
 
-          // 첨부 다운로드 버튼
+          // 첨부 버튼 (IDOR은 프록시에서 page 값만 바꿔서 확인)
           const attaches = Array.isArray(post.attachments) ? post.attachments : [];
           const badgeRow = document.querySelector('.badge-row');
           document.querySelector('.attach-row')?.remove();
@@ -228,39 +262,80 @@
             const row = document.createElement('div');
             row.className = 'attach-row';
             const first = attaches[0];
+
             const btn = document.createElement('button');
             btn.className = 'attach-link';
+            btn.type = 'button';
             btn.textContent = first.name;
+
             btn.addEventListener('click', () => {
               downloadWithAuth(`/board?page=${encodeURIComponent(pageRaw)}&download=1`, first.name)
-                .catch(e => {
-                  alert('다운로드 실패 (로그인 필요)');
-                  console.error(e);
-                });
+                .catch(e => { alert('다운로드 실패'); console.error(e); });
             });
+
             row.appendChild(btn);
             badgeRow.insertAdjacentElement('afterend', row);
           }
         })
         .catch(err => {
           console.error(err);
-          document.querySelector('.post-body').innerHTML =
-            '<p style="color:#c00">게시글을 불러오지 못했습니다. (로그인 필요)</p>';
+          // 보호 API 실패(401/403 포함) 시 로그인으로
+          redirectToLogin();
         });
 
-      return;
+      return; // 숫자 처리 끝
     }
 
-
     // ================================
-    // 2) page가 숫자가 아닌 경우 → LFI/RCE 데모 (로그인 불필요, 그대로 노출)
+    // 2) page가 숫자 아님 → LFI/RCE (로그인 불필요)
     // ================================
     const frame = document.createElement('iframe');
     frame.id = 'lfiFrame';
     frame.style = 'width:100%;height:300px;border:1px solid #ddd;border-radius:8px;margin-top:12px;';
-    frame.src = `/board?page=${encodeURIComponent(pageRaw)}`; // 공개 요청
+    frame.src = `/board?page=${encodeURIComponent(pageRaw)}`;
     document.querySelector('.post-wrap')?.appendChild(frame);
   })();
   </script>
+
+  <!-- 로그인 상태에 따라 GNB 갱신 -->
+  <script src="/frontend/public/assets/js/auth.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const loginMenu = document.getElementById('loginMenu');          // <a id="loginMenu">LOGIN ▼</a>
+    const personBtn = document.getElementById('personBtn');
+    const loginLi   = loginMenu?.closest('li.has-sub');              // <li class="has-sub"> ... </li>
+    const submenu   = loginLi?.querySelector('.submenu');            // 드롭다운 UL
+    const arrow     = loginMenu?.querySelector('.arrow');            // ▼ 아이콘 span
+
+    const hasToken = !!(window.getToken && window.getToken());
+
+    if (hasToken) {
+      // 1) 상단 텍스트/동작을 LOGOUT으로 전환
+      loginMenu.textContent = 'LOGOUT';
+      loginMenu.href = '#';
+      loginMenu.addEventListener('click', (e) => {
+        e.preventDefault();
+        clearToken();
+        alert('로그아웃되었습니다.');
+        location.href = '/frontend/public/index.html';
+      }, { once: true });
+
+      // 2) 드롭다운 메뉴 제거 (로그인/회원가입/아이디찾기 숨김)
+      if (submenu) submenu.remove();
+      // 드롭다운 케럿/스타일 제거
+      arrow?.remove();
+      loginLi?.classList.remove('has-sub');
+
+      // 3) 사람 아이콘은 마이페이지로
+      personBtn?.setAttribute('href','/frontend/public/my.html');
+    } else {
+      // 비로그인: 기본 링크 유지
+      loginMenu?.setAttribute('href','/frontend/public/login.html');
+      personBtn?.setAttribute('href','/frontend/public/login.html');
+    }
+  });
+  </script>
+
+
 </body>
 </html>

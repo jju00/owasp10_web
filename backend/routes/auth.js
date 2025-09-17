@@ -23,22 +23,25 @@ router.post('/login', async (req, res) => {
   const sql = `
     SELECT id, username, role
     FROM users
-    WHERE username='${username}' AND password='${password}'
+    WHERE username='${username}' AND password=MD5('${password}')
     LIMIT 1
   `;
+
   try {
     const conn = await pool.getConnection();
     try {
-      const [rows] = await conn.query(sql); // 바인딩 없이 그대로 → SQLi 허용
+      const [rows] = await conn.query(sql);
       conn.release();
-      if (!rows || rows.length === 0) return res.status(401).json({ error: 'invalid credentials' });
+      if (!rows || rows.length === 0) {
+        return res.status(401).json({ error: 'invalid credentials' });
+      }
 
       const user = rows[0];
       const token = signHS256({
         id: user.id, username: user.username, role: user.role,
-        exp: Math.floor(Date.now()/1000) + 10*60
+        exp: Math.floor(Date.now() / 1000) + 10 * 60
       });
-      return res.json({ token, user }); // 를 통해 클라에게 jwt 토큰 발급
+      return res.json({ token, user });
     } catch (e) {
       conn.release();
       console.error(e);

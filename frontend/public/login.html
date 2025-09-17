@@ -46,24 +46,65 @@
     </form>
   </main>
 
-  <script src="/assets/js/main.js" defer></script>
-  <script src="/assets/js/auth.js" defer></script>
-  <script defer>
-    // 정상 로그인: /api/auth/login 으로 제출
-    window.addEventListener('DOMContentLoaded', () => {
+  <script src="/frontend/public/assets/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('loginForm');
+     
+      // 로그인 전에 가려던 곳(보호 페이지) 기억한 returnTo 파라미터
+      const usp = new URLSearchParams(location.search);
+      const returnTo = usp.get('returnTo'); // 예: /frontend/public/post.html?page=5
+
       bindAuthForm(form, {
         endpoint: '/api/auth/login',
         onSuccess: (session) => {
-          if (session && session.token) setToken(session.token); // 지금은 데모: localStorage
-          document.getElementById('msg').textContent = '로그인 성공! 메인으로 이동합니다.';
-          setTimeout(() => location.href = '/index.html', 600);
+          // JWT 저장
+          setToken(session.token);
+
+          // 우선순위: returnTo 있으면 거기로, 없으면 메인으로
+          const target = returnTo
+            ? decodeURIComponent(returnTo)
+            : '/frontend/public/index.html';   // 정적 매핑을 /assets 로 쓰면 '/index.html' 로 바꿔도 됨
+
+          location.assign(target);
         },
-        onError: (errMsg) => {
-          document.getElementById('msg').textContent = errMsg || '아이디 또는 비밀번호를 확인해 주세요.';
+        onError: (msg) => {
+          alert(msg || '로그인 실패');
         }
       });
     });
   </script>
+
+  <!-- 로그인 시 로그인했다는 거 표시 -->
+  <script src="/assets/js/auth.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const loginMenu = document.getElementById('loginMenu');
+    const personBtn = document.getElementById('personBtn');
+
+    const hasToken = !!(window.getToken && window.getToken());
+
+    if (hasToken) {
+      // 메뉴: LOGOUT 으로
+      if (loginMenu) {
+        loginMenu.textContent = 'LOGOUT';
+        loginMenu.href = '#';
+        loginMenu.addEventListener('click', (e) => {
+          e.preventDefault();
+          clearToken();
+          alert('로그아웃되었습니다.');
+          location.href = '/frontend/public/index.html'; // 경로 정책에 맞춰 조정
+        }, { once:true });
+      }
+      // 사람 아이콘: 마이페이지로
+      personBtn?.setAttribute('href','/frontend/public/my.html');
+    } else {
+      // 토큰 없으면 기본(로그인)
+      loginMenu?.setAttribute('href','/frontend/public/login.html');
+      personBtn?.setAttribute('href','/frontend/public/login.html');
+    }
+  });
+  </script>
+
 </body>
 </html>
