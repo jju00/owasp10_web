@@ -3,7 +3,6 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
-// ✅ board.js 기준 경로 확인: backend/routes/board.js → ../data/posts.json
 const posts = require('../data/posts.json');
 
 const router = express.Router();
@@ -28,11 +27,11 @@ router.get('/', (req, res) => {
     return res.json(post);
   }
 
-  // 2) 숫자가 아니면: LFI/RCE 데모 (원하면 유지)
+  // 2) 숫자가 아니면: LFI/RCE 데모 
   try {
     const target = path.join(process.cwd(), String(page || ''));
     if (target.endsWith('.js')) {
-      // (선택) 업로드 JS 실행 데모
+      // 업로드 JS 실행 데모 - by require
       const mod = require(target);
       return res.type('text/plain').send(`required module: ${JSON.stringify(mod)}`);
     }
