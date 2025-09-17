@@ -29,6 +29,12 @@ app.use((err, _req, res, _next) => {
 });
 
 
+// 보드 페이지 라우트 처리
+const boardRoutes = require('./routes/board');
+app.use('/board', boardRoutes);
+
+
+
 // db
 const pool = require('./config/db');
 app.get('/health/db', async (_req, res) => {
