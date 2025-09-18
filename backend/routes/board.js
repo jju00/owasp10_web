@@ -34,10 +34,13 @@ router.get('/', requireLoginIfNumericPage, (req, res) => {
         abs,
         att.name,
         {
+          cacheControl: false,   // ← sendFile의 기본 Cache-Control 자동 설정 OFF
+          etag: false,
+          lastModified: false,
           headers: {
-            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
             'Pragma': 'no-cache',
-            'Expires': '0',
+            'Expires': '0',  
             'Surrogate-Control': 'no-store'
           },
           etag: false,

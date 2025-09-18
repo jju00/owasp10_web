@@ -3,6 +3,8 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
+app.set('etag', false); // ← 전역 ETag 제거 (조건부 요청/캐시 재검증 방지)
+
 // 경로 통일
 app.use('/frontend/public', express.static(path.join(__dirname, '..', 'frontend', 'public')));
 

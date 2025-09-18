@@ -182,37 +182,9 @@
     // 보호 리소스 접근 시 로그인 페이지로 보내기 (returnTo 포함)
     function redirectToLogin() {
       const here = encodeURIComponent(location.pathname + location.search);
-      location.assign(`/login.html?returnTo=${here}`);
+      // 경로 통일
+      location.assign(`/frontend/public/login.html?returnTo=${here}`);
     }
-
-    // 첨부 다운로드: Authorization 헤더 필요 → fetch + blob 다운로드
-    async function downloadWithAuth(url, filename) {
-      const token = (window.getToken && window.getToken()) || null;
-      if (!token) return redirectToLogin();
-
-      const headers = {
-        Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}`
-      };
-
-      // === 캐시 버스터 추가 ===
-      const sep = url.includes('?') ? '&' : '?';
-      const bust = `_cb=${Date.now()}`;
-      const finalUrl = url + sep + bust;
-
-      const res = await fetch(finalUrl, { headers, credentials: 'include', cache: 'no-store' });
-      if (res.status === 401 || res.status === 403) return redirectToLogin();
-      if (!res.ok) throw new Error(`download failed: ${res.status}`);
-
-      const blob = await res.blob();
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = filename || 'file.bin';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(a.href);
-    }
-
 
     // ================================
     // 1) page가 숫자 → 보호 API(JSON)
@@ -223,8 +195,7 @@
 
       const headers = { Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}` };
 
-      // getJSON은 auth.js가 Authorization 자동 부착
-      // → 상태코드 분기 위해 fetch로 교체
+      // 상태코드 분기 위해 fetch 사용
       fetch(`/board?page=${encodeURIComponent(pageRaw)}`, { headers, credentials: 'include' })
         .then(async (res) => {
           if (res.status === 401) { redirectToLogin(); return null; }
@@ -269,8 +240,11 @@
             btn.textContent = first.name;
 
             btn.addEventListener('click', () => {
-              downloadWithAuth(`/board?page=${encodeURIComponent(pageRaw)}&download=1`, first.name)
-                .catch(e => { alert('다운로드 실패'); console.error(e); });
+              // 전역 util 사용 (auth.js에 정의)
+              window.downloadWithAuth(
+                `/board?page=${encodeURIComponent(pageRaw)}&download=1`,
+                first.name
+              ).catch(e => { alert('다운로드 실패'); console.error(e); });
             });
 
             row.appendChild(btn);
@@ -298,7 +272,6 @@
   </script>
 
   <!-- 로그인 상태에 따라 GNB 갱신 -->
-  <script src="/frontend/public/assets/js/auth.js"></script>
   <script>
   document.addEventListener('DOMContentLoaded', () => {
     const loginMenu = document.getElementById('loginMenu');          // <a id="loginMenu">LOGIN ▼</a>
@@ -335,7 +308,5 @@
     }
   });
   </script>
-
-
 </body>
 </html>

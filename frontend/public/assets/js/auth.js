@@ -92,8 +92,62 @@ async function getMe() {
   return getJSON('/api/auth/me');
 }
 
+// 브라우저에서 이름만 랙돌.png로 다운받아지는 문제 (idor 시)
+// === Content-Disposition filename 파서 ===
+function parseFilenameFromCD(cd = '') {
+  const m1 = cd.match(/filename\*=UTF-8''([^;]+)/i);
+  if (m1) return decodeURIComponent(m1[1]);
+  const m2 = cd.match(/filename="([^"]+)"/i) || cd.match(/filename=([^;]+)/i);
+  return m2 ? m2[1] : null;
+}
+
+// 위험한 문자/경로 제거 (윈도우 등 호환)
+function safeFilename(name = 'file.bin') {
+  return name.replace(/[\\\/:*?"<>|]+/g, '_').split('/').pop().slice(0, 200);
+}
+
+// === JWT로 보호된 파일 다운로드(서버가 준 파일명 우선) ===
+async function downloadWithAuth(url, fallback) {
+  const token = (window.getToken && window.getToken()) || null;
+  if (!token) {
+    const here = encodeURIComponent(location.pathname + location.search);
+    location.assign(`/frontend/public/login.html?returnTo=${here}`);
+    return;
+  }
+
+  const headers = { Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}` };
+
+  // 캐시버스터 부착
+  const sep = url.includes('?') ? '&' : '?';
+  const finalUrl = `${url}${sep}_cb=${Date.now()}`;
+
+  const res = await fetch(finalUrl, { headers, credentials: 'include', cache: 'no-store' });
+  if (res.status === 401 || res.status === 403) {
+    const here = encodeURIComponent(location.pathname + location.search);
+    location.assign(`/frontend/public/login.html?returnTo=${here}`);
+    return;
+  }
+  if (!res.ok) throw new Error(`download failed: ${res.status}`);
+
+  // 서버 헤더의 파일명 사용 (없으면 fallback)
+  const cd = res.headers.get('Content-Disposition') || '';
+  const fromHeader = parseFilenameFromCD(cd);
+  const filename = safeFilename(fromHeader || fallback || 'file.bin');
+
+  const blob = await res.blob();
+  const href = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = href;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(href);
+}
+
 window.setToken = setToken;
 window.getToken = getToken;
 window.clearToken = clearToken;
 window.getMe = getMe;
 window.bindAuthForm = bindAuthForm;
+window.downloadWithAuth = downloadWithAuth;
