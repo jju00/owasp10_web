@@ -6,9 +6,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="/frontend/public/assets/css/style.css" />
   <link rel="stylesheet" href="/frontend/public/assets/css/post.css" />
+  <style>
+    /* 데이터 로딩 완료 전에는 더미를 숨긴다(레이아웃 유지) */
+    .preload .post-metahead,
+    .preload .post-title,
+    .preload .author-row,
+    .preload .post-body { visibility: hidden; }
+  </style>
+
 </head>
 
-<body id="top">
+<body id="top" class="preload">
   <!-- gnb - index.html과 같음 -->
   <header class="site-header">
     <div class="header-inner">
@@ -255,6 +263,10 @@
           console.error(err);
           // 보호 API 실패(401/403 포함) 시 로그인으로
           redirectToLogin();
+        })
+        .finally(() => {
+        // 이제 실제 데이터가 들어갔으니 보여준다
+        document.body.classList.remove('preload');
         });
 
       return; // 숫자 처리 끝
@@ -268,6 +280,9 @@
     frame.style = 'width:100%;height:300px;border:1px solid #ddd;border-radius:8px;margin-top:12px;';
     frame.src = `/board?page=${encodeURIComponent(pageRaw)}`;
     document.querySelector('.post-wrap')?.appendChild(frame);
+    frame.addEventListener('load', () => {
+      document.body.classList.remove('preload');
+    });
   })();
   </script>
 
