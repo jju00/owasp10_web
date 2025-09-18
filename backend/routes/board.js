@@ -24,21 +24,39 @@ router.get('/', requireLoginIfNumericPage, (req, res) => {
     const post = posts.find(p => p.id === pid);
     if (!post) return res.status(404).json({ error: 'no such post' });
 
+    // (A) 첨부 다운로드: IDOR 실습용 → 작성자/비밀글 체크 없이 바로 내려줌
+    if (req.query.download) {
+      const att = post.attachments?.[0];
+      if (!att) return res.status(404).json({ error: 'no file' });
+      const abs = path.join(process.cwd(), att.path);
 
-    // 비밀게시판 접근 제한 (쓴 사람만 볼 수 있음 - posts.json의 authorID 검증)
+      return res.download(
+        abs,
+        att.name,
+        {
+          cacheControl: false,   // ← sendFile의 기본 Cache-Control 자동 설정 OFF
+          etag: false,
+          lastModified: false,
+          headers: {
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+            'Pragma': 'no-cache',
+            'Expires': '0',  
+            'Surrogate-Control': 'no-store'
+          },
+          etag: false,
+          lastModified: false
+        }
+      );
+    }
+
+
+    // (B) 본문(JSON): 비밀글은 작성자만 허용 (그 외 403)
     if (post.cat === '비밀게시판') {
       if (!req.user || req.user.id !== post.authorId) {
         return res.status(403).json({ error: 'forbidden: secret post' });
       }
     }
 
-    // 첨부 다운로드(IDOR 데모 포인트)
-    if (req.query.download) {
-      const att = post.attachments?.[0];
-      if (!att) return res.status(404).json({ error: 'no file' });
-      const abs = path.join(process.cwd(), att.path);
-      return res.download(abs, att.name);
-    }
     return res.json(post);
   }
 
