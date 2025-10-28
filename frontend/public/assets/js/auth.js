@@ -7,7 +7,7 @@ function getCsrfToken() {
 }
 
 // === JWT Bearer 토큰 (로컬 저장: 데모용; 실제는 HttpOnly 쿠키 권장) ===
-const LS_JWT = 'jwt_token';
+const LS_JWT = 'jwt_token';  // localStorage 키 이름
 
 function setToken(token) {
   localStorage.setItem(LS_JWT, token);
@@ -92,7 +92,7 @@ async function getMe() {
   return getJSON('/api/auth/me');
 }
 
-// 브라우저에서 이름만 랙돌.png로 다운받아지는 문제 (idor 시)
+// 브라우저에서 이름만 랙돌.png로 다운받아지는 문제 해결 (idor 시)
 // === Content-Disposition filename 파서 ===
 function parseFilenameFromCD(cd = '') {
   const m1 = cd.match(/filename\*=UTF-8''([^;]+)/i);
@@ -111,7 +111,7 @@ async function downloadWithAuth(url, fallback) {
   const token = (window.getToken && window.getToken()) || null;
   if (!token) {
     const here = encodeURIComponent(location.pathname + location.search);
-    location.assign(`/frontend/public/login.html?returnTo=${here}`);
+    location.assign(`/login?returnTo=${here}`);
     return;
   }
 
@@ -124,7 +124,7 @@ async function downloadWithAuth(url, fallback) {
   const res = await fetch(finalUrl, { headers, credentials: 'include', cache: 'no-store' });
   if (res.status === 401 || res.status === 403) {
     const here = encodeURIComponent(location.pathname + location.search);
-    location.assign(`/frontend/public/login.html?returnTo=${here}`);
+    location.assign(`/login?returnTo=${here}`);
     return;
   }
   if (!res.ok) throw new Error(`download failed: ${res.status}`);

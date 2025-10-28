@@ -53,10 +53,10 @@
      
       // 로그인 전에 가려던 곳(보호 페이지) 기억한 returnTo 파라미터
       const usp = new URLSearchParams(location.search);
-      const returnTo = usp.get('returnTo'); // 예: /frontend/public/post.html?page=5
+      const returnTo = usp.get('returnTo'); // 예: /post?page=5
 
       bindAuthForm(form, {
-        endpoint: '/api/auth/login',
+        endpoint: '/login',
         onSuccess: (session) => {
           // JWT 저장
           setToken(session.token);
@@ -64,7 +64,7 @@
           // 우선순위: returnTo 있으면 거기로, 없으면 메인으로
           const target = returnTo
             ? decodeURIComponent(returnTo)
-            : '/frontend/public/index.html';   // 정적 매핑을 /assets 로 쓰면 '/index.html' 로 바꿔도 됨
+            : '/';   // 정적 매핑을 /assets 로 쓰면 '/index.html' 로 바꿔도 됨
 
           location.assign(target);
         },
@@ -93,7 +93,7 @@
           e.preventDefault();
           clearToken();
           alert('로그아웃되었습니다.');
-          location.href = '/frontend/public/index.html'; // 경로 정책에 맞춰 조정
+          location.href = '/'; 
         }, { once:true });
       }
       // 사람 아이콘: 마이페이지로

@@ -13,7 +13,7 @@
   <!-- 헤더 -->
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="#top" aria-label="BlackCat Security">
+      <a class="brand" href="/#top" aria-label="BlackCat Security">
         <img src="/frontend/public/assets/img/dark-logo.png" alt="" />
         <span class="brand-text">BlackCat Security</span>
       </a>
@@ -23,44 +23,44 @@
         <ul id="navMenu" class="nav-menu">
           <!-- 드롭다운: HOME -->
           <li class="has-sub">
-            <a class="toplink" href="/frontend/public/index.html#top"> 
+            <a class="toplink" href="/"> 
               HOME<span class="arrow"> </span></a>
           </li>
 
           <!-- 드롭다운: ABOUT -->
           <li class="has-sub">
-            <a class="toplink" href="/frontend/public/index.html#about">
+            <a class="toplink" href="/#about">
               ABOUT <span class="arrow"> </span></a>
           </li>
 
           <!-- 드롭다운: ACTIVIty -->
           <li class="has-sub">
-            <a class="toplink" href="/frontend/public/index.html#activities">
+            <a class="toplink" href="/#activities">
               ACTIVITY <span class="arrow">▼</span></a>
             <ul class="submenu">
-              <li><a href="/frontend/public/index.html#activities">스터디</a></li>
-              <li><a href="/frontend/public/index.html#activities">컨퍼런스</a></li>
-              <li><a href="/frontend/public/index.html#activities">ctf</a></li>
-              <li><a href="/frontend/public/index.html#activities">프로젝트</a></li>
+              <li><a href="/#activities">스터디</a></li>
+              <li><a href="/#activities">컨퍼런스</a></li>
+              <li><a href="/#activities">ctf</a></li>
+              <li><a href="/#activities">프로젝트</a></li>
             </ul>
           </li>
 
           <!-- 드롭다운: BOARD -->
           <li class="has-sub">
-            <a class="toplink" href="/frontend/public/index.html#board">
+            <a class="toplink" href="/#board">
               BOARD <span class="arrow">▼</span></a>
             <ul class="submenu">
-              <li><a href="/frontend/public/index.html#board">사진</a></li>
+              <li><a href="/#board">사진</a></li>
               <li><a href="#board-index containor">게시판</a></li>
             </ul>
           </li>
 
           <!-- 드롭다운: login -->
           <li class="has-sub">
-            <a class="toplink" id="loginMenu" href="/frontend/public/login.html">
+            <a class="toplink" id="loginMenu" href="/login">
               LOGIN <span class="arrow">▼</span></a>
             <ul class="submenu">
-              <li><a href="/frontend/public/login.html">로그인</a></li>
+              <li><a href="/login">로그인</a></li>
               <li><a href="#signup">회원가입</a></li>
               <li><a href="/account/recover.html">아이디/비밀번호 찾기</a></li>
             </ul>
@@ -70,7 +70,7 @@
 
       <!-- 헤더 아이콘 -->
       <div class="header-actions" role="group" aria-label="사용자/검색/언어">
-        <a class="icon-btn" id="personBtn" href="/frontend/public/login.html" aria-label="로그인">
+        <a class="icon-btn" id="personBtn" href="/login" aria-label="로그인">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/></svg>
         </a>
         <span class="vdiv" aria-hidden="true"></span>
@@ -228,7 +228,7 @@
       tbody.innerHTML = rows.map(r => `
         <tr>
           <td><span class="cat ${CAT_CLASS[r.cat]||'cat-free'}">${r.cat}</span></td>
-          <td class="tt"><a href="/frontend/public/post.html?page=${encodeURIComponent(r.pageId)}">${r.title}</a></td>
+          <td class="tt"><a href="/post?page=${encodeURIComponent(r.pageId)}">${r.title}</a></td>
           <td class="author">익명</td>
           <td><time>${fmtDate(r.date)}</time></td>
         </tr>
@@ -321,7 +321,7 @@
         e.preventDefault();
         clearToken();
         alert('로그아웃되었습니다.');
-        location.href = '/frontend/public/index.html';
+        location.href = '/';
       }, { once: true });
 
       // 2) 드롭다운 메뉴 제거 (로그인/회원가입/아이디찾기 숨김)
@@ -331,11 +331,11 @@
       loginLi?.classList.remove('has-sub');
 
       // 3) 사람 아이콘은 마이페이지로
-      personBtn?.setAttribute('href','/frontend/public/my.html');
+      personBtn?.setAttribute('href','/my');
     } else {
       // 비로그인: 기본 링크 유지
-      loginMenu?.setAttribute('href','/frontend/public/login.html');
-      personBtn?.setAttribute('href','/frontend/public/login.html');
+      loginMenu?.setAttribute('href','/login');
+      personBtn?.setAttribute('href','/login');
     }
   });
   </script>
