@@ -18,22 +18,21 @@ app.use(express.json());
 // 정적파일 서빙
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
 
-// 페이지 라우팅: 프렌들리 URL 매핑
+// API 라우트 먼저 처리 (우선순위 높음)
+// 보드 API 라우트
+const boardRoutes = require('./routes/board');
+app.use('/api/board', boardRoutes); // /api/board/list 등
+
+// AUTH API
+app.use('/api/auth', authRoutes);
+app.use('/', authRoutes); // POST /login, GET /me
+
+// 헬스체크
+app.get('/health', (_req, res) => res.json({ ok: true }));
+
+// 페이지 라우팅: HTML 파일 서빙
 app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'index.html'));
-});
-
-// /board: 쿼리에 page/download 있으면 기존 API로 넘기고, 아니면 보드 목록 페이지 서빙
-app.get('/board', (req, res, next) => {
-  if (typeof req.query.page !== 'undefined' || typeof req.query.download !== 'undefined') {
-    return next();
-  }
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'board.html'));
-});
-
-// 개별 게시글 페이지
-app.get('/post', (_req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'post.html'));
 });
 
 // 로그인 페이지
@@ -46,13 +45,29 @@ app.get('/my', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'my.html'));
 });
 
-// API - api/auth 아래 라우트는 routes/auth.js로 넘김
-// 관례상 엔드포인트 경로를 /api로 지정함
-app.use('/api/auth', authRoutes);
-// 프렌들리 경로도 지원: POST /login, GET /me
-app.use('/', authRoutes);
-// 프로세스 살아있나 헬스체크
-app.get('/health', (_req, res) => res.json({ ok: true }));
+// 개별 게시글 페이지 (post.html 서빙)
+app.get('/post', (_req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'post.html'));
+});
+
+// /board 경로 처리
+// - ?page=숫자 → boardRoutes로 넘김 (게시글 데이터 API)
+// - ?p=1, ?cat=공지사항 등 → board.html 서빙 (게시판 목록 페이지)
+app.get('/board', (req, res, next) => {
+  // page 쿼리가 있고 숫자면 API 라우트로
+  if (req.query.page && /^\d+$/.test(req.query.page)) {
+    return next();
+  }
+  // download 쿼리가 있으면 API 라우트로
+  if (typeof req.query.download !== 'undefined') {
+    return next();
+  }
+  // 그 외는 board.html 서빙 (페이지네이션 ?p=1 등)
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'board.html'));
+});
+
+// /board API 처리 (page=숫자, download 등)
+app.use('/board', boardRoutes);
 
 
 // 에러 처리 미들웨어 - 일단은 모든 오류에 500 상태코드만 응답하도록
@@ -60,11 +75,6 @@ app.use((err, _req, res, _next) => {
   console.error(err);
   res.status(500).json({ error: 'server error' });
 });
-
-
-// 보드 페이지 라우트 처리
-const boardRoutes = require('./routes/board');
-app.use('/board', boardRoutes);
 
 
 
