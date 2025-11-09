@@ -166,18 +166,18 @@
     // ===== 데이터: 1페이지 7개 / 2페이지 3개 =====
     const PAGES = {
       1: [
-        {pageId:1, cat:'공지사항',   title:'[공지] BlackCat 정기 세미나 진행',   date:'2025-04-02'},
-        {pageId:2, cat:'자유게시판', title:'kt에서 문자왔는데 이거 망한거냐?',     date:'2025-04-02'},
-        {pageId:3, cat:'자유게시판', title:'사진 올리고 싶은데',    date:'2025-04-02'},
-        {pageId:4, cat:'홍보게시판', title:'보안 스터디원 모집 (오프라인)',    date:'2025-04-02'},
-        {pageId:5, cat:'자유게시판', title:'우리집 고양이 사진',      date:'2025-04-02'},
-        {pageId:6, cat:'공지사항',   title:'[공지] BlackCat 종강총회 알림',  date:'2025-04-01'},  // ← 2p에서 이사
-        {pageId:7, cat:'비밀게시판', title:'문의드립니다',          date:'2025-04-01'},  // ← 2p에서 이사
+        {pageId:1, cat:'공지사항',   title:'[공지] BlackCat 정기 세미나 진행',   author:'admin',   date:'2025-04-02'},
+        {pageId:2, cat:'자유게시판', title:'kt에서 문자왔는데 이거 망한거냐?',    author:'bob',     date:'2025-04-02'},
+        {pageId:3, cat:'자유게시판', title:'사진 올리고 싶은데',                 author:'bob',     date:'2025-04-02'},
+        {pageId:4, cat:'홍보게시판', title:'보안 스터디원 모집 (오프라인)',       author:'charlie', date:'2025-04-02'},
+        {pageId:5, cat:'자유게시판', title:'우리집 고양이 사진',                 author:'diana',   date:'2025-04-02'},
+        {pageId:6, cat:'공지사항',   title:'[공지] BlackCat 종강총회 알림',      author:'admin',   date:'2025-04-01'},  // ← 2p에서 이사
+        {pageId:7, cat:'비밀게시판', title:'문의드립니다',                       author:'익명',      date:'2025-04-01'},  // ← 2p에서 이사
       ],
       2: [
-        {pageId:8,  cat:'자유게시판', title:'한로로 노래 안 들어본 사람도 있나',         date:'2025-04-01'},
-        {pageId:9,  cat:'홍보게시판', title:'프로젝트 할 사람 모집',           date:'2025-04-01'},
-        {pageId:10, cat:'비밀게시판', title:'고양이 사진 올리는 법.txt',                date:'2025-04-01'},
+        {pageId:8,  cat:'자유게시판', title:'한로로 노래 안 들어본 사람도 있나',  author:'alice',     date:'2025-04-01'},
+        {pageId:9,  cat:'홍보게시판', title:'프로젝트 할 사람 모집',              author:'alice',     date:'2025-04-01'},
+        {pageId:10, cat:'비밀게시판', title:'고양이 사진 올리는 법.txt',          author:'익명',      date:'2025-04-01'},
       ],
     };
 
@@ -224,7 +224,7 @@
         <tr>
           <td><span class="cat ${CAT_CLASS[r.cat]||'cat-free'}">${r.cat}</span></td>
           <td class="tt"><a href="/post?page=${encodeURIComponent(r.pageId)}">${r.title}</a></td>
-          <td class="author">익명</td>
+          <td class="author">${r.author}</td>
           <td><time>${fmtDate(r.date)}</time></td>
         </tr>
       `).join('');
