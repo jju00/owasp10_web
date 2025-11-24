@@ -29,13 +29,34 @@ router.get('/', requireLoginIfNumericPage, (req, res) => {
     
     // 게시글이 있으면 정상 처리
     if (post) {
-      // 본문(JSON): 비밀글은 작성자만 허용 (그 외 403)
-      if (post.cat === '비밀게시판') {
-        if (!req.user || req.user.id !== post.authorId) {
-          return res.status(403).json({ error: 'forbidden: secret post' });
-        }
+      // 비밀글 권한 체크
+      const isSecretPost = post.cat === '비밀게시판';
+      const isAuthor = req.user && req.user.id === post.authorId;
+      
+      if (isSecretPost && !isAuthor) {
+        return res.status(403).json({ error: 'forbidden: secret post' });
       }
 
+      // 첨부파일 다운로드 요청
+      if (req.query.download) {
+        const att = post.attachments?.[0];
+        if (!att) return res.status(404).json({ error: 'no file' });
+        
+        const abs = path.join(process.cwd(), att.path);
+        return res.download(abs, att.name, {
+          cacheControl: false,
+          etag: false,
+          lastModified: false,
+          headers: {
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+            'Surrogate-Control': 'no-store'
+          }
+        });
+      }
+
+      // 게시글 본문 반환
       return res.json(post);
     }
   }
