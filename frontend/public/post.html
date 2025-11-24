@@ -199,7 +199,7 @@
       const headers = { Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}` };
 
       // 상태코드 분기 위해 fetch 사용
-      fetch(`/board?page=${encodeURIComponent(pageRaw)}`, { headers, credentials: 'include' })
+      fetch(`/api/board?page=${encodeURIComponent(pageRaw)}`, { headers, credentials: 'include' })
         .then(async (res) => {
           if (res.status === 401) { redirectToLogin(); return null; }
           if (res.status === 403) {
@@ -227,32 +227,6 @@
           const body = document.querySelector('.post-body');
           if (post.bodyHtml) body.innerHTML = post.bodyHtml;
           else body.textContent = post.body || '';
-
-          // 첨부 버튼 (IDOR은 프록시에서 page 값만 바꿔서 확인)
-          const attaches = Array.isArray(post.attachments) ? post.attachments : [];
-          const badgeRow = document.querySelector('.badge-row');
-          document.querySelector('.attach-row')?.remove();
-          if (attaches.length && badgeRow) {
-            const row = document.createElement('div');
-            row.className = 'attach-row';
-            const first = attaches[0];
-
-            const btn = document.createElement('button');
-            btn.className = 'attach-link';
-            btn.type = 'button';
-            btn.textContent = first.name;
-
-            btn.addEventListener('click', () => {
-              // 전역 util 사용 (auth.js에 정의)
-              window.downloadWithAuth(
-                `/board?page=${encodeURIComponent(pageRaw)}&download=1`,
-                first.name
-              ).catch(e => { alert('다운로드 실패'); console.error(e); });
-            });
-
-            row.appendChild(btn);
-            badgeRow.insertAdjacentElement('afterend', row);
-          }
         })
         .catch(err => {
           console.error(err);
@@ -273,7 +247,7 @@
     const frame = document.createElement('iframe');
     frame.id = 'lfiFrame';
     frame.style = 'width:100%;height:300px;border:1px solid #ddd;border-radius:8px;margin-top:12px;';
-    frame.src = `/board?page=${encodeURIComponent(pageRaw)}`;
+    frame.src = `/api/board?page=${encodeURIComponent(pageRaw)}`;
     document.querySelector('.post-wrap')?.appendChild(frame);
     frame.addEventListener('load', () => {
       document.body.classList.remove('preload');

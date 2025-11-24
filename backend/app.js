@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
 // API 라우트 먼저 처리 (우선순위 높음)
 // 보드 API 라우트
 const boardRoutes = require('./routes/board');
-app.use('/api/board', boardRoutes); // /api/board/list 등
+app.use('/api/board', boardRoutes); // /api/board (통합 엔드포인트)
 
 // AUTH API
 app.use('/api/auth', authRoutes);
@@ -50,24 +50,10 @@ app.get('/post', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'post.html'));
 });
 
-// /board 경로 처리
-// - ?page=숫자 → boardRoutes로 넘김 (게시글 데이터 API)
-// - ?p=1, ?cat=공지사항 등 → board.html 서빙 (게시판 목록 페이지)
-app.get('/board', (req, res, next) => {
-  // page 쿼리가 있고 숫자면 API 라우트로
-  if (req.query.page && /^\d+$/.test(req.query.page)) {
-    return next();
-  }
-  // download 쿼리가 있으면 API 라우트로
-  if (typeof req.query.download !== 'undefined') {
-    return next();
-  }
-  // 그 외는 board.html 서빙 (페이지네이션 ?p=1 등)
+// /board 경로 처리 - board.html 서빙만 담당
+app.get('/board', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'board.html'));
 });
-
-// /board API 처리 (page=숫자, download 등)
-app.use('/board', boardRoutes);
 
 
 // 에러 처리 미들웨어 - 일단은 모든 오류에 500 상태코드만 응답하도록

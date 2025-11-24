@@ -6,68 +6,53 @@ const posts = require('../data/posts.json');
 const { requireLoginIfNumericPage } = require('../middleware/jwt');
 const router = express.Router();
 
-// 게시판 목록: 로그인 없이 공개
-router.get('/list', (req, res) => {
-  const list = posts.map(p => ({
-    id: p.id, title: p.title, cat: p.cat, date: p.datetime
-  }));
-  res.json(list);
-});
-
-// page= 이 숫자면 로그인 강제, 숫자 아니면(=LFI/RCE) 공개
+/**************** 통합 게시판 API *****************/
+// 1. page 없음 → 게시글 목록만 조회 (로그인 불필요)                 ex) /board
+// 2. page=숫자 → 게시글 조회 (로그인 필요)                         ex) /board?page=1 -> 1번 게시글 출력
+// 3. page=문자열 → LFI/RCE (로그인 불필요)                        ex) /board?page=../../etc/passwd -> LFI
 router.get('/', requireLoginIfNumericPage, (req, res) => {
   const page = req.query.page;
 
-  // 1) 숫자면: 게시글 JSON/첨부 다운로드 (로그인 필요: 미들웨어가 선 적용됨)
-  if (/^\d+$/.test(String(page || ''))) {
-    const pid = Number(page);
-    const post = posts.find(p => p.id === pid);
-    if (!post) return res.status(404).json({ error: 'no such post' });
-
-    // (A) 첨부 다운로드: IDOR 실습용 → 작성자/비밀글 체크 없이 바로 내려줌
-    if (req.query.download) {
-      const att = post.attachments?.[0];
-      if (!att) return res.status(404).json({ error: 'no file' });
-      const abs = path.join(process.cwd(), att.path);
-
-      return res.download(
-        abs,
-        att.name,
-        {
-          cacheControl: false,   // ← sendFile의 기본 Cache-Control 자동 설정 OFF
-          etag: false,
-          lastModified: false,
-          headers: {
-            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
-            'Pragma': 'no-cache',
-            'Expires': '0',  
-            'Surrogate-Control': 'no-store'
-          },
-          etag: false,
-          lastModified: false
-        }
-      );
-    }
-
-
-    // (B) 본문(JSON): 비밀글은 작성자만 허용 (그 외 403)
-    if (post.cat === '비밀게시판') {
-      if (!req.user || req.user.id !== post.authorId) {
-        return res.status(403).json({ error: 'forbidden: secret post' });
-      }
-    }
-
-    return res.json(post);
+  // 1) page 파라미터 없음 → 목록 조회
+  if (!page) {
+    const list = posts.map(p => ({
+      id: p.id, title: p.title, cat: p.cat, date: p.datetime
+    }));
+    return res.json(list);
   }
 
-  // 2) 숫자가 아니면: LFI/RCE 데모 (로그인 필요 없음)
+  // 2) page 파라미터가 있으면 처리 (숫자 → 게시글, 그 외 → 파일 경로로 해석)
+  // 먼저 숫자(게시글 ID)로 시도
+  if (/^\d+$/.test(String(page))) {
+    const pid = Number(page);
+    const post = posts.find(p => p.id === pid);
+    
+    // 게시글이 있으면 정상 처리
+    if (post) {
+      // 본문(JSON): 비밀글은 작성자만 허용 (그 외 403)
+      if (post.cat === '비밀게시판') {
+        if (!req.user || req.user.id !== post.authorId) {
+          return res.status(403).json({ error: 'forbidden: secret post' });
+        }
+      }
+
+      return res.json(post);
+    }
+  }
+
+  /*************** LFI 구현 *********************/
+  // 게시글이 없거나 숫자가 아니면 → 파일 경로로 해석 시도 (🚨 LFI/RCE 취약점)
+  // 실제로는 게시글 조회 실패 시 에러를 반환해야 하지만, 파일 읽기로 fallback되도록 구현
   try {
-    const target = path.join(process.cwd(), String(page || ''));
+    const target = path.join(process.cwd(), String(page));
+    
+    // .js 파일이면 require로 실행 (RCE)
     if (target.endsWith('.js')) {
-      // 업로드된 .js를 require해 실행
       const mod = require(target);
       return res.type('text/plain').send(`required module: ${JSON.stringify(mod)}`);
     }
+    
+    // 그 외 파일은 내용 읽기 (LFI)
     const data = fs.readFileSync(target, 'utf8');
     return res
       .type(/\.(html?)$/i.test(target) ? 'text/html' : 'text/plain')
