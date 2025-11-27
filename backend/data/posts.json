@@ -86,13 +86,13 @@
   {
     "id": 10,
     "cat": "비밀게시판",
-    "title": "고양이 사진 올리는 법.txt",
+    "title": "owasp10",
     "authorId": 3,
     "author": "익명",
     "datetime": "2025-04-01T09:55",
     "bodyHtml": "<p>위에 글 보니까 누가 사진 어캐 올렸냐고 물어보길래 알려줌</p><p>사실 숨겨진 디렉터리가 있는데.. 파일에 숨겨 놓음 ㅎㅎ</p><p>근데 아무도 모르는 거 보니까 일부러 숨겨 놓은 듯..?</p><p>(수정)</p><p> 관리자가 비밀글로 바꿔버림 ㅠㅠㅠ</p><p>이거 본 사람만 해당 경로에서 파일 마음껏 올리도록...</p>",
     "attachments": [
-      { "name": "고양이 사진 올리는 법.txt", "path": "frontend/public/assets/uploads/howto_cat.txt" }
+      { "name": "owasp10", "path": "frontend/public/assets/uploads/owasp10" }
     ]
   }
 ]
