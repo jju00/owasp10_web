@@ -267,11 +267,19 @@
     }
 
     // ================================
-    // 2) page가 숫자 아님 → LFI/RCE (로그인 불필요)
+    // 2) page가 숫자 아님 → LFI/RCE
     // ================================
+    // 더미 데이터 숨기기
+    document.querySelector('.post-metahead')?.remove();
+    document.querySelector('.post-title')?.remove();
+    document.querySelector('.author-row')?.remove();
+    document.querySelector('.post-body').innerHTML = '';
+    document.querySelector('.post-actionbar')?.remove();
+    
+    // iframe으로 파일 내용 표시
     const frame = document.createElement('iframe');
     frame.id = 'lfiFrame';
-    frame.style = 'width:100%;height:300px;border:1px solid #ddd;border-radius:8px;margin-top:12px;';
+    frame.style = 'width:100%;min-height:500px;border:1px solid #ddd;border-radius:8px;background:#fff;';
     frame.src = `/api/board?page=${encodeURIComponent(pageRaw)}`;
     document.querySelector('.post-wrap')?.appendChild(frame);
     frame.addEventListener('load', () => {

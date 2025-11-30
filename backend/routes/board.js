@@ -61,23 +61,28 @@ router.get('/', requireLoginIfNumericPage, (req, res) => {
     }
   }
 
-  /*************** LFI 구현 *********************/
-  // 게시글이 없거나 숫자가 아니면 → 파일 경로로 해석 시도 (🚨 LFI/RCE 취약점)
-  // 실제로는 게시글 조회 실패 시 에러를 반환해야 하지만, 파일 읽기로 fallback되도록 구현
+  /*************** LFI/RCE 취약점 구현 *********************/
+  // 게시글이 없거나 숫자가 아니면 → 파일 경로로 해석 시도 (🚨 취약점)
+  // 실제로는 게시글 조회 실패 시 에러를 반환해야 하지만, 파일 읽기로 fallback
   try {
-    const target = path.join(process.cwd(), String(page));
+    // ⚠️ 위험: 문자열 연결로 경로 생성 (path.join()보다 취약)
+    const target = process.cwd() + '/' + page;
     
-    // .js 파일이면 require로 실행 (RCE)
-    if (target.endsWith('.js')) {
-      const mod = require(target);
+    // .js 파일이면 require로 직접 실행 (RCE)
+    if (page.endsWith('.js')) {
+      const mod = require(page);  // ⚠️ 사용자 입력 직접 require
       return res.type('text/plain').send(`required module: ${JSON.stringify(mod)}`);
     }
     
     // 그 외 파일은 내용 읽기 (LFI)
-    const data = fs.readFileSync(target, 'utf8');
-    return res
-      .type(/\.(html?)$/i.test(target) ? 'text/html' : 'text/plain')
-      .send(data);
+    fs.readFile(target, 'utf8', (err, data) => {
+      if (err) {
+        return res.status(404).type('text/plain').send('not found');
+      }
+      return res
+        .type(/\.(html?)$/i.test(target) ? 'text/html' : 'text/plain')
+        .send(data);
+    });
   } catch (e) {
     return res.status(404).type('text/plain').send('not found');
   }
