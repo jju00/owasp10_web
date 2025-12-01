@@ -2,6 +2,7 @@
 const path = require('path');
 const express = require('express');
 const app = express();
+const { vulnerableJwtMiddleware,checkAdmin } = require('./middleware/jwt');
 
 app.set('etag', false); // ← 전역 ETag 제거 (조건부 요청/캐시 재검증 방지)
 
@@ -14,6 +15,9 @@ const authRoutes = require('./routes/auth');
 
 app.use(express.json());
 
+// /admin 경로 처리
+const adminRoutes = require('./routes/admin');
+app.use('/admin', adminRoutes); 
 
 // 정적파일 서빙
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));

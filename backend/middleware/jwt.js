@@ -86,7 +86,22 @@ function requireLoginIfNumericPage(req, res, next) {
   return vulnerableJwtMiddleware(req, res, next); // 상세글은 토큰 요구
 }
 
+// admin 접근 제한
+function checkAdmin(req, res, next) {
+  const user = req.user;  // JWT payload
+  // JWT 미들웨어가 req.user를 설정하지 못한 경우
+  if (!user) {
+    return res.status(401).json({ error: 'No token or invalid token' });
+  }
+  // role 확인
+  if (user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admins only' });
+  }
+  next();
+}
+
 module.exports = {
   vulnerableJwtMiddleware,
-  requireLoginIfNumericPage
+  requireLoginIfNumericPage,
+  checkAdmin
 };
