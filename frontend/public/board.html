@@ -223,7 +223,7 @@
       tbody.innerHTML = rows.map(r => `
         <tr>
           <td><span class="cat ${CAT_CLASS[r.cat]||'cat-free'}">${r.cat}</span></td>
-          <td class="tt"><a href="/post?page=${encodeURIComponent(r.pageId)}">${r.title}</a></td>
+          <td class="tt"><a href="/post/${r.pageId}">${r.title}</a></td>
           <td class="author">${r.author}</td>
           <td><time>${fmtDate(r.date)}</time></td>
         </tr>

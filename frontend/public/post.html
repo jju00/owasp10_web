@@ -178,36 +178,47 @@
   <script src="/frontend/public/assets/js/auth.js"></script>
   <script>
   (function () {
-    const usp = new URLSearchParams(location.search);
-    const pageRaw = usp.get('page') || '1';
-    const isNumeric = /^\d+$/.test(pageRaw);
+    // URL 경로에서 게시글 ID 추출 (예: /post/8 → 8)
+    const pathParts = location.pathname.split('/');
+    const postId = pathParts[pathParts.length - 1];
 
     // 보호 리소스 접근 시 로그인 페이지로 보내기 (returnTo 포함)
     function redirectToLogin() {
-      const here = encodeURIComponent(location.pathname + location.search);
-      // 경로 통일
+      const here = encodeURIComponent(location.pathname);
       location.assign(`/login?returnTo=${here}`);
     }
 
-    // ================================
-    // 1) page가 숫자 → 보호 API(JSON)
-    // ================================
-    if (isNumeric) {
-      const token = (window.getToken && window.getToken()) || null;
-      if (!token) return redirectToLogin();
+    // 게시글 조회
+    const token = (window.getToken && window.getToken()) || null;
+    if (!token) return redirectToLogin();
 
-      const headers = { Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}` };
+    const headers = { Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}` };
 
-      // 상태코드 분기 위해 fetch 사용
-      fetch(`/api/board?page=${encodeURIComponent(pageRaw)}`, { headers, credentials: 'include' })
+    // API 호출
+    console.log('Fetching post ID:', postId);
+    console.log('API URL:', `/api/board/${encodeURIComponent(postId)}`);
+    
+    fetch(`/api/board/${encodeURIComponent(postId)}`, { headers, credentials: 'include' })
         .then(async (res) => {
-          if (res.status === 401) { redirectToLogin(); return null; }
+          console.log('API Response status:', res.status);
+          
+          if (res.status === 401) { 
+            redirectToLogin(); 
+            return null; 
+          }
           if (res.status === 403) {
             document.querySelector('.post-body').innerHTML =
               '<p style="color:#e66">다른 사람의 비밀글은 확인할 수 없습니다.</p>';
+            document.body.classList.remove('preload');
             return null;
           }
-          if (!res.ok) throw new Error('fail ' + res.status);
+          if (res.status === 404) {
+            alert('게시글을 찾을 수 없습니다.');
+            return null;
+          }
+          if (!res.ok) {
+            throw new Error('HTTP ' + res.status);
+          }
           return res.json();
         })
         .then(post => {
@@ -244,7 +255,7 @@
 
             btn.addEventListener('click', () => {
               window.downloadWithAuth(
-                `/api/board?page=${encodeURIComponent(pageRaw)}&download=1`,
+                `/api/board/${encodeURIComponent(postId)}?download=1`,
                 first.name
               ).catch(e => { alert('다운로드 실패'); console.error(e); });
             });
@@ -254,37 +265,14 @@
           }
         })
         .catch(err => {
-          console.error(err);
-          // 보호 API 실패(401/403 포함) 시 로그인으로
-          redirectToLogin();
+          console.error('Error fetching post:', err);
+          alert('게시글을 불러오는 중 오류가 발생했습니다: ' + err.message);
+          document.body.classList.remove('preload');
         })
         .finally(() => {
-        // 이제 실제 데이터가 들어갔으니 보여준다
-        document.body.classList.remove('preload');
+          // 이제 실제 데이터가 들어갔으니 보여준다
+          document.body.classList.remove('preload');
         });
-
-      return; // 숫자 처리 끝
-    }
-
-    // ================================
-    // 2) page가 숫자 아님 → LFI/RCE
-    // ================================
-    // 더미 데이터 숨기기
-    document.querySelector('.post-metahead')?.remove();
-    document.querySelector('.post-title')?.remove();
-    document.querySelector('.author-row')?.remove();
-    document.querySelector('.post-body').innerHTML = '';
-    document.querySelector('.post-actionbar')?.remove();
-    
-    // iframe으로 파일 내용 표시
-    const frame = document.createElement('iframe');
-    frame.id = 'lfiFrame';
-    frame.style = 'width:100%;min-height:500px;border:1px solid #ddd;border-radius:8px;background:#fff;';
-    frame.src = `/api/board?page=${encodeURIComponent(pageRaw)}`;
-    document.querySelector('.post-wrap')?.appendChild(frame);
-    frame.addEventListener('load', () => {
-      document.body.classList.remove('preload');
-    });
   })();
   </script>
 
