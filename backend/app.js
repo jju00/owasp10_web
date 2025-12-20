@@ -76,6 +76,8 @@ app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'index.html'));
 });
 
+
+/*********** 페이지 라우팅 (프론트) ***********/
 // 로그인 페이지
 app.get('/login', (_req, res) => {
   noCacheHeaders(res);
@@ -109,7 +111,7 @@ app.use((err, _req, res, _next) => {
 
 
 
-// db
+/*********** db ***********/
 const pool = require('./config/db');
 app.get('/health/db', async (_req, res) => {
   try {
