@@ -22,10 +22,14 @@ app.use('/admin', adminRoutes);
 // 정적파일 서빙
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
 
-// API 라우트 먼저 처리 (우선순위 높음)
+/**************  API 라우트 **************/
 // 보드 API 라우트
 const boardRoutes = require('./routes/board');
 app.use('/api/board', boardRoutes); // /api/board (통합 엔드포인트)
+
+// 프로필 API 라우트
+const profileRoutes = require('./routes/profile');
+app.use('/api/profile', profileRoutes); // /api/profile/:userId
 
 // AUTH API
 app.use('/api/auth', authRoutes);
@@ -34,7 +38,8 @@ app.use('/', authRoutes); // POST /login, GET /me
 // 헬스체크
 app.get('/health', (_req, res) => res.json({ ok: true }));
 
-// 페이지 라우팅: HTML 파일 서빙
+
+/************** 페이지 라우팅: HTML 파일 서빙 **************/
 app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'index.html'));
 });
@@ -44,13 +49,13 @@ app.get('/login', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'login.html'));
 });
 
-// 마이 페이지
-app.get('/my', (_req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'my.html'));
+// 프로필 페이지
+app.get('/profile/:id', (_req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'profile.html'));
 });
 
 // 개별 게시글 페이지 (post.html 서빙)
-app.get('/post', (_req, res) => {
+app.get('/post/:id', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'post.html'));
 });
 

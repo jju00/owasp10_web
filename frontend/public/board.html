@@ -51,7 +51,7 @@
               BOARD <span class="arrow">▼</span></a>
             <ul class="submenu">
               <li><a href="/#board">사진</a></li>
-              <li><a href="#board-index containor">게시판</a></li>
+              <li><a href="/board">게시판</a></li>
             </ul>
           </li>
 
@@ -326,7 +326,7 @@
       loginLi?.classList.remove('has-sub');
 
       // 3) 사람 아이콘은 마이페이지로
-      personBtn?.setAttribute('href','/my');
+      personBtn?.setAttribute('href','/profile/me');
     } else {
       // 비로그인: 기본 링크 유지
       loginMenu?.setAttribute('href','/login');
