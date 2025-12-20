@@ -9,7 +9,6 @@ app.set('etag', false); // ← 전역 ETag 제거 (조건부 요청/캐시 재�
 // 경로 통일
 app.use('/frontend/public', express.static(path.join(__dirname, '..', 'frontend', 'public')));
 
-
 // 서브라우터 분리 - 경로: routes/auth.js (로그인 처리)
 const authRoutes = require('./routes/auth');
 
@@ -22,7 +21,7 @@ app.use('/admin', adminRoutes);
 // 정적파일 서빙
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
 
-// API 라우트 먼저 처리 (우선순위 높음)
+/*********** API 라우트 ***********/
 // 보드 API 라우트
 const boardRoutes = require('./routes/board');
 app.use('/api/board', boardRoutes); // /api/board (통합 엔드포인트)
@@ -39,6 +38,8 @@ app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'index.html'));
 });
 
+
+/*********** 페이지 라우팅 (프론트) ***********/
 // 로그인 페이지
 app.get('/login', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'login.html'));
@@ -50,7 +51,7 @@ app.get('/my', (_req, res) => {
 });
 
 // 개별 게시글 페이지 (post.html 서빙)
-app.get('/post', (_req, res) => {
+app.get('/post/:id', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'post.html'));
 });
 
@@ -68,7 +69,7 @@ app.use((err, _req, res, _next) => {
 
 
 
-// db
+/*********** db ***********/
 const pool = require('./config/db');
 app.get('/health/db', async (_req, res) => {
   try {
