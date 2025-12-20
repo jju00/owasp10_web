@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <title>BlackCat Security | Board</title>
+  <title>BlackCat Security | Profile</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="BlackCat Security 게시판" />
+  <meta name="description" content="BlackCat Security 프로필" />
   <link rel="stylesheet" href="/frontend/public/assets/css/style.css" />
   <link rel="stylesheet" href="/frontend/public/assets/css/board.css" />
 </head>
@@ -49,7 +49,7 @@
               BOARD <span class="arrow">▼</span></a>
             <ul class="submenu">
               <li><a href="/#board">사진</a></li>
-              <li><a href="#board-index containor">게시판</a></li>
+              <li><a href="/board">게시판</a></li>
             </ul>
           </li>
 
@@ -85,13 +85,15 @@
 
 
   <section class="board-index container">
-    <h1>👤 마이페이지</h1>
-    <p><strong>내 아이디:</strong> <span id="username">로딩 중...</span></p>
+    <h1>👤 프로필</h1>
+    <p><strong>아이디:</strong> <span id="username">로딩 중...</span></p>
+    <p><strong>User ID:</strong> <span id="userId">로딩 중...</span></p>
+    <p><strong>Role:</strong> <span id="userRole">로딩 중...</span></p>
     <p><strong>가입 날짜:</strong> 2025.05.06.</p>
     <a href="">커뮤니티 이용 규칙</a>
 
 
-    <h2>📝 내가 쓴 글</h2>
+    <h2>📝 작성한 글</h2>
 
       <!-- 목록 테이블 -->
       <div class="board-main">
@@ -112,65 +114,117 @@
     <p>버전: 1.0.11.7</p>
   </section>
 
+  <script src="/frontend/public/assets/js/auth.js"></script>
   <script>
-    const token = localStorage.getItem('jwt_token');
-    if (!token) {
-      document.body.innerHTML = '<p>로그인 정보가 없습니다.</p>';
-      throw new Error('No token');
-    }
+    (function() {
+      // 로그인 체크
+      const token = (window.getToken && window.getToken()) || null;
+      if (!token) {
+        alert('로그인이 필요합니다.');
+        location.href = '/login?returnTo=' + encodeURIComponent(location.pathname);
+        return;
+      }
 
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const username = payload.username;
-    document.getElementById('username').textContent = username;
+      const headers = { 
+        Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}` 
+      };
 
-    const PAGES = {
-      1: [
-        {pageId:1, cat:'공지사항',   title:'[공지] BlackCat 정기 세미나 진행',   author:'admin',   date:'2025-04-02'},
-        {pageId:2, cat:'자유게시판', title:'kt에서 문자왔는데 이거 망한거냐?',    author:'bob',     date:'2025-04-02'},
-        {pageId:3, cat:'자유게시판', title:'사진 올리고 싶은데',                 author:'bob',     date:'2025-04-02'},
-        {pageId:4, cat:'홍보게시판', title:'보안 스터디원 모집 (오프라인)',       author:'charlie', date:'2025-04-02'},
-        {pageId:5, cat:'자유게시판', title:'우리집 고양이 사진',                 author:'diana',   date:'2025-04-02'},
-        {pageId:6, cat:'공지사항',   title:'[공지] BlackCat 종강총회 알림',      author:'admin',   date:'2025-04-01'},
-        {pageId:7, cat:'비밀게시판', title:'문의드립니다',                       author:'익명',     date:'2025-04-01'},
-      ],
-      2: [
-        {pageId:8,  cat:'자유게시판', title:'한로로 노래 안 들어본 사람도 있나',  author:'alice',   date:'2025-04-01'},
-        {pageId:9,  cat:'홍보게시판', title:'프로젝트 할 사람 모집',              author:'alice',   date:'2025-04-01'},
-        {pageId:10, cat:'비밀게시판', title:'고양이 사진 올리는 법.txt',          author:'익명',     date:'2025-04-01'},
-      ],
-    };
+      // URL 경로에서 프로필 ID 추출 (예: /profile/2 → 2, /profile/me → me)
+      const pathParts = location.pathname.split('/');
+      const profileId = pathParts[pathParts.length - 1] || 'me';
 
-    const CAT_CLASS = {
-      '공지사항': 'cat-noti',
-      '자유게시판': 'cat-free',
-      '비밀게시판': 'cat-secret',
-      '홍보게시판': 'cat-promo',
-    };
+      // /profile/me 접근 시 자동으로 실제 userId로 리다이렉트
+      if (profileId === 'me') {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const myUserId = payload.id;
+        location.replace('/profile/' + myUserId);
+        return;
+      }
 
-    const ul = document.getElementById('my-posts');
-    ul.innerHTML = '';
+      // API 엔드포인트 (항상 숫자 ID로만 호출)
+      const apiUrl = `/api/profile/${encodeURIComponent(profileId)}`;  // IDOR 취약점
 
-    const allPosts = Object.values(PAGES).flat();
-    const myPosts = allPosts.filter(post => post.author === username);
+      // 프로필 정보 조회
+      fetch(apiUrl, { headers, credentials: 'include' })
+        .then(async (res) => {
+          if (res.status === 401) {
+            alert('로그인이 만료되었습니다.');
+            location.href = '/login?returnTo=' + encodeURIComponent(location.pathname);
+            return null;
+          }
+          if (res.status === 403) {
+            alert('접근 권한이 없습니다. (Admin 프로필은 조회할 수 없습니다)');
+            return null;
+          }
+          if (res.status === 404) {
+            alert('사용자를 찾을 수 없습니다.');
+            return null;
+          }
+          if (!res.ok) throw new Error('fail ' + res.status);
+          return res.json();
+        })
+        .then(profile => {
+          if (!profile) return;
 
-    if (myPosts.length === 0) {
-      ul.innerHTML = '<tr><td colspan="4">작성한 글이 없습니다.</td></tr>';
-    } else {
-      myPosts.forEach(post => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><span class="cat ${CAT_CLASS[post.cat] || ''}">${post.cat}</span></td>
-          <td class="tt"><a href="/post?page=${post.pageId}">${post.title}</a></td>
-          <td class="author">${post.author}</td>
-          <td>${post.date.slice(5)}</td>
-        `;
-        ul.appendChild(tr);
-      });
-    }
+          // 프로필 정보 표시
+          document.getElementById('username').textContent = profile.username || '알 수 없음';
+          document.getElementById('userId').textContent = profile.id || '알 수 없음';
+          document.getElementById('userRole').textContent = profile.role || '알 수 없음';
+
+          // 게시글 목록 렌더링 (더미 데이터 - 실제로는 API로 받아와야 함)
+          const PAGES = {
+            1: [
+              {pageId:1, cat:'공지사항',   title:'[공지] BlackCat 정기 세미나 진행',   author:'admin',   date:'2025-04-02'},
+              {pageId:2, cat:'자유게시판', title:'kt에서 문자왔는데 이거 망한거냐?',    author:'bob',     date:'2025-04-02'},
+              {pageId:3, cat:'자유게시판', title:'사진 올리고 싶은데',                 author:'bob',     date:'2025-04-02'},
+              {pageId:4, cat:'홍보게시판', title:'보안 스터디원 모집 (오프라인)',       author:'charlie', date:'2025-04-02'},
+              {pageId:5, cat:'자유게시판', title:'우리집 고양이 사진',                 author:'diana',   date:'2025-04-02'},
+              {pageId:6, cat:'공지사항',   title:'[공지] BlackCat 종강총회 알림',      author:'admin',   date:'2025-04-01'},
+              {pageId:7, cat:'비밀게시판', title:'문의드립니다',                       author:'익명',     date:'2025-04-01'},
+            ],
+            2: [
+              {pageId:8,  cat:'자유게시판', title:'한로로 노래 안 들어본 사람도 있나',  author:'alice',   date:'2025-04-01'},
+              {pageId:9,  cat:'홍보게시판', title:'프로젝트 할 사람 모집',              author:'alice',   date:'2025-04-01'},
+              {pageId:10, cat:'비밀게시판', title:'고양이 사진 올리는 법.txt',          author:'익명',     date:'2025-04-01'},
+            ],
+          };
+
+          const CAT_CLASS = {
+            '공지사항': 'cat-noti',
+            '자유게시판': 'cat-free',
+            '비밀게시판': 'cat-secret',
+            '홍보게시판': 'cat-promo',
+          };
+
+          const tbody = document.getElementById('my-posts');
+          tbody.innerHTML = '';
+
+          const allPosts = Object.values(PAGES).flat();
+          const myPosts = allPosts.filter(post => post.author === profile.username);
+
+          if (myPosts.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4">작성한 글이 없습니다.</td></tr>';
+          } else {
+            myPosts.forEach(post => {
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td><span class="cat ${CAT_CLASS[post.cat] || ''}">${post.cat}</span></td>
+                <td class="tt"><a href="/post/${post.pageId}">${post.title}</a></td>
+                <td class="author">${post.author}</td>
+                <td>${post.date.slice(5)}</td>
+              `;
+              tbody.appendChild(tr);
+            });
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert('프로필을 불러오는 중 오류가 발생했습니다.');
+        });
+    })();
   </script>
 
     <!-- 로그인 상태에 따라 GNB 갱신 -->
-  <script src="/frontend/public/assets/js/auth.js"></script>
   <script>
   document.addEventListener('DOMContentLoaded', () => {
     const loginMenu = document.getElementById('loginMenu');          // <a id="loginMenu">LOGIN ▼</a>
@@ -199,7 +253,7 @@
       loginLi?.classList.remove('has-sub');
 
       // 3) 사람 아이콘은 마이페이지로
-      personBtn?.setAttribute('href','/my');
+      personBtn?.setAttribute('href','/profile/me');
     } else {
       // 비로그인: 기본 링크 유지
       loginMenu?.setAttribute('href','/login');
@@ -217,3 +271,4 @@
   </footer>
 </body>
 </html>
+

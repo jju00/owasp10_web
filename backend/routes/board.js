@@ -1,6 +1,5 @@
 // backend/routes/board.js
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const posts = require('../data/posts.json');
 const { vulnerableJwtMiddleware } = require('../middleware/jwt');

@@ -181,7 +181,7 @@
     // URL 경로에서 게시글 ID 추출 (예: /post/8 → 8)
     const pathParts = location.pathname.split('/');
     const postId = pathParts[pathParts.length - 1];
-    
+
     // 보호 리소스 접근 시 로그인 페이지로 보내기 (returnTo 포함)
     function redirectToLogin() {
       const here = encodeURIComponent(location.pathname);
@@ -190,91 +190,89 @@
 
     // 게시글 조회
     const token = (window.getToken && window.getToken()) || null;
-    if (!token) {
-      redirectToLogin();
-      return;
-    }
+    if (!token) return redirectToLogin();
 
-    const headers = { 
-      Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}` 
-    };
+    const headers = { Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}` };
 
     // API 호출
-    fetch(`/api/board/${encodeURIComponent(postId)}`, { 
-      headers, 
-      credentials: 'include' 
-    })
-      .then(async (res) => {
-        if (res.status === 401) { 
-          redirectToLogin(); 
-          return null; 
-        }
-        if (res.status === 403) {
-          document.querySelector('.post-body').innerHTML =
-            '<p style="color:#e66">다른 사람의 비밀글은 확인할 수 없습니다.</p>';
-          return null;
-        }
-        if (!res.ok) throw new Error('fail ' + res.status);
-        return res.json();
-      })
-      .then(post => {
-        if (!post) return;
+    console.log('Fetching post ID:', postId);
+    console.log('API URL:', `/api/board/${encodeURIComponent(postId)}`);
+    
+    fetch(`/api/board/${encodeURIComponent(postId)}`, { headers, credentials: 'include' })
+        .then(async (res) => {
+          console.log('API Response status:', res.status);
+          
+          if (res.status === 401) { 
+            redirectToLogin(); 
+            return null; 
+          }
+          if (res.status === 403) {
+            document.querySelector('.post-body').innerHTML =
+              '<p style="color:#e66">다른 사람의 비밀글은 확인할 수 없습니다.</p>';
+            document.body.classList.remove('preload');
+            return null;
+          }
+          if (res.status === 404) {
+            alert('게시글을 찾을 수 없습니다.');
+            return null;
+          }
+          if (!res.ok) {
+            throw new Error('HTTP ' + res.status);
+          }
+          return res.json();
+        })
+        .then(post => {
+          if (!post) return;
 
-        document.querySelector('.cat').textContent = post.cat || '게시판';
-        document.querySelector('.post-title').textContent = post.title || '제목 없음';
-        document.querySelector('.author-meta .nick').textContent = post.author || '익명';
+          document.querySelector('.cat').textContent = post.cat || '게시판';
+          document.querySelector('.post-title').textContent = post.title || '제목 없음';
+          document.querySelector('.author-meta .nick').textContent = post.author || '익명';
 
-        const t = new Date(post.datetime || Date.now());
-        const timeText =
-          `${String(t.getFullYear()).slice(2)}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')} `
-          + `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
-        const timeEl = document.querySelector('time.info');
-        if (timeEl) { 
-          timeEl.textContent = timeText; 
-          timeEl.dateTime = (post.datetime || t.toISOString()); 
-        }
+          const t = new Date(post.datetime || Date.now());
+          const timeText =
+            `${String(t.getFullYear()).slice(2)}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')} `
+            + `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
+          const timeEl = document.querySelector('time.info');
+          if (timeEl) { timeEl.textContent = timeText; timeEl.dateTime = (post.datetime || t.toISOString()); }
 
-        const body = document.querySelector('.post-body');
-        if (post.bodyHtml) body.innerHTML = post.bodyHtml;
-        else body.textContent = post.body || '';
+          const body = document.querySelector('.post-body');
+          if (post.bodyHtml) body.innerHTML = post.bodyHtml;
+          else body.textContent = post.body || '';
 
-        // 첨부파일 버튼 표시
-        const attaches = Array.isArray(post.attachments) ? post.attachments : [];
-        const badgeRow = document.querySelector('.badge-row');
-        document.querySelector('.attach-row')?.remove();
-        if (attaches.length && badgeRow) {
-          const row = document.createElement('div');
-          row.className = 'attach-row';
-          const first = attaches[0];
+          // 첨부파일 버튼 표시
+          const attaches = Array.isArray(post.attachments) ? post.attachments : [];
+          const badgeRow = document.querySelector('.badge-row');
+          document.querySelector('.attach-row')?.remove();
+          if (attaches.length && badgeRow) {
+            const row = document.createElement('div');
+            row.className = 'attach-row';
+            const first = attaches[0];
 
-          const btn = document.createElement('button');
-          btn.className = 'attach-link';
-          btn.type = 'button';
-          btn.textContent = `📎 ${first.name}`;
+            const btn = document.createElement('button');
+            btn.className = 'attach-link';
+            btn.type = 'button';
+            btn.textContent = `📎 ${first.name}`;
 
-          btn.addEventListener('click', () => {
-            window.downloadWithAuth(
-              `/api/board/${encodeURIComponent(postId)}?download=1`,
-              first.name
-            ).catch(e => { 
-              alert('다운로드 실패'); 
-              console.error(e); 
+            btn.addEventListener('click', () => {
+              window.downloadWithAuth(
+                `/api/board/${encodeURIComponent(postId)}?download=1`,
+                first.name
+              ).catch(e => { alert('다운로드 실패'); console.error(e); });
             });
-          });
 
-          row.appendChild(btn);
-          badgeRow.insertAdjacentElement('afterend', row);
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        // API 실패 시 로그인으로
-        redirectToLogin();
-      })
-      .finally(() => {
-        // 이제 실제 데이터가 들어갔으니 보여준다
-        document.body.classList.remove('preload');
-      });
+            row.appendChild(btn);
+            badgeRow.insertAdjacentElement('afterend', row);
+          }
+        })
+        .catch(err => {
+          console.error('Error fetching post:', err);
+          alert('게시글을 불러오는 중 오류가 발생했습니다: ' + err.message);
+          document.body.classList.remove('preload');
+        })
+        .finally(() => {
+          // 이제 실제 데이터가 들어갔으니 보여준다
+          document.body.classList.remove('preload');
+        });
   })();
   </script>
 
@@ -307,7 +305,7 @@
       loginLi?.classList.remove('has-sub');
 
       // 3) 사람 아이콘은 마이페이지로
-      personBtn?.setAttribute('href','/frontend/public/my.html');
+      personBtn?.setAttribute('href','/profile/me');
     } else {
       // 비로그인: 기본 링크 유지
       loginMenu?.setAttribute('href','/frontend/public/login.html');
