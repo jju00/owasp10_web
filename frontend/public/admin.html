@@ -2,11 +2,100 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>관리자 페이지</title>
+  <title>Admin Uploads</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background-color: #121212;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .image-grid-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .image-grid {
+      width: fit-content;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .image-grid img {
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid #333;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .image-grid img:hover {
+      transform: scale(1.05);
+      border-color: #00bcd4;
+    }
+
+    .selected {
+      border-color: #00ff88 !important;
+    }
+
+    #selected-image {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    #selected-image img {
+      max-width: 300px;
+      border: 3px solid #00ff88;
+      border-radius: 10px;
+    }
+
+    #selected-filename {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #00ff88;
+    }
+
+    #change-banner-btn {
+      margin-top: 2rem;
+      padding: 0.75rem 2rem;
+      background-color: #00bcd4;
+      color: #121212;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    #change-banner-btn:hover {
+      background-color: #00a0ba;
+    }
+  </style>
 </head>
 <body>
   <h1>관리자 페이지</h1>
-  <div id="admin-content">Loading...</div>
+  <h2>배너 이미지 선택</h2>
+  
+  <div class="image-grid-wrapper">
+    <div class="image-grid" id="image-list">
+      <!-- 이미지 썸네일 표시 영역 -->
+    </div>
+  </div>
+
+  <div id="selected-image">
+    <!-- 선택된 이미지 표시 -->
+    <div id="selected-filename"></div>
+    <button id="change-banner-btn" style="display:none;">선택된 이미지로 배너 변경</button>
+  </div>
 
   <script>
     const token = localStorage.getItem('jwt_token');
@@ -15,7 +104,7 @@
       location.href = '/login';
     }
 
-    fetch('/admin/uploads', {
+    fetch('/admin/uploads/list', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -24,19 +113,34 @@
       if (res.status === 403) {
         alert('관리자만 접근 가능합니다.');
         location.href = '/';
-        return;
+        throw new Error('403');
       } else if (res.status === 401) {
         alert('로그인이 필요합니다.');
         location.href = '/login';
-        return;
+        throw new Error('401');
       }
       return res.json();
     })
-    .then(data => {
-      if (data?.secret) {
-        document.getElementById('admin-content').innerText = data.secret;
-      }
-    });
+    .then(files => {
+      const container = document.getElementById('image-list');
+      files.forEach(file => {
+        const img = document.createElement('img');
+        img.src = `/assets/uploads/${file}`;
+        img.alt = file;
+        img.onclick = () => {
+          document.querySelectorAll('.image-grid img').forEach(i => i.classList.remove('selected'));
+          img.classList.add('selected');
+          document.getElementById('selected-image').innerHTML = `
+            <h3>선택된 이미지:</h3>
+            <img src="${img.src}" alt="${file}">
+            <div id="selected-filename">${file}</div>
+            <button id="change-banner-btn">선택된 이미지로 배너 변경</button>
+          `;
+        };
+        container.appendChild(img);
+      });
+    })
+    .catch(err => console.error(err));
   </script>
 </body>
 </html>

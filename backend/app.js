@@ -29,6 +29,10 @@ app.use(express.json());
 const adminRoutes = require('./routes/admin');
 app.use('/admin', adminRoutes); 
 
+// uploads 이미지
+app.use('/assets/uploads', express.static(path.join(__dirname, '..', 'frontend', 'public', 'assets', 'uploads')));
+
+
 // 정적파일 서빙 (캐시 비활성화)
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'public'), {
   etag: false,
