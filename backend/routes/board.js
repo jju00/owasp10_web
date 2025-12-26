@@ -37,7 +37,7 @@ router.get('/:id', vulnerableJwtMiddleware, (req, res) => {
   }
 
   // 비밀글 권한 체크
-  const isSecretPost = post.cat === '비밀게시판';
+  const isSecretPost = post.cat === 'SECRET';
   const isAuthor = req.user && req.user.id === post.authorId;
   
   if (isSecretPost && !isAuthor) {

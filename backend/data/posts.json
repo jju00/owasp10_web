@@ -1,96 +1,96 @@
 [
   {
     "id": 1,
-    "cat": "공지사항",
-    "title": "[공지] BlackCat 정기 세미나 진행",
+    "cat": "NOTICE",
+    "title": "[NOTICE] BlackCat Monthly Seminar Announcement",
     "author": "admin",
     "datetime": "2025-04-02T12:47",
-    "bodyHtml": "<p>2025년 11월 23일 세미나 진행합니다.</p><p>발표 주제</p><p>1. 임베디드 펌웨어 에뮬레이션</p><p>2. 웹 버그헌팅 방법론</p><p>3. 레드팀 c2 프레임워크 제작</p><p>ps. 참석 안 하면 벌금 100000000원</p>",
+    "bodyHtml": "<p>The seminar will be held on November 23, 2025.</p><p>Presentation Topics</p><p>1. Embedded Firmware Emulation</p><p>2. Web Bug Bounty Methodology</p><p>3. Red Team C2 Framework Development</p><p>We look forward to your participation.</p>",
     "attachments": []
   },
   {
     "id": 2,
-    "cat": "자유게시판",
-    "title": "kt에서 문자왔는데 이거 망한거냐?",
+    "cat": "LOUNGE",
+    "title": "I just got a text from KT… should I be worried?",
     "author": "bob",
     "datetime": "2025-04-02T10:05",
-    "bodyHtml": "<p>kt에서 최근에 소액결제했었음</p><p>최근에 뉴스보는데 kt 해킹당했다길래 식겁해서</p><p>kt에서 온 문자 확인했는데...</p><p>아무일도 없더라</p><p>어그로 미안. 저녁 메뉴 추천해주고 가</p>",
+    "bodyHtml": "<p>I recently made a small payment through KT.</p><p>I saw the news saying KT got hacked, so I panicked for a moment.</p><p>I checked the message from KT...</p><p>But nothing actually happened.</p><p>Sorry for the clickbait. Recommend me something for dinner.</p>",
     "attachments": []
   },
   {
     "id": 3,
-    "cat": "자유게시판",
-    "title": "사진 올리고 싶은데",
+    "cat": "LOUNGE",
+    "title": "I want to upload a photo",
     "author": "bob",
     "datetime": "2025-04-02T09:12",
-    "bodyHtml": "<p>아니 아래 글 보니까 누구는 고양이 사진 올리던데</p><p>어디다 올리는 거임? 나만 모르는 방법이라도 있나;</p><p>고양이 사진 올린 사람아 댓글 좀 달아주라</p><p>어디 분명 파일 올리는 곳이 있는 거 같은데 못찾겠네</p>",
+    "bodyHtml": "<p>I saw someone post a cat photo below.</p><p>Where do you upload it? Is there some method I don’t know about?</p><p>The person who uploaded the cat photo, please leave a comment.</p><p>There must be a place to upload files somewhere, but I can’t find it.</p>",
     "attachments": []
   },
   {
     "id": 4,
-    "cat": "홍보게시판",
-    "title": "보안 스터디원 모집(오프라인)",
+    "cat": "PROMOTION",
+    "title": "Recruiting Members for an Offline Security Study Group",
     "author": "charlie",
     "datetime": "2025-04-02T08:40",
-    "bodyHtml": "<p>수도권 오프라인 보안 스터디원 모집합니다.</p><p>분야: 웹 해킹</p><p>상세: owasp top 10 기반 및 lfi, xss, 파일 관련 취약점, csrf 등</p><p>010-1111-2222로 연락주세요</p>",
+    "bodyHtml": "<p>We are recruiting members for an offline security study group in the metropolitan area.</p><p>Field: Web Hacking</p><p>Details: Based on OWASP Top 10, covering LFI, XSS, file-related vulnerabilities, CSRF, and more.</p><p>Please contact 010-1111-2222.</p>",
     "attachments": []
   },
   {
     "id": 5,
-    "cat": "자유게시판",
-    "title": "우리집 고양이 사진",
+    "cat": "LOUNGE",
+    "title": "My Cat’s Photo",
     "author": "diana",
     "datetime": "2025-04-02T07:30",
-    "bodyHtml": "<p>고양이 사진 보고 가셈</p><p>종은 랙돌인데 털이 너무 빠짐;</p><p>그래도 보다보면 기분 좋고 외롭지도 않아서 좋다. 님들도 고양이 하나 키우는 거 추천</p>",
+    "bodyHtml": "<p>Here’s a photo of my cat.</p><p>It’s a Ragdoll, but it sheds a lot.</p><p>Still, looking at it makes me feel better and less lonely. I totally recommend getting a cat.</p>",
     "attachments": [
-      { "name": "랙돌.png", "path": "frontend/public/assets/uploads/rackdol.png" }
+      { "name": "rackdol.png", "path": "frontend/public/assets/uploads/rackdol.png" }
     ]
   },
   {
     "id": 6,
-    "cat": "공지사항",
-    "title": "[공지] BlackCat 종강총회 알림",
+    "cat": "NOTICE",
+    "title": "[NOTICE] BlackCat End-of-Semester Gathering",
     "author": "admin",
     "datetime": "2025-04-01T18:00",
-    "bodyHtml": "<p>2025년 12월 31일 종강총회합니다.</p><p>많은 참여 부탁드립니당</p><p>뒤풀이는 아마 할 거 같습니다</p><p>고기먹을까 치킨먹을까 뭐먹을까</p>",
+    "bodyHtml": "<p>The end-of-semester gathering will be held on December 31, 2025.</p><p>We hope many of you can join us.</p><p>There will probably be an after-party.</p><p>Should we go for barbecue or chicken? What should we eat?</p>",
     "attachments": []
   },
   {
     "id": 7,
-    "cat": "비밀게시판",
-    "title": "문의드립니다",
+    "cat": "SECRET",
+    "title": "Inquiry",
     "authorId": 2,
-    "author": "익명",
+    "author": "Anonymous",
     "datetime": "2025-04-01T16:22",
-    "bodyHtml": "<p>파일을 올리는 곳 주소가 어딘가요?</p><p>제가 알기로는 사이트 어딘가 숨겨진 곳에 파일 올릴 수 있는 거로 아는데</p><p>저도 고양이 사진 올리고 싶슴다 ㅠ</p><p>10번 게시글 보게 해주세요..</p>",
+    "bodyHtml": "<p>Where can I upload files?</p><p>As far as I know, there’s a hidden place on the site where you can upload files.</p><p>I want to upload a cat photo too 😭</p><p>Please let me see post number 10..</p>",
     "attachments": []
   },
   {
     "id": 8,
-    "cat": "자유게시판",
-    "title": "한로로 노래 안 들어본 사람도 있나",
+    "cat": "LOUNGE",
+    "title": "Anyone here who’s never listened to Hanroro?",
     "author": "alice",
     "datetime": "2025-04-01T14:11",
-    "bodyHtml": "<p>뽀롱뽀롱 한로로~</p><p>사랑하게 될 거야</p><p>화해, 0+0, 시간을 달리네</p><p>자처, ㅈㅣㅂ 등등 추천한다...반드시 들으셈</p>",
+    "bodyHtml": "<p>🎵 Bborong bborong, Hanroro~</p><p>You’re gonna fall in love.</p><p>‘Reconciliation,’ ‘0+0,’ ‘Time Flies,’</p><p>‘Self-Destruction,’ etc. — highly recommended. Seriously, go listen.</p>",
     "attachments": []
   },
   {
     "id": 9,
-    "cat": "홍보게시판",
-    "title": "프로젝트 할 사람 모집",
+    "cat": "PROMOTION",
+    "title": "Looking for Project Members",
     "author": "alice",
     "datetime": "2025-04-01T12:05",
-    "bodyHtml": "<p>기한: 종강 후 ~ 다음 학기 개강 전</p><p>내용: c2 프레임워크 제작 실습</p><p>상세: 주 1번 오프라인 모임 및 주 1회 온라인 회의</p><p>모집: 0명</p>",
+    "bodyHtml": "<p>Duration: From the end of the semester until the start of the next one</p><p>Project: C2 framework development practice</p><p>Details: One offline meeting per week and one online meeting per week</p><p>Recruiting: 0 people</p>",
     "attachments": []
   },
   {
     "id": 10,
-    "cat": "비밀게시판",
-    "title": "owasp10",
+    "cat": "SECRET",
+    "title": "How to Upload a Cat Photo",
     "authorId": 3,
-    "author": "익명",
+    "author": "Anonymous",
     "datetime": "2025-04-01T09:55",
-    "bodyHtml": "<p>위에 글 보니까 누가 사진 어캐 올렸냐고 물어보길래 알려줌</p><p>사실 숨겨진 디렉터리가 있는데.. 파일에 숨겨 놓음 ㅎㅎ</p><p>근데 아무도 모르는 거 보니까 일부러 숨겨 놓은 듯..?</p><p>(수정)</p><p> 관리자가 비밀글로 바꿔버림 ㅠㅠㅠ</p><p>이거 본 사람만 해당 경로에서 파일 마음껏 올리도록...</p>",
+    "bodyHtml": "<p>I saw someone asking how others were uploading photos, so I figured I’d explain.</p><p>There’s actually a hidden directory where you can upload files...</p><p>Seems like it was intentionally hidden since no one knew about it.</p><p>(Edit)</p><p>The admin turned it into a private post 😭</p><p>Anyone who sees this, feel free to upload files at that path...</p>",
     "attachments": [
       { "name": "owasp10", "path": "frontend/public/assets/uploads/owasp10" }
     ]
