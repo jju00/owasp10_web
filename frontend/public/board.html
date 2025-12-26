@@ -90,13 +90,13 @@
     <div class="board-shell">
       <!-- 왼쪽 사이드바 -->
       <aside class="board-side" aria-label="게시판 카테고리">
-        <h3 class="side-title">게시판</h3>
+        <h3 class="side-title">Board</h3>
         <nav class="side-nav">
-          <button class="side-item is-active" data-cat="all">전체 보기</button>
-          <button class="side-item" data-cat="공지사항">공지사항</button>
-          <button class="side-item" data-cat="자유게시판">자유 게시판</button>
-          <button class="side-item" data-cat="비밀게시판">비밀 게시판</button>
-          <button class="side-item" data-cat="홍보게시판">홍보 게시판</button>
+          <button class="side-item is-active" data-cat="all">ALL</button>
+          <button class="side-item" data-cat="NOTICE">NOTICE</button>
+          <button class="side-item" data-cat="LOUNGE">LOUNGE</button>
+          <button class="side-item" data-cat="SECRET">SECRET</button>
+          <button class="side-item" data-cat="PROMOTION">PROMOTION</button>
         </nav>
       </aside>
 
@@ -107,7 +107,7 @@
           <span class="search-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M21 20.29 16.65 16a8 8 0 1 0-1.41 1.41L20.29 21 21 20.29ZM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6Z"/></svg>
           </span>
-          <input id="q" class="search-input" type="search" name="q" placeholder="검색" aria-label="검색어" />
+          <input id="q" class="search-input" type="search" name="q" placeholder="Search" aria-label="검색어" />
         </form>
 
         <!-- 목록 테이블 -->
@@ -121,10 +121,10 @@
             </colgroup>
             <thead>
               <tr>
-                <th scope="col">게시판</th>
-                <th scope="col">제목</th>
-                <th scope="col">이름</th>
-                <th scope="col">일시</th>
+                <th scope="col">Board</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Date</th>
               </tr>
             </thead>
             <tbody id="tbody"><!-- JS 렌더 --></tbody>
@@ -166,26 +166,26 @@
     // ===== 데이터: 1페이지 7개 / 2페이지 3개 =====
     const PAGES = {
       1: [
-        {pageId:1, cat:'공지사항',   title:'[공지] BlackCat 정기 세미나 진행',   author:'admin',   date:'2025-04-02'},
-        {pageId:2, cat:'자유게시판', title:'kt에서 문자왔는데 이거 망한거냐?',    author:'bob',     date:'2025-04-02'},
-        {pageId:3, cat:'자유게시판', title:'사진 올리고 싶은데',                 author:'bob',     date:'2025-04-02'},
-        {pageId:4, cat:'홍보게시판', title:'보안 스터디원 모집 (오프라인)',       author:'charlie', date:'2025-04-02'},
-        {pageId:5, cat:'자유게시판', title:'우리집 고양이 사진',                 author:'diana',   date:'2025-04-02'},
-        {pageId:6, cat:'공지사항',   title:'[공지] BlackCat 종강총회 알림',      author:'admin',   date:'2025-04-01'},  // ← 2p에서 이사
-        {pageId:7, cat:'비밀게시판', title:'문의드립니다',                       author:'익명',      date:'2025-04-01'},  // ← 2p에서 이사
+        {pageId:1, cat:'NOTICE',   title:'[NOTICE] BlackCat Monthly Seminar Announcement',   author:'admin',   date:'2025-04-02'},
+        {pageId:2, cat:'LOUNGE', title:'I just got a text from KT… should I be worried?',    author:'bob',     date:'2025-04-02'},
+        {pageId:3, cat:'LOUNGE', title:'I want to upload a photo',                 author:'bob',     date:'2025-04-02'},
+        {pageId:4, cat:'PROMOTION', title:'Recruiting Members for an Offline Security Study Group',       author:'charlie', date:'2025-04-02'},
+        {pageId:5, cat:'LOUNGE', title:'My Cat’s Photo',                 author:'diana',   date:'2025-04-02'},
+        {pageId:6, cat:'NOTICE',   title:'[NOTICE] BlackCat End-of-Semester Gathering',      author:'admin',   date:'2025-04-01'},  // ← 2p에서 이사
+        {pageId:7, cat:'SECRET', title:'Inquiry',                       author:'익명',      date:'2025-04-01'},  // ← 2p에서 이사
       ],
       2: [
-        {pageId:8,  cat:'자유게시판', title:'한로로 노래 안 들어본 사람도 있나',  author:'alice',     date:'2025-04-01'},
-        {pageId:9,  cat:'홍보게시판', title:'프로젝트 할 사람 모집',              author:'alice',     date:'2025-04-01'},
-        {pageId:10, cat:'비밀게시판', title:'고양이 사진 올리는 법.txt',          author:'익명',      date:'2025-04-01'},
+        {pageId:8,  cat:'LOUNGE', title:'Anyone here who’s never listened to Hanroro?',  author:'alice',     date:'2025-04-01'},
+        {pageId:9,  cat:'PROMOTION', title:'Looking for Project Members',              author:'alice',     date:'2025-04-01'},
+        {pageId:10, cat:'SECRET', title:'How to Upload a Cat Photo',          author:'익명',      date:'2025-04-01'},
       ],
     };
 
     const CAT_CLASS = {
-      '공지사항': 'cat-noti',
-      '자유게시판': 'cat-free',
-      '비밀게시판': 'cat-secret',
-      '홍보게시판': 'cat-promo',
+      'NOTICE': 'cat-noti',
+      'LOUNGE': 'cat-free',
+      'SECRET': 'cat-secret',
+      'PROMOTION': 'cat-promo',
     };
 
     // page 파라미터

@@ -196,11 +196,11 @@
         <!-- 왼쪽: 게시판 -->
         <section class="panel board-panel" id="board-list" aria-labelledby="noticeTab">
           <div class="tabs">
-            <button id="tabAll" class="tab is-active" data-cat="all">전체 보기</button>
-            <button class="tab" data-cat="공지사항">공지사항</button>
-            <button class="tab" data-cat="자유게시판">자유 게시판</button>
-            <button class="tab" data-cat="비밀게시판">비밀 게시판</button>
-            <button class="tab" data-cat="홍보게시판">홍보 게시판</button>
+            <button id="tabAll" class="tab is-active" data-cat="all">ALL</button>
+            <button class="tab" data-cat="NOTICE">NOTICE</button>
+            <button class="tab" data-cat="LOUNGE">LOUNGE</button>
+            <button class="tab" data-cat="SECRET">SECRTE</button>
+            <button class="tab" data-cat="PROMOTION">PROMOTION</button>
             <button class="tab add" aria-label="게시 추가">＋</button>
           </div>
           <ul class="board-list" id="boardList">
@@ -434,7 +434,7 @@
       let filteredPosts = category === 'all' 
         ? allPosts 
         : allPosts.filter(post => post.cat === category);
-      
+
       // 최신 4개만 표시
       filteredPosts = filteredPosts.slice(0, 4);
       
@@ -467,7 +467,7 @@
     // 게시판 데이터 로드
     async function loadBoardData() {
       try {
-        const response = await fetch('/api/board/list');
+        const response = await fetch('/api/board');
         if (!response.ok) {
           throw new Error('게시판 데이터를 불러올 수 없습니다');
         }
