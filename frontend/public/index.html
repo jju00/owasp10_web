@@ -408,6 +408,20 @@
 
   <!-- 게시판 미리보기 로드 스크립트 -->
   <script src="/frontend/public/assets/js/auth.js"></script>
+  
+  <!-- 로그인 체크: 토큰이 없으면 로그인 페이지로 리다이렉트 -->
+  <script>
+  (() => {
+    // auth.js가 로드된 후 토큰 체크
+    const token = window.getToken && window.getToken();
+    if (!token) {
+      // 토큰이 없으면 로그인 페이지로 리다이렉트
+      alert('로그인이 필요합니다.');
+      location.href = '/login';
+    }
+  })();
+  </script>
+
   <script>
   (() => {
     const boardList = document.getElementById('boardList');
