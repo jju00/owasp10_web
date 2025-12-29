@@ -5,7 +5,6 @@
   <title>로그인</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="/frontend/public/assets/CSS/auth.css" />
-  <!-- 나중에 서버가 실제 CSRF 토큰으로 교체 -->
   <meta name="csrf-token" content="__CSRF_PLACEHOLDER__">
 </head>
 <body class="auth">
@@ -23,7 +22,7 @@
         placeholder="아이디를 입력하세요"
         required />
       </label>
-
+      
       <label>
         <span>비밀번호</span>
         <input type="password" name="password" autocomplete="current-password" 
@@ -35,7 +34,10 @@
         <button type="submit" class="btn primary">로그인</button>
       </div>
 
-      <!-- 하단 링크바: 회원가입 | 아이디/비밀번호 찾기 -->
+      <!-- Test at 2025-12-25 --> 
+      <!-- executives: nagox -->
+
+      <!-- 회원가입 | 아이디/비밀번호 찾기 -->
       <nav class="account-links" aria-label="account links">
         <a href="/signup.html">회원가입</a>
         <span class="divider" aria-hidden="true">|</span>
@@ -53,7 +55,7 @@
      
       // 로그인 전에 가려던 곳(보호 페이지) 기억한 returnTo 파라미터
       const usp = new URLSearchParams(location.search);
-      const returnTo = usp.get('returnTo'); // 예: /post?page=5
+      const returnTo = usp.get('returnTo'); 
 
       bindAuthForm(form, {
         endpoint: '/login',
@@ -64,7 +66,7 @@
           // 우선순위: returnTo 있으면 거기로, 없으면 메인으로
           const target = returnTo
             ? decodeURIComponent(returnTo)
-            : '/';   // 정적 매핑을 /assets 로 쓰면 '/index.html' 로 바꿔도 됨
+            : '/';   
 
           location.assign(target);
         },
