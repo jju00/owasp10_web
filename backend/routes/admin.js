@@ -25,4 +25,26 @@ router.get('/uploads/list', vulnerableJwtMiddleware, checkAdmin, (req, res) => {
   });
 });
 
+// backend/routes/admin.js (추가)
+router.post('/banner', vulnerableJwtMiddleware, checkAdmin, express.json(), (req, res) => {
+  const { url } = req.body;
+
+  if (!url || typeof url !== 'string') {
+    return res.status(400).json({ error: 'Invalid image URL' });
+  }
+
+  // SSRF 유도: 외부에서 입력받은 URL을 내부에서 요청
+  fetch(url)
+    .then(r => r.arrayBuffer())  // 단순히 요청만 보냄
+    .then(() => {
+      // 서버에서 index.html에 표시할 URL 저장 (단순 저장용)
+      fs.writeFileSync(path.join(__dirname, '..', 'data', 'banner.txt'), url);
+      res.json({ success: true });
+    })
+    .catch(() => {
+      res.status(500).json({ error: 'Failed to fetch the image URL' });
+    });
+});
+
+
 module.exports = router;

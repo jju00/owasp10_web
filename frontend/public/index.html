@@ -158,38 +158,36 @@
   <section id="board" class="slice-board">
     <div class="container">
       <!-- 상단 큰 타이틀 -->
-      <h2 class="board-heading">BOARD</h2>
+      <h2 class="board-heading">EVENT OF THIS MONTH</h2>
 
-      <!-- 갤러리 (캐러셀) -->
-      <div class="carousel" aria-roledescription="carousel" aria-label="주요 이미지">
-        <button class="nav prev" aria-label="이전 슬라이드">‹</button>
-
-        <div class="viewport" tabindex="0">
-          <ul class="track">
-            <li class="slide is-active" id="slide1">
-              <img src="/frontend/public/assets/img/cat1.png" alt="첫번째 이미지" />
-              <div class="caption"></div>
-            </li>
-            <li class="slide" id="slide2">
-              <img src="/frontend/public/assets/img/dog1.png" alt="두번째 이미지" />
-              <div class="caption"></div>
-            </li>
-            <li class="slide" id="slide3">
-              <img src="/frontend/public/assets/img/penguin.png" alt="세번째 이미지" />
-              <div class="caption"></div>
-            </li>
-          </ul>
-        </div>
-
-        <button class="nav next" aria-label="다음 슬라이드">›</button>
-
-        <div class="dots" role="tablist" aria-label="슬라이드 선택">
-          <button class="dot is-active" role="tab" aria-selected="true" aria-controls="slide1" tabindex="0"></button>
-          <button class="dot" role="tab" aria-selected="false" aria-controls="slide2" tabindex="-1"></button>
-          <button class="dot" role="tab" aria-selected="false" aria-controls="slide3" tabindex="-1"></button>
-          <button class="pause" aria-label="일시정지/재생" title="일시정지">❚❚</button>
-        </div>
+      <!-- 배너 이미지 영역 -->
+      <div class="banner-image" style="margin-top: 2rem;">
+        <img id="banner-img" src="" alt="이번 달 이벤트 배너" style="
+          display: block;
+          margin: 0 auto;
+          max-height: 600px;
+          border-radius: 16px;
+          box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        " />
       </div>
+
+      <script>
+        fetch('/banner')
+          .then(res => res.json())
+          .then(data => {
+            const img = document.getElementById('banner-img');
+            if (data.url) {
+              // 절대 URL을 상대 경로로 변환
+              const relativeUrl = new URL(data.url, window.location.origin).pathname;
+              img.src = relativeUrl;
+            } else {
+              img.alt = '배너 이미지가 설정되지 않았습니다';
+            }
+          })
+          .catch(err => {
+            console.error('배너 이미지 로딩 실패:', err);
+          });
+      </script>
 
       <!-- 하단 2단 그리드: 왼쪽 게시판 / 오른쪽 안내+아이콘 -->
       <div class="board-grid">
