@@ -1,5 +1,6 @@
 // backend/app.js
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const app = express();
 const { vulnerableJwtMiddleware,checkAdmin } = require('./middleware/jwt');
@@ -104,6 +105,19 @@ app.get('/post/:id', (_req, res) => {
 app.get('/board', (req, res) => {
   noCacheHeaders(res);
   res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'board.html'));
+});
+
+// banner 라우트
+app.get('/banner', (req, res) => {
+  try {
+    const bannerPath = path.join(__dirname, 'data', 'banner.txt');
+    const url = fs.readFileSync(bannerPath, 'utf-8').trim();
+
+    res.json({ url });
+  } catch (err) {
+    console.error('배너 로드 실패:', err.message);
+    res.json({ url: null });
+  }
 });
 
 

@@ -136,6 +136,31 @@
             <div id="selected-filename">${file}</div>
             <button id="change-banner-btn">선택된 이미지로 배너 변경</button>
           `;
+
+          // button click event
+          document.getElementById('change-banner-btn').onclick = () => {
+            const fileUrl = img.src;
+
+            fetch('/admin/banner', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+              },
+              body: JSON.stringify({url:fileUrl})
+            })
+            .then(res=>{
+              if(res.ok){
+                alert('banner uploaded success!');
+              } else {
+                alert('failed to upload the banner.');
+              }
+            })
+            .catch(err => {
+              console.error(err);
+              alert('Server Error');
+            });
+          }
         };
         container.appendChild(img);
       });
