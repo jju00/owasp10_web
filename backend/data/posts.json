@@ -10,21 +10,25 @@
   },
   {
     "id": 2,
-    "cat": "LOUNGE",
-    "title": "I just got a text from KT… should I be worried?",
+    "cat": "EVENT",
+    "title": "Club Graduation Ceremony",
     "author": "bob",
     "datetime": "2025-04-02T10:05",
-    "bodyHtml": "<p>I recently made a small payment through KT.</p><p>I saw the news saying KT got hacked, so I panicked for a moment.</p><p>I checked the message from KT...</p><p>But nothing actually happened.</p><p>Sorry for the clickbait. Recommend me something for dinner.</p>",
-    "attachments": []
+    "bodyHtml": "<p>We held a graduation ceremony within the club.</p><p>Congratulations to all the seniors who have graduated!</p>",
+    "attachments": [
+      { "name": "graduation.png", "path": "frontend/public/assets/uploads/graduation.png" }
+    ]
   },
   {
     "id": 3,
-    "cat": "LOUNGE",
-    "title": "I want to upload a photo",
+    "cat": "EVENT",
+    "title": "Club Study Session",
     "author": "bob",
     "datetime": "2025-04-02T09:12",
-    "bodyHtml": "<p>I saw someone post a cat photo below.</p><p>Where do you upload it? Is there some method I don’t know about?</p><p>The person who uploaded the cat photo, please leave a comment.</p><p>There must be a place to upload files somewhere, but I can’t find it.</p>",
-    "attachments": []
+    "bodyHtml": "<p>We held a hacking study session within the club.</p><p>It was challenging, but thank you to everyone who participated and kept up until the end.</p>",
+    "attachments": [
+      { "name": "study.png", "path": "frontend/public/assets/uploads/study.png" }
+    ]
   },
   {
     "id": 4,
@@ -37,11 +41,11 @@
   },
   {
     "id": 5,
-    "cat": "LOUNGE",
+    "cat": "SECRET",
     "title": "My Cat’s Photo",
-    "author": "diana",
+    "author": "Anonymous",
     "datetime": "2025-04-02T07:30",
-    "bodyHtml": "<p>Here’s a photo of my cat.</p><p>It’s a Ragdoll, but it sheds a lot.</p><p>Still, looking at it makes me feel better and less lonely. I totally recommend getting a cat.</p>",
+    "bodyHtml": "<p>Here’s a photo of my cat.</p><p>It’s a Ragdoll, but it sheds a lot.</p><p>Still, looking at it makes me feel better and less lonely. I’d like to recommend this cat as our club’s logo.</p>",
     "attachments": [
       { "name": "rackdol.png", "path": "frontend/public/assets/uploads/rackdol.png" }
     ]
@@ -58,21 +62,23 @@
   {
     "id": 7,
     "cat": "SECRET",
-    "title": "Inquiry",
+    "title": "TEST",
     "authorId": 2,
     "author": "Anonymous",
     "datetime": "2025-04-01T16:22",
-    "bodyHtml": "<p>Where can I upload files?</p><p>As far as I know, there’s a hidden place on the site where you can upload files.</p><p>I want to upload a cat photo too 😭</p><p>Please let me see post number 10..</p>",
+    "bodyHtml": "<p>I created an admin page.</p><p>I set up access restrictions, but can you guys access it too?</p>",
     "attachments": []
   },
   {
     "id": 8,
-    "cat": "LOUNGE",
-    "title": "Anyone here who’s never listened to Hanroro?",
+    "cat": "EVENT",
+    "title": "End-of-Semester General Meeting",
     "author": "alice",
     "datetime": "2025-04-01T14:11",
-    "bodyHtml": "<p>🎵 Bborong bborong, Hanroro~</p><p>You’re gonna fall in love.</p><p>‘Reconciliation,’ ‘0+0,’ ‘Time Flies,’</p><p>‘Self-Destruction,’ etc. — highly recommended. Seriously, go listen.</p>",
-    "attachments": []
+    "bodyHtml": "<p>We held the end-of-semester general meeting.</p><p>Thank you to everyone who participated.</p>",
+    "attachments": [
+      { "name": "End-of-Semester_Party.png", "path": "frontend/public/assets/uploads/End-of-Semester_Party.png" }
+    ]
   },
   {
     "id": 9,

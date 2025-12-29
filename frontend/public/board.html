@@ -94,7 +94,7 @@
         <nav class="side-nav">
           <button class="side-item is-active" data-cat="all">ALL</button>
           <button class="side-item" data-cat="NOTICE">NOTICE</button>
-          <button class="side-item" data-cat="LOUNGE">LOUNGE</button>
+          <button class="side-item" data-cat="EVENT">EVENT</button>
           <button class="side-item" data-cat="SECRET">SECRET</button>
           <button class="side-item" data-cat="PROMOTION">PROMOTION</button>
         </nav>
@@ -167,23 +167,23 @@
     const PAGES = {
       1: [
         {pageId:1, cat:'NOTICE',   title:'[NOTICE] BlackCat Monthly Seminar Announcement',   author:'admin',   date:'2025-04-02'},
-        {pageId:2, cat:'LOUNGE', title:'I just got a text from KT… should I be worried?',    author:'bob',     date:'2025-04-02'},
-        {pageId:3, cat:'LOUNGE', title:'I want to upload a photo',                 author:'bob',     date:'2025-04-02'},
+        {pageId:2, cat:'EVENT', title:'Club Graduation Ceremony',    author:'bob',     date:'2025-04-02'},
+        {pageId:3, cat:'EVENT', title:'Club Study Session',                 author:'bob',     date:'2025-04-02'},
         {pageId:4, cat:'PROMOTION', title:'Recruiting Members for an Offline Security Study Group',       author:'charlie', date:'2025-04-02'},
-        {pageId:5, cat:'LOUNGE', title:'My Cat’s Photo',                 author:'diana',   date:'2025-04-02'},
+        {pageId:5, cat:'SECRET', title:'My Cat’s Photo',                 author:'Anonymous',   date:'2025-04-02'},
         {pageId:6, cat:'NOTICE',   title:'[NOTICE] BlackCat End-of-Semester Gathering',      author:'admin',   date:'2025-04-01'},  // ← 2p에서 이사
-        {pageId:7, cat:'SECRET', title:'Inquiry',                       author:'익명',      date:'2025-04-01'},  // ← 2p에서 이사
+        {pageId:7, cat:'SECRET', title:'TEST',                       author:'Anonymous',      date:'2025-04-01'},  // ← 2p에서 이사
       ],
       2: [
-        {pageId:8,  cat:'LOUNGE', title:'Anyone here who’s never listened to Hanroro?',  author:'alice',     date:'2025-04-01'},
+        {pageId:8,  cat:'EVENT', title:'End-of-Semester General Meeting',  author:'alice',     date:'2025-04-01'},
         {pageId:9,  cat:'PROMOTION', title:'Looking for Project Members',              author:'alice',     date:'2025-04-01'},
-        {pageId:10, cat:'SECRET', title:'How to Upload a Cat Photo',          author:'익명',      date:'2025-04-01'},
+        {pageId:10, cat:'SECRET', title:'How to Upload a Cat Photo',          author:'Anonymous',      date:'2025-04-01'},
       ],
     };
 
     const CAT_CLASS = {
       'NOTICE': 'cat-noti',
-      'LOUNGE': 'cat-free',
+      'EVENT': 'cat-free',
       'SECRET': 'cat-secret',
       'PROMOTION': 'cat-promo',
     };
