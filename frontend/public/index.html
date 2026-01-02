@@ -18,7 +18,7 @@
       </a>
 
       <nav class="nav" aria-label="주요 메뉴">
-        <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">Menu</button>
         <ul id="navMenu" class="nav-menu">
           <!-- 드롭다운: HOME -->
           <li class="has-sub">
@@ -37,10 +37,10 @@
             <a class="toplink" href="#activities">
               ACTIVITY <span class="arrow">▼</span></a>
             <ul class="submenu">
-              <li><a href="#activities">스터디</a></li>
-              <li><a href="#activities">컨퍼런스</a></li>
+              <li><a href="#activities">Study</a></li>
+              <li><a href="#activities">Conference</a></li>
               <li><a href="#activities">ctf</a></li>
-              <li><a href="#activities">프로젝트</a></li>
+              <li><a href="#activities">Project</a></li>
             </ul>
           </li>
 
@@ -49,8 +49,8 @@
             <a class="toplink" href="#board">
               BOARD <span class="arrow">▼</span></a>
             <ul class="submenu">
-              <li><a href="#board">사진</a></li>
-              <li><a href="/board">게시판</a></li>
+              <li><a href="#board">Gallery</a></li>
+              <li><a href="/board">Board</a></li>
             </ul>
           </li>
 
@@ -87,22 +87,69 @@
   <!-- 히어로 -->
   <section class="hero">
     <div class="container hero-inner">
-      <h1 class="hero-title">We Make Ambitious<br>Dreams a Reality</h1>
-      <p class="hero-sub strong">압도적인 전문성은 기업의 완벽한 보안을 만듭니다.</p>
+      <h1 class="hero-title">Learn. Build. Grow.</h1>
+      <p class="hero-sub strong">A community where we grow together through security and technology.</p>
     </div>
   </section>
 
   <!-- ABOUT US 섹션 -->
-  <section id="about" class="slice-about">
-    <div class="container about-text-wrap">
+  <section id="about" class="slice-about slice-dark">
+    <div class="container activities-wrap">
       <h2 class="about-heading">ABOUT US</h2>
-      <h3 class="about-sub">who we are</h3>
-      <p class="about-desc">
-        BlackCat is a practical cybersecurity team dedicated to researching security<br>
-        technologies and gaining hands-on experience. We are active in various fields including <br>
-        web hacking, system defense, reverse engineering, and network security, and we enhance our capabilities through participating in CTF competitions 
-        and presenting at security conferences.
-      </p>
+        <div class="feature-shelf">
+          <div class="feature-grid">
+            <article class="feature-card">
+              <!-- 경로 통일 필요 시 조정 -->
+              <img class="profile-icon" src="/frontend/public/assets/img/bob.png" alt="" width="120" height="120" loading="lazy" />
+              <h3>Bob</h3>
+              <p class="feature-desc">
+                President<br>
+                Leading the club with a passion for security, collaboration, and growth.<br><br>
+                <em>“Let’s build something meaningful together.”</em>
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <img class="profile-icon" src="/frontend/public/assets/img/alice.png" alt="" width="84" height="84" loading="lazy" />
+              <h3>Alice</h3>
+              <p class="feature-desc">
+                Vice President<br>
+                Supporting the team and keeping everything running smoothly.<br><br>
+                <em>“I’ll make sure no one gets left behind.”</em>
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <img class="profile-icon" src="/frontend/public/assets/img/charlie.png" alt="" width="84" height="84" loading="lazy" />
+              <h3>Charlie</h3>
+              <p class="feature-desc">
+                Treasurer<br>
+                Managing resources and keeping the club organized and efficient.<br><br>
+                <em>“I’ll make every effort count.”</em>
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <img class="profile-icon" src="/frontend/public/assets/img/diana.png" alt="" width="84" height="84" loading="lazy" />
+              <h3>Diana</h3>
+              <p class="feature-desc">
+                PR & Planning<br>
+                Connecting ideas, people, and events to grow our community.<br><br>
+                <em>“Let’s make our activities visible and memorable.”</em>
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <img class="profile-icon" src="/frontend/public/assets/img/richard.png" alt="" width="84" height="84" loading="lazy" />
+              <h3>Richard</h3>
+              <p class="feature-desc">
+                Faculty Advisor<br>
+                Guiding and supporting the club with experience and insight.<br><br>
+                <em>“I’ll be here to support your growth and challenges.”</em>
+              </p>
+            </article>
+          </div>
+      </div>
     </div>
   </section>
 
@@ -110,13 +157,12 @@
   <section id="activities" class="slice-dark">
     <div class="container activities-wrap">
       <h2 class="activities-heading">ACTIVITIES</h2>
-      <div class="activities-body grow-only">
         <div class="feature-shelf">
           <div class="feature-grid">
             <article class="feature-card">
               <!-- 경로 통일 필요 시 조정 -->
               <img class="feature-icon" src="/frontend/public/assets/img/study.png" alt="" width="84" height="84" loading="lazy" />
-              <h3>STUDY & SEMINOR</h3>
+              <h3>STUDY & SEMINAR</h3>
               <p class="feature-desc">
                 Enhancing <br>
                 fundamental hacking abilities <br>
@@ -149,7 +195,6 @@
               </p>
             </article>
           </div>
-        </div>
       </div>
     </div>
   </section>
