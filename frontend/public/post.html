@@ -26,7 +26,7 @@
       </a>
 
       <nav class="nav" aria-label="주요 메뉴">
-        <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">Menu</button>
         <ul id="navMenu" class="nav-menu">
           <!-- 드롭다운: HOME -->
           <li class="has-sub">
@@ -48,10 +48,10 @@
               ACTIVITY <span class="arrow">▼</span>
             </a>
             <ul class="submenu">
-              <li><a href="/#activities">스터디</a></li>
-              <li><a href="/#activities">컨퍼런스</a></li>
-              <li><a href="/#activities">ctf</a></li>
-              <li><a href="/#activities">프로젝트</a></li>
+              <li><a href="/#activities">Study</a></li>
+              <li><a href="/#activities">Conference</a></li>
+              <li><a href="/#activities">CTF</a></li>
+              <li><a href="/#activities">Project</a></li>
             </ul>
           </li>
 
@@ -61,8 +61,8 @@
               BOARD <span class="arrow">▼</span>
             </a>
             <ul class="submenu">
-              <li><a href="/#board">사진</a></li>
-              <li><a href="/board#board-index containor">게시판</a></li>
+              <li><a href="/#board">Gallery</a></li>
+              <li><a href="/board#board-index containor">Board</a></li>
             </ul>
           </li>
 
@@ -72,9 +72,9 @@
               LOGIN <span class="arrow">▼</span>
             </a>
             <ul class="submenu">
-              <li><a href="/login">로그인</a></li>
-              <li><a href="#signup">회원가입</a></li>
-              <li><a href="/account/recover.html">아이디/비밀번호 찾기</a></li>
+              <li><a href="/login">Login</a></li>
+              <li><a href="#signup">Sign Up</a></li>
+              <li><a href="/account/recover.html">Forgotten ID / PW</a></li>
             </ul>
           </li>
         </ul>
@@ -239,30 +239,19 @@
           if (post.bodyHtml) body.innerHTML = post.bodyHtml;
           else body.textContent = post.body || '';
 
-          // 첨부파일 버튼 표시
+          // 첨부파일 이미지 삽입
           const attaches = Array.isArray(post.attachments) ? post.attachments : [];
-          const badgeRow = document.querySelector('.badge-row');
-          document.querySelector('.attach-row')?.remove();
-          if (attaches.length && badgeRow) {
-            const row = document.createElement('div');
-            row.className = 'attach-row';
-            const first = attaches[0];
-
-            const btn = document.createElement('button');
-            btn.className = 'attach-link';
-            btn.type = 'button';
-            btn.textContent = `📎 ${first.name}`;
-
-            btn.addEventListener('click', () => {
-              window.downloadWithAuth(
-                `/api/board/${encodeURIComponent(postId)}?download=1`,
-                first.name
-              ).catch(e => { alert('다운로드 실패'); console.error(e); });
+          if (attaches.length && body) {
+            attaches.forEach(file => {
+              const img = document.createElement('img');
+              img.src = file.path;
+              img.alt = file.name;
+              img.style.maxWidth = '100%';
+              img.style.marginTop = '1em';
+              body.appendChild(img);
             });
-
-            row.appendChild(btn);
-            badgeRow.insertAdjacentElement('afterend', row);
           }
+
         })
         .catch(err => {
           console.error('Error fetching post:', err);

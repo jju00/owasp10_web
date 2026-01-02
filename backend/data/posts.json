@@ -16,7 +16,7 @@
     "datetime": "2025-04-02T10:05",
     "bodyHtml": "<p>We held a graduation ceremony within the club.</p><p>Congratulations to all the seniors who have graduated!</p>",
     "attachments": [
-      { "name": "graduation.png", "path": "frontend/public/assets/uploads/graduation.png" }
+      { "name": "graduation.png", "path": "/frontend/public/assets/uploads/graduation.png" }
     ]
   },
   {
@@ -27,7 +27,7 @@
     "datetime": "2025-04-02T09:12",
     "bodyHtml": "<p>We held a hacking study session within the club.</p><p>It was challenging, but thank you to everyone who participated and kept up until the end.</p>",
     "attachments": [
-      { "name": "study.png", "path": "frontend/public/assets/uploads/study.png" }
+      { "name": "study.png", "path": "/frontend/public/assets/uploads/study.png" }
     ]
   },
   {
@@ -47,7 +47,7 @@
     "datetime": "2025-04-02T07:30",
     "bodyHtml": "<p>Here’s a photo of my cat.</p><p>It’s a Ragdoll, but it sheds a lot.</p><p>Still, looking at it makes me feel better and less lonely. I’d like to recommend this cat as our club’s logo.</p>",
     "attachments": [
-      { "name": "rackdol.png", "path": "frontend/public/assets/uploads/rackdol.png" }
+      { "name": "rackdol.png", "path": "/frontend/public/assets/uploads/rackdol.png" }
     ]
   },
   {
@@ -77,7 +77,7 @@
     "datetime": "2025-04-01T14:11",
     "bodyHtml": "<p>We held the end-of-semester general meeting.</p><p>Thank you to everyone who participated.</p>",
     "attachments": [
-      { "name": "End-of-Semester_Party.png", "path": "frontend/public/assets/uploads/End-of-Semester_Party.png" }
+      { "name": "End-of-Semester_Party.png", "path": "/frontend/public/assets/uploads/End-of-Semester_Party.png" }
     ]
   },
   {
@@ -98,7 +98,7 @@
     "datetime": "2025-04-01T09:55",
     "bodyHtml": "<p>I saw someone asking how others were uploading photos, so I figured I’d explain.</p><p>There’s actually a hidden directory where you can upload files...</p><p>Seems like it was intentionally hidden since no one knew about it.</p><p>(Edit)</p><p>The admin turned it into a private post 😭</p><p>Anyone who sees this, feel free to upload files at that path...</p>",
     "attachments": [
-      { "name": "owasp10", "path": "frontend/public/assets/uploads/owasp10" }
+      { "name": "owasp10", "path": "/frontend/public/assets/uploads/owasp10" }
     ]
   }
 ]

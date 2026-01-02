@@ -39,7 +39,7 @@
             <ul class="submenu">
               <li><a href="#activities">Study</a></li>
               <li><a href="#activities">Conference</a></li>
-              <li><a href="#activities">ctf</a></li>
+              <li><a href="#activities">CTF</a></li>
               <li><a href="#activities">Project</a></li>
             </ul>
           </li>
@@ -226,11 +226,11 @@
               const relativeUrl = new URL(data.url, window.location.origin).pathname;
               img.src = relativeUrl;
             } else {
-              img.alt = '배너 이미지가 설정되지 않았습니다';
+              img.alt = 'Banner image not selected.';
             }
           })
           .catch(err => {
-            console.error('배너 이미지 로딩 실패:', err);
+            console.error('Failed to load banner image:', err);
           });
       </script>
 
@@ -249,7 +249,7 @@
           <ul class="board-list" id="boardList">
             <!-- JavaScript로 동적 로드 -->
           </ul>
-          <a class="more" href="/board">더보기</a>
+          <a class="more" href="/board">more</a>
         </section>
 
         <!-- 오른쪽: 안내 박스 + 아이콘 -->
@@ -274,7 +274,7 @@
 
           <!-- 아이콘들 -->
           <div class="sns-bar">
-            <h4 class="sns-title">BlackCat의 다양한 소식</h4>
+            <h4 class="sns-title">More About BlackCat</h4>
             <div class="sns-icons">
               <!-- 실제 아이콘 파일이 있으면 img로 교체 가능 -->
               <a class="sns yt" href="#" aria-label="YouTube">▶</a>
@@ -503,7 +503,7 @@
       
       boardList.innerHTML = filteredPosts.map(post => `
         <li>
-          <a href="/post?page=${post.id}">${post.title}</a>
+          <a href="/post/${post.id}">${post.title}</a>
           <time>${formatDate(post.date)}</time>
         </li>
       `).join('');

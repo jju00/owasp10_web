@@ -9,10 +9,10 @@ CREATE TABLE users (
 
 -- 비밀번호를 MD5로 해싱해서 저장
 INSERT INTO users (username, password, role) VALUES
-  ('admin',   MD5('NoBrute123'), 'admin'),
-  ('nagox',   MD5('NoGoyang76'), 'user'),
+  ('cookbob',   SHA2('NoBrute123'), 'admin'),
+  ('nagox',   MD5('ashley76'), 'user'),
   ('alice',   MD5('alice123'),   'user'),
   ('bob',     MD5('bob123'),     'user'),
   ('charlie', MD5('charlie123'), 'user'),
   ('diana',   MD5('diana123'),   'user'),
-  ('eve',     MD5('eve123'),     'user');
+  ('richard', MD5('richard123'), 'user');
