@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <title>로그인</title>
+  <title>LOGIN</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="/frontend/public/assets/CSS/auth.css" />
   <meta name="csrf-token" content="__CSRF_PLACEHOLDER__">
@@ -10,28 +10,28 @@
 <body class="auth">
   <main class="auth-container">
     <header class="auth-header">
-      <h1>로그인</h1>
-      <p class="sub">서비스 이용을 위해 로그인이 필요합니다.</p>
+      <h1>LOGIN</h1>
+      <p class="sub">You need to log in to use this service.</p>
     </header>
 
     <!-- 일반 로그인 폼 -->
     <form id="loginForm" class="auth-form">
       <label>
-        <span>아이디</span>
+        <span>ID</span>
         <input name="username" autocomplete="username"
-        placeholder="아이디를 입력하세요"
+        placeholder="Enter your username"
         required />
       </label>
       
       <label>
-        <span>비밀번호</span>
+        <span>PW</span>
         <input type="password" name="password" autocomplete="current-password" 
-        placeholder="비밀번호 (영문, 숫자, 특수문자 조합 8~16자리)"
+        placeholder="Password (8–16 characters, including letters, numbers, and special characters)"
         required />
       </label>
 
       <div class="actions">
-        <button type="submit" class="btn primary">로그인</button>
+        <button type="submit" class="btn primary">Login</button>
       </div>
 
       <!-- Test at 2025-12-25 --> 
@@ -39,9 +39,9 @@
 
       <!-- 회원가입 | 아이디/비밀번호 찾기 -->
       <nav class="account-links" aria-label="account links">
-        <a href="/signup.html">회원가입</a>
+        <a href="/signup.html">Sign Up</a>
         <span class="divider" aria-hidden="true">|</span>
-        <a href="/account/recover.html">아이디/비밀번호 찾기</a>
+        <a href="/account/recover.html">Forgot ID / Password</a>
       </nav>
 
       <p id="msg" class="msg" role="status" aria-live="polite"></p>
@@ -71,7 +71,7 @@
           location.assign(target);
         },
         onError: (msg) => {
-          alert(msg || '로그인 실패');
+          alert(msg || 'Login Failed');
         }
       });
     });
@@ -94,7 +94,7 @@
         loginMenu.addEventListener('click', (e) => {
           e.preventDefault();
           clearToken();
-          alert('로그아웃되었습니다.');
+          alert('You have been logged out.');
           location.href = '/'; 
         }, { once:true });
       }
