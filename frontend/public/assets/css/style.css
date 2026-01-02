@@ -133,7 +133,7 @@ html { scroll-behavior: smooth; }
 /* 히어로를 화면 중앙 정렬 + 충분한 높이 */
 .hero{
   position: relative;
-  min-height: 78vh;                    /* 화면을 넉넉히 채우기 */
+  min-height: 58vh;                    /* 화면을 넉넉히 채우기 */
   display: grid;
   place-items: center;                 /* 수직/수평 중앙 정렬 */
   text-align: center;                  /* 가운데 정렬 */
@@ -177,7 +177,7 @@ html { scroll-behavior: smooth; }
 .hero-sub.strong{ font-weight: 700; }  /* 한글 자막 굵게 */
 
 @media (max-width: 600px){
-  .hero{ min-height: 68vh; }
+  .hero{ min-height: 48vh; }
 }
 
 
@@ -185,7 +185,7 @@ html { scroll-behavior: smooth; }
 .slice-about {
   background: linear-gradient(180deg,#0a1730 0%, #778899 100%); /* 약간 더 푸른 톤 */
   color: var(--fg);
-  padding: 100px 0;
+  padding: 160px 0 40px;
   text-align: center;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
@@ -218,6 +218,25 @@ html { scroll-behavior: smooth; }
   color: #dfe6f1;
 }
 
+.slice-about.slice-dark {
+  background: linear-gradient(180deg,#0a1730 0%, #778899 100%) !important;
+  color: var(--fg) !important;
+}
+
+.profile-icon{
+  display:block;
+  width:100px;
+  height:100px;
+  margin:0 auto 12px;            /* 가운데 정렬 + 제목과 간격 */
+  object-fit:contain;            /* PNG 비율 유지 */
+  border-radius:22px;            /* 둥근 사각형 윤곽(이미지가 사각형일 때) */
+  background: radial-gradient(120% 120% at 18% 15%, #ffffff22, transparent 55%);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:
+    0 14px 28px rgba(0,0,0,.35), /* 아래 그림자 */
+    0 0 0 6px rgba(90,120,255,.10); /* 은은한 링(박스 느낌 유지) */
+  transition: filter .25s ease, box-shadow .25s ease;
+}
 
 /* -------------- ACTIVITIES 섹션 --------------- */
 /* 섹션: 흐릿한 배경 톤 */
@@ -244,15 +263,6 @@ html { scroll-behavior: smooth; }
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
   text-shadow: 0 2px 20px rgba(0,0,0,.35);
-}
-
-/* 본문 래퍼(이것만 천천히 커짐) */
-.grow-only{
-  transform: scale(0.94);
-  min-height: 600px;
-  transform-origin: center top;
-  will-change: transform, opacity;
-  opacity: .97;
 }
 
 /* 선반: 그리드 배경을 살짝 띄워 보이게 */
