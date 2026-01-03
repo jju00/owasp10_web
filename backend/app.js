@@ -28,11 +28,7 @@ app.use(express.json());
 
 // /admin 경로 처리
 const adminRoutes = require('./routes/admin');
-app.use('/admin', adminRoutes); 
-
-// uploads 이미지
-app.use('/assets/uploads', express.static(path.join(__dirname, '..', 'frontend', 'public', 'assets', 'uploads')));
-
+app.use('/febf809ab643f5f211905c83ba9f6cf5a2659d81469ec9df1e8ab5ca0390f7a5', adminRoutes); 
 
 // 정적파일 서빙 (캐시 비활성화)
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'public'), {

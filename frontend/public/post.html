@@ -58,12 +58,8 @@
           <!-- 드롭다운: BOARD -->
           <li class="has-sub">
             <a class="toplink" href="/board#board-index containor">
-              BOARD <span class="arrow">▼</span>
+              BOARD <span class="arrow"></span>
             </a>
-            <ul class="submenu">
-              <li><a href="/#board">Gallery</a></li>
-              <li><a href="/board#board-index containor">Board</a></li>
-            </ul>
           </li>
 
           <!-- 드롭다운: LOGIN -->
@@ -99,15 +95,6 @@
             />
           </svg>
         </button>
-        <span class="vdiv" aria-hidden="true"></span>
-        <a class="icon-btn" href="/en" aria-label="English">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <path
-              fill="currentColor"
-              d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm7.93 9h-3.11a15.5 15.5 0 0 0-1.05-5A8.01 8.01 0 0 1 19.93 11ZM12 4c.9 0 2.47 2.07 3.07 6H8.93C9.53 6.07 11.1 4 12 4ZM4.07 13h3.11a15.5 15.5 0 0 0 1.05 5 8.01 8.01 0 0 1-4.16-5Zm3.11-2H4.07A8.01 8.01 0 0 1 8.23 6a15.5 15.5 0 0 0-1.05 5Zm1.75 2h5.14c-.6 3.93-2.17 6-3.07 6s-2.47-2.07-3.07-6Zm7.84 0h3.11a8.01 8.01 0 0 1-4.16 5 15.5 15.5 0 0 0 1.05-5Z"
-            />
-          </svg>
-        </a>
       </div>
     </div>
   </header>
@@ -140,7 +127,7 @@
     </div>
 
     <!-- 본문 (더미 데이터) -->
-    <article class="post-body">
+   <article class="post-body">
       <p>친구가 들어가서 보여줬는데, 관리자 전용 게시판이 있는데 권한이 없다고 안들어가진네..</p>
       <p>ID/PW 있으면 들어가는 거 맞냐?</p>
       <p>위장주소 + 대표자명 + 이메일 + 추천인 ID + 파트너사 2개 + 커뮤니티 창설일</p>
@@ -208,7 +195,7 @@
           }
           if (res.status === 403) {
             document.querySelector('.post-body').innerHTML =
-              '<p style="color:#e66">다른 사람의 비밀글은 확인할 수 없습니다.</p>';
+              '<p style="color:#e66">You cannot view another user’s secret post.</p>';
             document.body.classList.remove('preload');
             return null;
           }
@@ -283,7 +270,7 @@
       loginMenu.addEventListener('click', (e) => {
         e.preventDefault();
         clearToken();
-        alert('로그아웃되었습니다.');
+        alert('You have been logged out.');
         location.href = '/';
       }, { once: true });
 
