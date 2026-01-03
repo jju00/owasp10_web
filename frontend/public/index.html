@@ -46,12 +46,8 @@
 
           <!-- 드롭다운: BOARD -->
           <li class="has-sub">
-            <a class="toplink" href="#board">
-              BOARD <span class="arrow">▼</span></a>
-            <ul class="submenu">
-              <li><a href="#board">Gallery</a></li>
-              <li><a href="/board">Board</a></li>
-            </ul>
+            <a class="toplink" href="/board">
+              BOARD <span class="arrow"></span></a>
           </li>
 
           <!-- 드롭다운: login -->
@@ -59,9 +55,9 @@
             <a class="toplink" id="loginMenu" href="#login">
               LOGIN <span class="arrow">▼</span></a>
             <ul class="submenu">
-              <li><a href="/login">로그인</a></li>
-              <li><a href="#">회원가입</a></li>
-              <li><a href="#">아이디/비밀번호 찾기</a></li>
+              <li><a href="/login">Login</a></li>
+              <li><a href="#">Sign Up</a></li>
+              <li><a href="#">Forgotten ID / PW</a></li>
             </ul>
           </li>
         </ul>
@@ -76,10 +72,6 @@
         <button class="icon-btn" type="button" aria-label="검색">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M21 20.29 16.65 16a8 8 0 1 0-1.41 1.41L20.29 21 21 20.29ZM4 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6Z"/></svg>
         </button>
-        <span class="vdiv" aria-hidden="true"></span>
-        <a class="icon-btn" href="/en" aria-label="English">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm7.93 9h-3.11a15.5 15.5 0 0 0-1.05-5A8.01 8.01 0 0 1 19.93 11ZM12 4c.9 0 2.47 2.07 3.07 6H8.93C9.53 6.07 11.1 4 12 4ZM4.07 13h3.11a15.5 15.5 0 0 0 1.05 5 8.01 8.01 0 0 1-4.16-5Zm3.11-2H4.07A8.01 8.01 0 0 1 8.23 6a15.5 15.5 0 0 0-1.05 5Zm1.75 2h5.14c-.6 3.93-2.17 6-3.07 6s-2.47-2.07-3.07-6Zm7.84 0h3.11a8.01 8.01 0 0 1-4.16 5 15.5 15.5 0 0 0 1.05-5Z"/></svg>
-        </a>
       </div>
     </div>
   </header>
@@ -461,7 +453,7 @@
     const token = window.getToken && window.getToken();
     if (!token) {
       // 토큰이 없으면 로그인 페이지로 리다이렉트
-      alert('로그인이 필요합니다.');
+      alert('Login is required.');
       location.href = '/login';
     }
   })();
@@ -563,7 +555,7 @@
       loginMenu.addEventListener('click', (e) => {
         e.preventDefault();
         clearToken();
-        alert('로그아웃되었습니다.');
+        alert('You have been logged out.');
         location.href = '/';
       }, { once: true });
 

@@ -82,8 +82,8 @@
   </style>
 </head>
 <body>
-  <h1>관리자 페이지</h1>
-  <h2>배너 이미지 선택</h2>
+  <h1>Admin Page</h1>
+  <h2>Choose the banner</h2>
   
   <div class="image-grid-wrapper">
     <div class="image-grid" id="image-list">
@@ -94,7 +94,7 @@
   <div id="selected-image">
     <!-- 선택된 이미지 표시 -->
     <div id="selected-filename"></div>
-    <button id="change-banner-btn" style="display:none;">선택된 이미지로 배너 변경</button>
+    <button id="change-banner-btn" style="display:none;">Change the banner</button>
   </div>
 
   <script>
@@ -104,7 +104,7 @@
       location.href = '/login';
     }
 
-    fetch('/admin/uploads/list', {
+    fetch('/febf809ab643f5f211905c83ba9f6cf5a2659d81469ec9df1e8ab5ca0390f7a5/uploads/list', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -131,17 +131,17 @@
           document.querySelectorAll('.image-grid img').forEach(i => i.classList.remove('selected'));
           img.classList.add('selected');
           document.getElementById('selected-image').innerHTML = `
-            <h3>선택된 이미지:</h3>
+            <h3>Selected Image:</h3>
             <img src="${img.src}" alt="${file}">
             <div id="selected-filename">${file}</div>
-            <button id="change-banner-btn">선택된 이미지로 배너 변경</button>
+            <button id="change-banner-btn">Change Banner</button>
           `;
 
           // button click event
           document.getElementById('change-banner-btn').onclick = () => {
             const fileUrl = img.src;
 
-            fetch('/admin/banner', {
+            fetch('/febf809ab643f5f211905c83ba9f6cf5a2659d81469ec9df1e8ab5ca0390f7a5/banner', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
