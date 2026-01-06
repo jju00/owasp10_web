@@ -3,7 +3,7 @@
     "id": 1,
     "cat": "NOTICE",
     "title": "[NOTICE] BlackCat Monthly Seminar Announcement",
-    "author": "admin",
+    "author": "bob",
     "datetime": "2025-04-02T12:47",
     "bodyHtml": "<p>The seminar will be held on November 23, 2025.</p><p>Presentation Topics</p><p>1. Embedded Firmware Emulation</p><p>2. Web Bug Bounty Methodology</p><p>3. Red Team C2 Framework Development</p><p>We look forward to your participation.</p>",
     "attachments": []
@@ -12,7 +12,7 @@
     "id": 2,
     "cat": "EVENT",
     "title": "Club Graduation Ceremony",
-    "author": "bob",
+    "author": "diana",
     "datetime": "2025-04-02T10:05",
     "bodyHtml": "<p>We held a graduation ceremony within the club.</p><p>Congratulations to all the seniors who have graduated!</p>",
     "attachments": [
@@ -23,7 +23,7 @@
     "id": 3,
     "cat": "EVENT",
     "title": "Club Study Session",
-    "author": "bob",
+    "author": "diana",
     "datetime": "2025-04-02T09:12",
     "bodyHtml": "<p>We held a hacking study session within the club.</p><p>It was challenging, but thank you to everyone who participated and kept up until the end.</p>",
     "attachments": [
@@ -41,39 +41,28 @@
   },
   {
     "id": 5,
-    "cat": "SECRET",
-    "title": "My Cat’s Photo",
-    "author": "Anonymous",
-    "datetime": "2025-04-02T07:30",
-    "bodyHtml": "<p>Here’s a photo of my cat.</p><p>It’s a Ragdoll, but it sheds a lot.</p><p>Still, looking at it makes me feel better and less lonely. I’d like to recommend this cat as our club’s logo.</p>",
-    "attachments": [
-      { "name": "rackdol.png", "path": "/frontend/public/assets/uploads/rackdol.png" }
-    ]
-  },
-  {
-    "id": 6,
     "cat": "NOTICE",
     "title": "[NOTICE] BlackCat End-of-Semester Gathering",
-    "author": "admin",
+    "author": "bob",
     "datetime": "2025-04-01T18:00",
     "bodyHtml": "<p>The end-of-semester gathering will be held on December 31, 2025.</p><p>We hope many of you can join us.</p><p>There will probably be an after-party.</p><p>Should we go for barbecue or chicken? What should we eat?</p>",
     "attachments": []
   },
   {
-    "id": 7,
+    "id": 6,
     "cat": "SECRET",
     "title": "TEST",
     "authorId": 2,
-    "author": "Anonymous",
+    "author": "nagox",
     "datetime": "2025-04-01T16:22",
     "bodyHtml": "<p>I created an admin page.</p><p>I set up access restrictions, but can you guys access it too?</p><p>Access to /febf809ab643f5f211905c83ba9f6cf5a2659d81469ec9df1e8ab5ca0390f7a5.</p><p>Plus, You can get private key from the file owasp10.</p><p>I hide it in the uploads directory.</p>",
     "attachments": []
   },
   {
-    "id": 8,
+    "id": 7,
     "cat": "EVENT",
     "title": "End-of-Semester General Meeting",
-    "author": "alice",
+    "author": "diana",
     "datetime": "2025-04-01T14:11",
     "bodyHtml": "<p>We held the end-of-semester general meeting.</p><p>Thank you to everyone who participated.</p>",
     "attachments": [
@@ -81,24 +70,12 @@
     ]
   },
   {
-    "id": 9,
+    "id": 8,
     "cat": "PROMOTION",
     "title": "Looking for Project Members",
     "author": "alice",
     "datetime": "2025-04-01T12:05",
     "bodyHtml": "<p>Duration: From the end of the semester until the start of the next one</p><p>Project: C2 framework development practice</p><p>Details: One offline meeting per week and one online meeting per week</p><p>Recruiting: 0 people</p>",
     "attachments": []
-  },
-  {
-    "id": 10,
-    "cat": "SECRET",
-    "title": "How to Upload a Cat Photo",
-    "authorId": 3,
-    "author": "Anonymous",
-    "datetime": "2025-04-01T09:55",
-    "bodyHtml": "<p>I saw someone asking how others were uploading photos, so I figured I’d explain.</p><p>There’s actually a hidden directory where you can upload files...</p><p>Seems like it was intentionally hidden since no one knew about it.</p><p>(Edit)</p><p>The admin turned it into a private post 😭</p><p>Anyone who sees this, feel free to upload files at that path...</p>",
-    "attachments": [
-      { "name": "owasp10", "path": "/frontend/public/assets/uploads/owasp10" }
-    ]
   }
 ]

@@ -164,20 +164,18 @@
           document.getElementById('userRole').textContent = profile.role || '알 수 없음';
 
           // 게시글 목록 렌더링 (더미 데이터 - 실제로는 API로 받아와야 함)
-          const PAGES = {
+        const PAGES = {
           1: [
-            {pageId:1, cat:'NOTICE',   title:'[NOTICE] BlackCat Monthly Seminar Announcement',   author:'admin',   date:'2025-04-02'},
-            {pageId:2, cat:'EVENT', title:'Club Graduation Ceremony',    author:'bob',     date:'2025-04-02'},
-            {pageId:3, cat:'EVENT', title:'Club Study Session',                 author:'bob',     date:'2025-04-02'},
+            {pageId:1, cat:'NOTICE',   title:'[NOTICE] BlackCat Monthly Seminar Announcement',   author:'bob',   date:'2025-04-02'},
+            {pageId:2, cat:'EVENT', title:'Club Graduation Ceremony',    author:'diana',     date:'2025-04-02'},
+            {pageId:3, cat:'EVENT', title:'Club Study Session',                 author:'diana',     date:'2025-04-02'},
             {pageId:4, cat:'PROMOTION', title:'Recruiting Members for an Offline Security Study Group',       author:'charlie', date:'2025-04-02'},
-            {pageId:5, cat:'SECRET', title:'My Cat’s Photo',                 author:'Anonymous',   date:'2025-04-02'},
-            {pageId:6, cat:'NOTICE',   title:'[NOTICE] BlackCat End-of-Semester Gathering',      author:'admin',   date:'2025-04-01'},  // ← 2p에서 이사
-            {pageId:7, cat:'SECRET', title:'TEST',                       author:'Anonymous',      date:'2025-04-01'},  // ← 2p에서 이사
-          ],
-          2: [
-            {pageId:8,  cat:'EVENT', title:'End-of-Semester General Meeting',  author:'alice',     date:'2025-04-01'},
-            {pageId:9,  cat:'PROMOTION', title:'Looking for Project Members',              author:'alice',     date:'2025-04-01'},
-            {pageId:10, cat:'SECRET', title:'How to Upload a Cat Photo',          author:'Anonymous',      date:'2025-04-01'},
+            {pageId:5, cat:'NOTICE',   title:'[NOTICE] BlackCat End-of-Semester Gathering',      author:'bob',   date:'2025-04-01'},  // ← 2p에서 이사
+            {pageId:6, cat:'SECRET', title:'TEST',                       author:'nagox',      date:'2025-04-01'},  // ← 2p에서 이사
+            {pageId:7,  cat:'EVENT', title:'End-of-Semester General Meeting',  author:'diana',     date:'2025-04-01'}      
+            ],
+          2: [  
+            {pageId:8,  cat:'PROMOTION', title:'Looking for Project Members',              author:'alice',     date:'2025-04-01'}
           ],
         };
 
