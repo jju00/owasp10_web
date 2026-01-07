@@ -25,6 +25,36 @@ router.get('/uploads/list', vulnerableJwtMiddleware, checkAdmin, (req, res) => {
   });
 });
 
+// SSRF 취약점: 배너 이미지 미리보기 (URL 검증 없음)
+router.get('/preview', vulnerableJwtMiddleware, checkAdmin, (req, res) => {
+  const { url } = req.query;
+
+  if (!url || typeof url !== 'string') {
+    return res.status(400).json({ error: 'Missing url parameter' });
+  }
+
+  /****************** SSRF 취약점: 사용자 입력 URL을 서버에서 직접 요청 ******************/ 
+  // 내부 서비스(localhost:8080) 접근 가능
+  fetch(url)
+    .then(response => {
+      // 원본 서비스의 상태 코드와 Content-Type 그대로 전달
+      const contentType = response.headers.get('content-type') || 'application/octet-stream';
+      res.status(response.status);
+      res.setHeader('Content-Type', contentType);
+      
+      return response.arrayBuffer();
+    })
+    .then(buffer => {
+      // 500 에러여도 원본 응답 내용을 그대로 전달
+      res.send(Buffer.from(buffer));
+    })
+    .catch(err => {
+      // 네트워크 에러 등 fetch 자체가 실패한 경우만 에러 처리
+      console.error('Preview fetch error:', err.message);
+      res.status(500).json({ error: 'Failed to connect to URL', details: err.message });
+    });
+});
+
 // backend/routes/admin.js (추가)
 router.post('/banner', vulnerableJwtMiddleware, checkAdmin, express.json(), (req, res) => {
   const { url } = req.body;

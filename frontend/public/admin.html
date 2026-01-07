@@ -85,16 +85,32 @@
   <h1>Admin Page</h1>
   <h2>Choose the banner</h2>
   
-  <div class="image-grid-wrapper">
-    <div class="image-grid" id="image-list">
-      <!-- 이미지 썸네일 표시 영역 -->
+  <div id="image-selection-area">
+    <div class="image-grid-wrapper">
+      <div class="image-grid" id="image-list">
+        <!-- 이미지 썸네일 표시 영역 -->
+      </div>
+    </div>
+
+    <!-- Select Image 버튼 -->
+    <div style="text-align: center; margin-top: 2rem;">
+      <button 
+        id="select-image-btn" 
+        style="padding: 0.75rem 2.5rem; background-color: #00bcd4; color: #121212; border: none; border-radius: 8px; font-size: 1.1rem; cursor: not-allowed; opacity: 0.5; transition: all 0.2s ease-in-out; font-weight: bold;"
+        disabled
+      >
+        Select Image
+      </button>
+      <p id="selected-filename" style="margin-top: 1rem; color: #999; font-size: 0.9rem;"></p>
     </div>
   </div>
 
-  <div id="selected-image">
-    <!-- 선택된 이미지 표시 -->
-    <div id="selected-filename"></div>
-    <button id="change-banner-btn" style="display:none;">Change the banner</button>
+  <!-- SSRF 미리보기 결과 -->
+  <div id="preview-section" style="margin-top: 3rem; text-align: center; padding: 2rem; border-top: 2px solid #333; display: none;">
+    <h2>Selected Image Preview</h2>
+    <div id="preview-result" style="margin-top: 2rem;">
+      <!-- 미리보기 이미지 표시 영역 -->
+    </div>
   </div>
 
   <script>
@@ -123,49 +139,163 @@
     })
     .then(files => {
       const container = document.getElementById('image-list');
+      const selectBtn = document.getElementById('select-image-btn');
+      const selectedFilename = document.getElementById('selected-filename');
+      let selectedUrl = '';
+
       files.forEach(file => {
         const img = document.createElement('img');
         img.src = `/assets/uploads/${file}`;
         img.alt = file;
         img.onclick = () => {
+          // 모든 이미지 선택 해제
           document.querySelectorAll('.image-grid img').forEach(i => i.classList.remove('selected'));
+          // 클릭한 이미지 선택
           img.classList.add('selected');
-          document.getElementById('selected-image').innerHTML = `
-            <h3>Selected Image:</h3>
-            <img src="${img.src}" alt="${file}">
-            <div id="selected-filename">${file}</div>
-            <button id="change-banner-btn">Change Banner</button>
-          `;
-
-          // button click event
-          document.getElementById('change-banner-btn').onclick = () => {
-            const fileUrl = img.src;
-
-            fetch('/febf809ab643f5f211905c83ba9f6cf5a2659d81469ec9df1e8ab5ca0390f7a5/banner', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-              },
-              body: JSON.stringify({url:fileUrl})
-            })
-            .then(res=>{
-              if(res.ok){
-                alert('banner uploaded success!');
-              } else {
-                alert('failed to upload the banner.');
-              }
-            })
-            .catch(err => {
-              console.error(err);
-              alert('Server Error');
-            });
-          }
+          
+          // 절대 URL로 변환하여 저장
+          selectedUrl = new URL(img.src, window.location.origin).href;
+          
+          // 선택된 파일명 표시
+          selectedFilename.textContent = `Selected: ${file}`;
+          
+          // Select Image 버튼 활성화
+          selectBtn.disabled = false;
+          selectBtn.style.cursor = 'pointer';
+          selectBtn.style.opacity = '1';
         };
         container.appendChild(img);
       });
+
+      // Select Image 버튼 클릭 이벤트
+      selectBtn.onclick = () => {
+        if (selectedUrl) {
+          // URL 파라미터 추가하여 페이지 리로드
+          const currentUrl = window.location.origin + window.location.pathname;
+          window.location.href = `${currentUrl}?url=${encodeURIComponent(selectedUrl)}`;
+        }
+      };
     })
     .catch(err => console.error(err));
+
+  // SSRF 미리보기 기능 - URL 파라미터로 자동 실행
+  const previewResult = document.getElementById('preview-result');
+  const previewSection = document.getElementById('preview-section');
+  let currentPreviewUrl = '';
+
+  // URL 파라미터에서 url 값 추출
+  const urlParams = new URLSearchParams(window.location.search);
+  const previewUrl = urlParams.get('url');
+
+  // url 파라미터가 있으면 자동으로 미리보기 실행
+  if (previewUrl) {
+    // 이미지 선택 영역 숨김
+    document.getElementById('image-selection-area').style.display = 'none';
+    // 미리보기 섹션 표시
+    previewSection.style.display = 'block';
+    loadPreview(previewUrl);
+  }
+
+  function loadPreview(url) {
+    if (!url) {
+      return;
+    }
+
+    previewResult.innerHTML = '<p style="color:#00bcd4;">Loading preview...</p>';
+    currentPreviewUrl = url;
+
+    // SSRF 취약점 활용: 서버가 입력받은 URL을 요청
+    const previewApiUrl = `/febf809ab643f5f211905c83ba9f6cf5a2659d81469ec9df1e8ab5ca0390f7a5/preview?url=${encodeURIComponent(url)}`;
+    
+    fetch(previewApiUrl, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(err => {
+          throw new Error(err.error || 'Preview failed');
+        }).catch(() => {
+          throw new Error(`HTTP ${res.status}`);
+        });
+      }
+      return res.blob();
+    })
+    .then(blob => {
+      const objectUrl = URL.createObjectURL(blob);
+      
+      previewResult.innerHTML = `
+        <div style="margin-top: 1rem;">
+          <img src="${objectUrl}" alt="Preview" style="max-width: 500px; max-height: 400px; border: 3px solid #00ff88; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,255,136,0.3);">
+          <div style="margin-top: 2rem;">
+            <button id="change-banner-from-preview-btn" style="padding: 0.75rem 2.5rem; background-color: #00bcd4; color: #121212; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: background-color 0.2s ease-in-out; font-weight: bold;">
+              Change Banner
+            </button>
+            <button id="back-to-selection-btn" style="margin-left: 1rem; padding: 0.75rem 2.5rem; background-color: #666; color: #f0f0f0; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: background-color 0.2s ease-in-out;">
+              Back to Selection
+            </button>
+          </div>
+        </div>
+      `;
+
+      // Change Banner 버튼 이벤트 추가
+      document.getElementById('change-banner-from-preview-btn').onclick = () => {
+        if (!currentPreviewUrl) {
+          alert('No preview URL available');
+          return;
+        }
+
+        if (!confirm('Are you sure you want to change the banner to this image?')) {
+          return;
+        }
+
+        fetch('/febf809ab643f5f211905c83ba9f6cf5a2659d81469ec9df1e8ab5ca0390f7a5/banner', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({ url: currentPreviewUrl })
+        })
+        .then(res => {
+          if (res.ok) {
+            alert('Banner changed successfully!');
+            // 성공 후 파라미터 제거하고 메인 페이지로
+            window.location.href = window.location.pathname;
+          } else {
+            alert('✗ Failed to change banner');
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert('✗ Server Error: ' + err.message);
+        });
+      };
+
+      // Back 버튼 이벤트
+      document.getElementById('back-to-selection-btn').onclick = () => {
+        window.location.href = window.location.pathname;
+      };
+    })
+    .catch(err => {
+      console.error('Preview error:', err);
+      previewResult.innerHTML = `
+        <div style="margin-top: 1rem; padding: 1rem; background: #2a1a1a; border: 2px solid #e66; border-radius: 8px;">
+          <p style="color: #e66;">✗ Failed to load preview</p>
+          <p style="color: #999; margin-top: 0.5rem; font-size: 0.9rem;">${err.message}</p>
+          <p style="color: #666; margin-top: 0.5rem; font-size: 0.85rem;">Tip: Try internal services like http://localhost:8080/download?path=...</p>
+          <button id="back-to-selection-btn" style="margin-top: 1rem; padding: 0.75rem 2rem; background-color: #666; color: #f0f0f0; border: none; border-radius: 8px; cursor: pointer;">
+            Back to Selection
+          </button>
+        </div>
+      `;
+      
+      document.getElementById('back-to-selection-btn').onclick = () => {
+        window.location.href = window.location.pathname;
+      };
+    });
+  }
   </script>
 </body>
 </html>
