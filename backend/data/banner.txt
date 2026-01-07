@@ -1,1 +1,1 @@
-http://localhost:3000/assets/uploads/End-of-Semester_Party.png
+http://192.168.200.135/assets/uploads/End-of-Semester_Party.png
