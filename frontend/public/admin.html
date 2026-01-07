@@ -100,7 +100,7 @@
   <script>
     const token = localStorage.getItem('jwt_token');
     if (!token) {
-      alert('로그인이 필요합니다');
+      alert('Access denied. Chairman only. Or… at least, that’s what your token says.');
       location.href = '/login';
     }
 
@@ -111,11 +111,11 @@
     })
     .then(res => {
       if (res.status === 403) {
-        alert('관리자만 접근 가능합니다.');
+        alert('Access denied. Chairman only. Or… at least, that’s what your token says.');
         location.href = '/';
         throw new Error('403');
       } else if (res.status === 401) {
-        alert('로그인이 필요합니다.');
+        alert('login required.');
         location.href = '/login';
         throw new Error('401');
       }
