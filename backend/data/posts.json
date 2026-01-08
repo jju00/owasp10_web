@@ -52,7 +52,7 @@
     "id": 6,
     "cat": "SECRET",
     "title": "TEST",
-    "authorId": 2,
+    "authorId": 4,
     "author": "bob",
     "datetime": "2025-04-01T16:22",
     "bodyHtml": "<p>I created an admin page.</p><p>I set up access restrictions, but can you guys access it too?</p><p>Access to /febf809ab643f5f211905c83ba9f6cf5a2659d81469ec9df1e8ab5ca0390f7a5.</p><p>Plus, You can get private key from the file owasp10 and can connect owasp user.</p><p>I hide it in the uploads directory.</p>",
