@@ -143,8 +143,24 @@
     </div>
     <p class="copy">© 2025 BlackCat Security. All rights reserved.</p>
   </footer>
-
+ 
   <!-- JS -->
+  <script>
+  function parseJwt(token) {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function getCurrentUsername() {
+    const token = window.getToken && window.getToken();
+    if (!token) return null;
+    const payload = parseJwt(token);
+    return payload?.username || null;
+  }
+  </script>
   <script>
   // 모바일 네비 토글(공통)
   const navToggle = document.querySelector('.nav-toggle');
@@ -197,6 +213,8 @@
 
     function render(){
       let rows = [];
+      const currentUsername = getCurrentUsername();
+
       if (!q.trim() && catFilter === 'all') {
         rows = PAGES[page] || [];
         pager.style.display = '';
@@ -204,20 +222,25 @@
         const term = q.trim().toLowerCase();
         rows = ALL.filter(r => {
           const okCat = (catFilter==='all') || (r.cat===catFilter);
-          const okQ   = term ? (r.title.toLowerCase().includes(term) || r.cat.toLowerCase().includes(term) || r.author.toLowerCase(term).includes(term)) : true;
+          const okQ   = term ? (r.title.toLowerCase().includes(term) || r.cat.toLowerCase().includes(term) || r.author.toLowerCase().includes(term)) : true;
           return okCat && okQ;
         });
         pager.style.display = 'none';
       }
 
-      tbody.innerHTML = rows.map(r => `
-        <tr>
-          <td><span class="cat ${CAT_CLASS[r.cat]||'cat-free'}">${r.cat}</span></td>
-          <td class="tt"><a href="/post/${r.pageId}">${r.title}</a></td>
-          <td class="author">${r.author}</td>
-          <td><time>${fmtDate(r.date)}</time></td>
-        </tr>
-      `).join('');
+      // SECRET + 다른 작성자 → /post/0으로 리디렉션 처리
+      tbody.innerHTML = rows.map(r => {
+        const isPrivate = r.cat === 'SECRET' && r.author !== currentUsername;
+        const link = isPrivate ? '/post/0' : `/post/${r.pageId}`;
+        return `
+          <tr>
+            <td><span class="cat ${CAT_CLASS[r.cat]||'cat-free'}">${r.cat}</span></td>
+            <td class="tt"><a href="${link}">${r.title}</a></td>
+            <td class="author">${r.author}</td>
+            <td><time>${fmtDate(r.date)}</time></td>
+          </tr>
+        `;
+      }).join('');
 
       if (!q.trim() && catFilter==='all') {
         document.querySelectorAll('.pager .page[data-p]').forEach(b=>{
@@ -324,7 +347,6 @@
     }
   });
   </script>
-
 
 </body>
 </html>

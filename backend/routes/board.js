@@ -13,7 +13,8 @@ router.get('/', (req, res) => {
   const list = posts.map(p => ({
     id: p.id, 
     title: p.title, 
-    cat: p.cat, 
+    cat: p.cat,
+    author: p.author ,
     date: p.datetime
   }));
   return res.json(list);
@@ -34,14 +35,6 @@ router.get('/:id', vulnerableJwtMiddleware, (req, res) => {
   // 게시글이 없는 경우
   if (!post) {
     return res.status(404).json({ error: 'post not found' });
-  }
-
-  // 비밀글 권한 체크
-  const isSecretPost = post.cat === 'SECRET';
-  const isAuthor = req.user && req.user.id === post.authorId;
-  
-  if (isSecretPost && !isAuthor) {
-    return res.status(403).json({ error: 'forbidden: secret post' });
   }
 
   // 첨부파일 다운로드 요청

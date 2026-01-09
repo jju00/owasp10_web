@@ -1,5 +1,14 @@
 [
   {
+    "id": 0,
+    "cat": "ERROR",
+    "title": "Access Denied",
+    "author": "bob",
+    "datetime": "2025-04-01T16:47",
+    "bodyHtml": "<p>You cannot view another user’s secret post.</p>",
+    "attachments": []
+  },
+  {
     "id": 1,
     "cat": "NOTICE",
     "title": "[NOTICE] BlackCat Monthly Seminar Announcement",

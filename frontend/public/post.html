@@ -190,12 +190,6 @@
             redirectToLogin(); 
             return null; 
           }
-          if (res.status === 403) {
-            document.querySelector('.post-body').innerHTML =
-              '<p style="color:#e66">You cannot view another user’s secret post.</p>';
-            document.body.classList.remove('preload');
-            return null;
-          }
           if (res.status === 404) {
             alert('게시글을 찾을 수 없습니다.');
             return null;

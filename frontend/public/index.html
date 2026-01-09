@@ -457,6 +457,22 @@
       location.href = '/login';
     }
   })();
+
+  // 토큰 파싱함수 (사용자 확인용)
+  function parseJwt(token) {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function getCurrentUsername() {
+    const token = window.getToken && window.getToken();
+    if (!token) return null;
+    const payload = parseJwt(token);
+    return payload?.username || null;
+  }
   </script>
 
   <script>
@@ -480,25 +496,33 @@
       currentCategory = category;
       
       // 카테고리 필터링
-      let filteredPosts = category === 'all' 
+      let filteredPosts = (category === 'all' 
         ? allPosts 
-        : allPosts.filter(post => post.cat === category);
+        : allPosts.filter(post => post.cat === category)
+      ).filter(post => post.id !== 0); //0번 글은 표시 안함.
+
+      // 현재 사용자 정보 로드
+      const currentUsername = getCurrentUsername();
 
       // 최신 4개만 표시
       filteredPosts = filteredPosts.slice(0, 4);
-      
+
       // HTML 생성
       if (filteredPosts.length === 0) {
         boardList.innerHTML = '<li style="padding: 20px; text-align: center; color: #999;">게시글이 없습니다</li>';
         return;
       }
       
-      boardList.innerHTML = filteredPosts.map(post => `
-        <li>
-          <a href="/post/${post.id}">${post.title}</a>
-          <time>${formatDate(post.date)}</time>
-        </li>
-      `).join('');
+      boardList.innerHTML = filteredPosts.map(post => {
+        const isPrivate = post.cat === 'SECRET' && currentUsername && post.author !== currentUsername;
+        const link = isPrivate ? '/post/0' : `/post/${post.id}`;
+        return `  
+          <li>
+            <a href="${link}">${post.title}</a>
+            <time>${formatDate(post.date)}</time>
+          </li>
+        `;
+      }).join('');
     }
 
     // 탭 버튼 클릭 이벤트
@@ -528,7 +552,7 @@
         renderBoard('all');
       } catch (error) {
         console.error('게시판 로드 오류:', error);
-        boardList.innerHTML = '<li style="padding: 20px; text-align: center; color: #e66;">게시판을 불러올 수 없습니다</li>';
+        boardList.innerHTML = '<li style="padding: 20px; text-align: center; color: #e66;">Failed to load Board.</li>';
       }
     }
 
